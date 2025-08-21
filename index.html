@@ -5,65 +5,69 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Category Grid</title>
   <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f0f0f0;
-    }
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f0f0f0;
+}
 
-   .header {
+.header {
   text-align: center;
-  margin-top: 30px;
-  margin-bottom: 40px;
-
+  margin-top: 20px;
+  margin-bottom: 30px;
   padding: 10px;
 }
 
 .logo {
-  max-width: 300px;
+  max-width: 220px;
   height: auto;
 }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: repeat(2, 1fr);
-      gap: 30px;
-      padding: 0 40px 40px;
-    }
+/* ✅ Default: Desktop (4 per row) */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(200px, 1fr)); /* ✅ flexible */
+  gap: 25px;
+  padding: 0 40px 40px;
+  width: 100%;
+  box-sizing: border-box; /* ensures padding doesn’t push content out */
+}
 
-    .grid-item {
+.grid-item {
   background: #fff;
   border: 1px solid #ccc;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   font-size: 1.1em;
   font-weight: bold;
   border-radius: 10px;
   text-align: center;
   padding: 20px;
-  min-height: 250px;
+  min-height: 200px;
   box-shadow: 0 0 10px rgb(222, 211, 124);
   cursor: pointer;
-  transition: 0.3s;
+  transition: transform 0.2s ease;
 }
-    .grid-item:hover {
-      background: #eaeaea;
-    }
-    .grid-item.category {
+
+.grid-item:hover {
+  background: #eaeaea;
+  transform: scale(1.03);
+}
+
+.grid-item.category {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
 }
 
-   .back-btn {
-  margin-left: 40px;
-  margin-bottom: 20px;
-  padding: 10px 20px;
+.back-btn {
+  margin-left: 15px;
+  margin-bottom: 15px;
+  padding: 8px 16px;
   font-size: 1rem;
   cursor: pointer;
   background-color: #1acb2f;
@@ -73,18 +77,57 @@
   transition: background-color 0.3s ease;
   box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
 }
-
 .back-btn:hover {
   background-color: #0056b3;
 }
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 15px;
-  padding: 0 10px 30px;
-  width: 100%;
+
+/* 📱 Tablet (3 per row) */
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 0 20px 30px;
+  }
 }
-  </style>
+
+/* 📱 Mobile (2 per row) */
+@media (max-width: 700px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 0 15px 20px;
+  }
+
+  .grid-item {
+    font-size: 1em;
+    min-height: 160px;
+    padding: 15px;
+  }
+
+  .logo {
+    max-width: 180px;
+  }
+}
+
+/* 📱 Extra small phones (1 per row) */
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .grid-item {
+    min-height: 140px;
+    font-size: 0.95em;
+  }
+
+  .back-btn {
+    margin-left: 10px;
+    font-size: 0.9rem;
+    padding: 6px 12px;
+  }
+}
+</style>
 </head>
 <body>
 
