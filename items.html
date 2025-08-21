@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Category Grid</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+    }
+
+   .header {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 40px;
+
+  padding: 10px;
+}
+
+.logo {
+  max-width: 300px;
+  height: auto;
+}
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 30px;
+      padding: 0 40px 40px;
+    }
+
+    .grid-item {
+  background: #fff;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.1em;
+  font-weight: bold;
+  border-radius: 10px;
+  text-align: center;
+  padding: 20px;
+  min-height: 250px;
+  box-shadow: 0 0 10px rgb(222, 211, 124);
+  cursor: pointer;
+  transition: 0.3s;
+}
+    .grid-item:hover {
+      background: #eaeaea;
+    }
+    .grid-item.category {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+   .back-btn {
+  margin-left: 40px;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: #1acb2f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+}
+
+.back-btn:hover {
+  background-color: #0056b3;
+}
+  </style>
+</head>
+<body>
+
+  <div class="header">
+  <img src="download.png" alt="Kirtiraj Logo" class="logo" />
+</div>
+  <button class="back-btn" id="backBtn" style="display: none;">← Back to Categories</button>
+  <div class="grid" id="categoryGrid"></div>
+
+  <script>
+    const data = {
+    "Papad / Mathia / Chorafali": [
+      { name: "Gulla 6pcs", size: 0.085, rate: 20 },
+      { name: "Chorafali Papad 500g", size: 0.5, rate: 150 },
+      { name: "Mathia Papad 500g", size: 0.5, rate: 150 },
+      { name: "Green Chilli Mathia Papad 500g", size: 0.5, rate: 170 },
+      { name: "Suvari Papad 200gm", size: 0.2 },
+      { name: "Single Mari Papad 250g", size: 0.25 },
+      { name: "Single Mari Papad 500g", size: 0.5, rate: 150 },
+      { name: "Single Mari Disco Papad 400gm", size: 0.4, rate: 150 },
+      { name: "Punjabi Double Mari Papad 250g", size: 0.25 },
+      { name: "Punjabi Double Mari Papad 500grm", size: 0.5, rate: 160 },
+      { name: "Punjabi Doublemari Disco Papad 400grm", size: 0.4, rate: 160 },
+      { name: "Jeera Papad 250g", size: 0.25, rate: 80 },
+      { name: "Jeera Disco Papad 400grm", size: 0.4 },
+      { name: "Jeera Mari Papad 250g", size: 0.25, rate: 85 },
+      { name: "Rajwadi Papad 250g", size: 0.25, rate: 85 },
+      { name: "Garlic Papad 250g", size: 0.25, rate: 85 },
+      { name: "Green Garlic Papad 500g", size: 0.5 },
+      { name: "Moong Udad Papad 500g", size: 0.5, rate: 170 }
+    ],
+    "Coockies / Khari / Toast": [
+      { name: "Atta Biscuit (wheat Cookies)", size: 0.2, rate: 80 },
+      { name: "Austrlian Cookies 200gm", size: 0.2, rate: 110 },
+      { name: "Chocolate Chips Cookies 200g", size: 0.2, rate: 90 },
+      { name: "Dry Fruit Biscuit 200g", size: 0.2, rate: 110 },
+      { name: "Mix Cookies 200g", size: 0.2, rate: 110 },
+      { name: "Multigrain Cookies 200gm", size: 0.2, rate: 110 },
+      { name: "Surti Nankhatai 200g", size: 0.2, rate: 110 },
+      { name: "Wheat Biscuit 200g", size: 0.2, rate: 90 },
+      { name: "Tuti Fruti Toast 300g", size: 0.3, rate: 120 },
+      { name: "Wheat Toast 300g", size: 0.3, rate: 120 },
+      { name: "Jeera Toast 300g", size: 0.3, rate: 120 },
+      { name: "Wheat Toast Mini 200gm", size: 0.2, rate: 100 },
+      { name: "Jeera Toast Mini 200gm", size: 0.2, rate: 100 },
+      { name: "Jeera Khari 200gm", size: 0.2, rate: 90 },
+      { name: "Plain Khari 200gm", size: 0.2, rate: 90 },
+      { name: "Wheat Khari 200gm", size: 0.2, rate: 90 },
+      { name: "Wheat Methi Masala Khari 200gm", size: 0.2, rate: 90 }
+    ],
+    "Khakhra": [
+      { name: "Bajari Dhebra Khakhra 200g", size: 0.2, rate: 60 },
+      { name: "Chatpata Khakhra 200g", size: 0.2, rate: 60 },
+      { name: "Garlic Khakhra 200g", size: 0.2, rate: 70 },
+      { name: "Hot & Spicy Khakhra 200g", size: 0.2, rate: 70 },
+      { name: "Jeera Khakhra 500g", size: 0.5, rate: 130 },
+      { name: "Masala Khakhra 500g", size: 0.5, rate: 130 },
+      { name: "Mathiya Khakhra 200g", size: 0.2, rate: 130 },
+      { name: "Methi Khakhra 500gms", size: 0.5, rate: 130 },
+      { name: "Methi Masala Khakhra 200g", size: 0.2, rate: 70 },
+      { name: "Multi Grain Khakhra 200g", size: 0.2, rate: 70 },
+      { name: "Panipuri Khakhra 200g", size: 0.2, rate: 60 },
+      { name: "Plain Khakhra 500g", size: 0.5, rate: 130 }
+    ],
+    "Khichiya": [
+      { name: "Bajra Khichiya 250gm", size: 0.25, rate: 75 },
+      { name: "Green Chilli Rice Papadi 400gm - Mini", size: 0.4, rate: 130 },
+      { name: "Green Chilli Rice Papadi 250gm", size: 0.25, rate: 75 },
+      { name: "Jeera Rice Papadi 250g", size: 0.25, rate: 75 },
+      { name: "Jeera Rice Papadi 400g - Mini", size: 0.4, rate: 130 },
+      { name: "Jowar Khichiya 250gm", size: 0.25, rate: 75 },
+      { name: "Moraiya Papadi 200g - Mini", size: 0.2, rate: 70 },
+      { name: "Rajwadi Rice Papadi 400g - Mini", size: 0.4, rate: 130 },
+      { name: "Rajwadi Rice Papadi 250gm", size: 0.25, rate: 75 },
+      { name: "Sabudana Chamcho", size: 0.4, rate: 120 },
+      { name: "Sabudana Chakri", size: 0.4, rate: 120 }
+    ],
+   "Namkeen": [
+  { name: "Vadhvani Marcha 200g", size: 0.2, rate: 85 },
+  { name: "Hing 50g", size: 0.05, rate: 110 },
+  { name: "Panipuri 500g", size: 0.5 },
+  { name: "Thick Mathia 200g", size: 0.2, rate: 85 },
+  { name: "Bhel Mix 150g", size: 0.15, rate: 75 },
+  { name: "Chakri 250gms", size: 0.25, rate: 100 },
+  { name: "Fire Puri 200g", size: 0.2, rate: 75 },
+  { name: "Masala Puri 200g", size: 0.2, rate: 65 },
+  { name: "Methi Puri 200g", size: 0.2, rate: 75 },
+  { name: "Namak Para 200g", size: 0.2, rate: 75 },
+  { name: "Methi Para 200g", size: 0.2, rate: 75 },
+  { name: "Shakarpara 200g", size: 0.2, rate: 75 },
+  { name: "Bhatha Kani Gathiya 200g", size: 0.2, rate: 80 },
+  { name: "Bhavnagri Methi Gathiya 200g", size: 0.2, rate: 65 },
+  { name: "Bhavnagri Gathiya 200g", size: 0.2, rate: 65 },
+  { name: "Chakri Gathiya 200g", size: 0.2, rate: 65 },
+  { name: "Masala Gathiya 200g", size: 0.2, rate: 65 },
+  { name: "Mora Gathiya 200g", size: 0.2, rate: 65 },
+  { name: "Khamni Sev 200g", size: 0.2, rate: 85 },
+  { name: "Masala Sev 200g", size: 0.2, rate: 65 },
+  { name: "Nylon Sev 200g", size: 0.2, rate: 65 },
+  { name: "Ratlami Sev 200g", size: 0.2, rate: 70 },
+  { name: "Usal Sev 200g", size: 0.2, rate: 80 },
+  { name: "Fulwadi 200g", size: 0.2, rate: 85 },
+  { name: "Tam Tam 200g", size: 0.2, rate: 85 },
+  { name: "Masala Papadi 200g", size: 0.2 },
+  { name: "Plain Papadi Namkin 200gm", size: 0.2 },
+  { name: "Bhadrani Moong 200g", size: 0.2, rate: 65 },
+  { name: "Chana Dal 200g", size: 0.2, rate: 70 },
+  { name: "Chanajor Garam 200g", size: 0.2, rate: 65 },
+  { name: "Chapta Mug 200g", size: 0.2, rate: 60 },
+  { name: "Dal Moth 200g", size: 0.2, rate: 60 },
+  { name: "Sing Bhujia 200g", size: 0.2, rate: 60 },
+  { name: "Soya Chips 200g", size: 0.2, rate: 75 },
+  { name: "Soya Stick 200g", size: 0.2, rate: 75 },
+  { name: "Farali Chevdo Spicy 200g", size: 0.2, rate: 65 },
+  { name: "Indori Mix 200g", size: 0.2, rate: 65 },
+  { name: "Mix Chavanu 200g", size: 0.2, rate: 90 },
+  { name: "Kenyan Chevdo 200gm", size: 0.2, rate: 85 },
+  { name: "Navrang Chevdo 200gms", size: 0.2, rate: 85 },
+  { name: "New Gujarati Chevdo 400g", size: 0.4, rate: 160 },
+  { name: "Papad Chavanu 200g", size: 0.2, rate: 85 },
+  { name: "Nylon Pauva 200gm", size: 0.2, rate: 75 },
+  { name: "Surati Chavanu 200g", size: 0.2, rate: 85 },
+  { name: "Wheat Chevdo 200g", size: 0.2, rate: 95 }
+],
+    "Roasted - Namkeen": [
+      { name: "Bajra Puff Roasted 200g", size: 0.2, rate: 90 },
+      { name: "Channa Dal Roasted 200g", size: 0.2 },
+      { name: "Channa Pudina Dal Roasted 200gm", size: 0.2, rate: 90 },
+      { name: "Moong Jor Roasted 200g", size: 0.2, rate: 90 },
+      { name: "Moong Roasted 200g", size: 0.2 },
+      { name: "Navratan Mix Roasted 200gms", size: 0.2, rate: 100 },
+      { name: "Total Diet Roasted 200g", size: 0.2, rate: 100 },
+      { name: "Wheat Puff 200gm", size: 0.2, rate: 90 }
+    ],
+    "Mukhwas": [
+      { name: "Alsi Mukhwas 150g", size: 0.15 },
+      { name: "Banarasi Paan 220gm", size: 0.22 },
+      { name: "Chulbuli Imli 200gm", size: 0.2 },
+      { name: "Dhana Dal 180g", size: 0.18 },
+      { name: "Jal Jeera Shots 200g", size: 0.2 },
+      { name: "Kalkatti Paan 220gm", size: 0.22 },
+      { name: "Keri Ni Gotli 100gm", size: 0.1 },
+      { name: "Mix Fruit Shots 200gm", size: 0.2 },
+      { name: "Natural Mukhwas 130gm", size: 0.13 },
+      { name: "Paan Shot 170gm", size: 0.17, rate: 110 },
+      { name: "Til Alsi Dhana Dal 150g", size: 0.15 }
+    ]
+  };
+
+
+    const categoryGrid = document.getElementById("categoryGrid");
+    const backBtn = document.getElementById("backBtn");
+
+    function showCategories() {
+  categoryGrid.innerHTML = "";
+  backBtn.style.display = "none";
+
+  Object.keys(data).forEach(category => {
+    const div = document.createElement("div");
+    div.className = "grid-item category";
+    div.textContent = category;
+    div.onclick = () => showItems(category);
+    categoryGrid.appendChild(div);
+  });
+}
+    function showItems(category) {
+  categoryGrid.innerHTML = "";
+  backBtn.style.display = "inline";
+  const items = data[category] || [];
+
+  items.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "grid-item";
+
+    const name = document.createElement("div");
+    name.textContent = item.name;
+    name.style.flexGrow = "1";
+    name.style.display = "flex";
+    name.style.justifyContent = "center";
+    name.style.alignItems = "center";
+    name.style.textAlign = "center";
+    name.style.padding = "10px";
+
+    const hr = document.createElement("hr");
+    hr.style.width = "100%";
+    hr.style.margin = "10px 0";
+
+    const rate = document.createElement("div");
+    rate.style.fontSize = "0.95em";
+    rate.style.color = "#333";
+    rate.style.fontWeight = "normal";
+    rate.textContent = item.rate ? `₹${item.rate}` : "Rate Unavailable";
+
+    div.appendChild(name);
+    div.appendChild(hr);
+    div.appendChild(rate);
+
+    categoryGrid.appendChild(div);
+  });
+}
+    
+    backBtn.onclick = showCategories;
+
+    showCategories(); // Initial call
+  </script>
+
+</body>
+</html>
