@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Category Grid</title>
-  <style>
+ <style>
 html, body {
   height: 100%;
   margin: 0;
@@ -24,14 +24,21 @@ html, body {
   height: auto;
 }
 
-/* ✅ Default: Desktop (4 per row) */
+/* ✅ Default grid (categories = 3 per row, items = 4 per row) */
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(200px, 1fr)); /* ✅ flexible */
   gap: 25px;
   padding: 0 40px 40px;
   width: 100%;
-  box-sizing: border-box; /* ensures padding doesn’t push content out */
+  box-sizing: border-box;
+}
+
+.grid.category-view {
+  grid-template-columns: repeat(3, minmax(200px, 1fr));
+}
+
+.grid.item-view {
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
 }
 
 .grid-item {
@@ -41,15 +48,11 @@ html, body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 1.1em;
-  font-weight: bold;
   border-radius: 10px;
   text-align: center;
-  padding: 20px;
-  min-height: 200px;
-  box-shadow: 0 0 10px rgb(222, 211, 124);
   cursor: pointer;
   transition: transform 0.2s ease;
+  box-shadow: 0 0 10px rgb(222, 211, 124);
 }
 
 .grid-item:hover {
@@ -57,11 +60,28 @@ html, body {
   transform: scale(1.03);
 }
 
+/* Category cards */
 .grid-item.category {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  font-size: 1.1em;
+  font-weight: bold;
+  min-height: 200px;
+  padding: 20px;
+}
+
+/* Item cards (smaller + lighter) */
+.grid-item.item {
+  font-size: 0.9em;
+  min-height: 130px;
+  padding: 12px;
+  box-shadow: 0 0 6px rgba(222, 211, 124, 0.6);
+}
+
+.grid-item.item hr {
+  margin: 6px 0;
+}
+
+.grid-item.item div {
+  font-size: 0.9em;
 }
 
 .back-btn {
@@ -81,46 +101,53 @@ html, body {
   background-color: #0056b3;
 }
 
-/* 📱 Tablet (3 per row) */
+/* 📱 Tablet */
 @media (max-width: 1024px) {
-  .grid {
+  .grid.category-view {
     grid-template-columns: repeat(3, 1fr);
+  }
+  .grid.item-view {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .grid {
     gap: 20px;
     padding: 0 20px 30px;
   }
 }
 
-/* 📱 Mobile (2 per row) */
+/* 📱 Mobile */
 @media (max-width: 700px) {
-  .grid {
+  .grid.category-view,
+  .grid.item-view {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .grid {
     gap: 15px;
     padding: 0 15px 20px;
   }
-
-  .grid-item {
+  .grid-item.category {
     font-size: 1em;
     min-height: 160px;
     padding: 15px;
   }
-
   .logo {
     max-width: 180px;
   }
 }
 
-/* 📱 Extra small phones (1 per row) */
+/* 📱 Extra small phones */
 @media (max-width: 480px) {
-  .grid {
+  .grid.category-view,
+  .grid.item-view {
     grid-template-columns: 1fr;
+  }
+  .grid {
     gap: 12px;
   }
-
-  .grid-item {
+  .grid-item.category {
     min-height: 140px;
     font-size: 0.95em;
   }
-
   .back-btn {
     margin-left: 10px;
     font-size: 0.9rem;
@@ -278,10 +305,11 @@ html, body {
   };
 
 
-    const categoryGrid = document.getElementById("categoryGrid");
-    const backBtn = document.getElementById("backBtn");
+   const categoryGrid = document.getElementById("categoryGrid");
+const backBtn = document.getElementById("backBtn");
 
-    function showCategories() {
+function showCategories() {
+  categoryGrid.className = "grid category-view";
   categoryGrid.innerHTML = "";
   backBtn.style.display = "none";
 
@@ -293,14 +321,16 @@ html, body {
     categoryGrid.appendChild(div);
   });
 }
-    function showItems(category) {
+
+function showItems(category) {
+  categoryGrid.className = "grid item-view";
   categoryGrid.innerHTML = "";
   backBtn.style.display = "inline";
   const items = data[category] || [];
 
   items.forEach(item => {
     const div = document.createElement("div");
-    div.className = "grid-item";
+    div.className = "grid-item item";
 
     const name = document.createElement("div");
     name.textContent = item.name;
@@ -309,16 +339,12 @@ html, body {
     name.style.justifyContent = "center";
     name.style.alignItems = "center";
     name.style.textAlign = "center";
-    name.style.padding = "10px";
+    name.style.padding = "5px";
 
     const hr = document.createElement("hr");
     hr.style.width = "100%";
-    hr.style.margin = "10px 0";
 
     const rate = document.createElement("div");
-    rate.style.fontSize = "0.95em";
-    rate.style.color = "#333";
-    rate.style.fontWeight = "normal";
     rate.textContent = item.rate ? `₹${item.rate}` : "Rate Unavailable";
 
     div.appendChild(name);
@@ -327,6 +353,11 @@ html, body {
 
     categoryGrid.appendChild(div);
   });
+}
+
+backBtn.onclick = showCategories;
+
+showCategories();
 }
     
     backBtn.onclick = showCategories;
