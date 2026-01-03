@@ -620,6 +620,15 @@ function removeItem(index) {
   document.getElementById("cartCount").innerText = cart.length;
   renderCart();
 }
+function checkout() {
+  if (cart.length === 0) {
+    alert("Your cart is empty.");
+    return;
+  }
+
+  alert("Order placed! (Next step: connect WhatsApp / payment)");
+  closeCart();
+}
 document.getElementById("cartBtn").onclick = openCart;
 // ⬇️ THESE MUST BE OUTSIDE FUNCTIONS
 backBtn.onclick = showCategories;
