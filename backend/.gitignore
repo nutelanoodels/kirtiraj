@@ -3,13 +3,17 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-
-# Virtual environment
+.env
 venv/
+.env.*
 
 # Django
 db.sqlite3
-.env
+media/
+staticfiles/
 
 # OS
 .DS_Store
+
+# Node / frontend junk
+node_modules/
