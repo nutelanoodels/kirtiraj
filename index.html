@@ -260,6 +260,26 @@ html, body {
   background: #ccc;
   border-radius: 4px;
 }
+.cart-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.buy-btn {
+  background: #1acb2f;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.buy-btn:hover {
+  background: #128c24;
+}
 </style>
 </head>
 <body>
@@ -628,7 +648,10 @@ showCategories();
     <h3>Your Cart</h3>
     <div id="cartItems" class="cart-items"></div>
     <hr>
-    <strong>Total: ₹<span id="cartTotal">0</span></strong>
+    <div class="cart-footer">
+  <strong>Total: ₹<span id="cartTotal">0</span></strong>
+  <button class="buy-btn" onclick="checkout()">Buy Now</button>
+  </div>
   </div>
 </div>
 </body>
