@@ -10,7 +10,7 @@ def create_order(request):
         name=data["name"],
         phone=data["phone"],
         address=data["address"],
-        total_amount=data["total_amount"]
+        total_amount=data["total_amount"],
     )
 
     for item in data["items"]:
@@ -18,7 +18,7 @@ def create_order(request):
             order=order,
             product_name=item["name"],
             price=item["rate"],
-            quantity=item["quantity"]
+            quantity=item["quantity"],
         )
 
     return Response({"success": True, "order_id": order.id})

@@ -1,30 +1,14 @@
-"""
-Django settings for core project.
-Production-ready for Render + GitHub
-"""
-
 from pathlib import Path
 import os
 import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# =========================
-# SECURITY
-# =========================
+SECRET_KEY = os.getenv("SECRET_KEY", "unsafe-dev-key")
 
-SECRET_KEY = os.environ.get(
-    "SECRET_KEY",
-    "unsafe-dev-key-change-this"
-)
+DEBUG = False
 
-DEBUG = os.environ.get("DEBUG", "False") == "True"
-
-ALLOWED_HOSTS = ["*"]  # OK for now, tighten later
-
-# =========================
-# APPLICATIONS
-# =========================
+ALLOWED_HOSTS = ["kirtiraj.onrender.com", "localhost", "127.0.0.1"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -41,10 +25,6 @@ INSTALLED_APPS = [
     "orders",
 ]
 
-# =========================
-# MIDDLEWARE
-# =========================
-
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
@@ -57,22 +37,12 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-# =========================
-# URL / WSGI
-# =========================
-
 ROOT_URLCONF = "core.urls"
-
-WSGI_APPLICATION = "core.wsgi.application"
-
-# =========================
-# TEMPLATES
-# =========================
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        "DIRS": [],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -85,21 +55,11 @@ TEMPLATES = [
     },
 ]
 
-# =========================
-# DATABASE (Render-safe)
-# =========================
+WSGI_APPLICATION = "core.wsgi.application"
 
 DATABASES = {
-    "default": dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        conn_max_age=600,
-        ssl_require=False,
-    )
+    "default": dj_database_url.config(default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}")
 }
-
-# =========================
-# PASSWORD VALIDATION
-# =========================
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
@@ -108,39 +68,17 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-# =========================
-# INTERNATIONALIZATION
-# =========================
-
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# =========================
-# STATIC FILES
-# =========================
-
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
-# =========================
-# MEDIA FILES (images)
-# =========================
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-# =========================
-# CORS
-# =========================
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_ALLOW_ALL_ORIGINS = True
-
-# =========================
-# DEFAULT PRIMARY KEY
-# =========================
-
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
