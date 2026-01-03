@@ -337,6 +337,16 @@ function showItems(category) {
   items.forEach(item => {
     const div = document.createElement("div");
     div.className = "grid-item item";
+    if (item.img) {
+    const img = document.createElement("img");
+    img.src = item.img;
+    img.alt = item.name;
+    img.style.width = "80px";
+    img.style.height = "80px";
+    img.style.objectFit = "contain";
+    img.style.marginBottom = "6px";
+    div.appendChild(img);
+  }
 
     const name = document.createElement("div");
     name.textContent = item.name;
