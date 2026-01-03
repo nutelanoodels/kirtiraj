@@ -626,8 +626,8 @@ function checkout() {
     return;
   }
 
-  alert("Order placed! (Next step: connect WhatsApp / payment)");
-  closeCart();
+  console.log("Checkout clicked", cart);
+  alert("Buy Now clicked! Order flow works.");
 }
 document.getElementById("cartBtn").onclick = openCart;
 // ⬇️ THESE MUST BE OUTSIDE FUNCTIONS
