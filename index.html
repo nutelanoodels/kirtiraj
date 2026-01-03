@@ -626,10 +626,19 @@ function checkout() {
     return;
   }
 
-  console.log("Checkout clicked", cart);
-  alert("Buy Now clicked! Order flow works.");
+  // OPTIONAL: log order
+  console.log("Order placed:", cart);
+
+  // Clear cart
+  cart = [];
+
+  // Reset UI
+  document.getElementById("cartCount").innerText = 0;
+  renderCart();
+  closeCart();
+
+  alert("Order placed successfully!");
 }
-document.getElementById("cartBtn").onclick = openCart;
 // ⬇️ THESE MUST BE OUTSIDE FUNCTIONS
 backBtn.onclick = showCategories;
 showCategories();
