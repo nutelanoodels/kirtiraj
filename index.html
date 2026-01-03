@@ -45,7 +45,7 @@ html, body {
 }
 
 .grid.item-view {
-  grid-template-columns: repeat(2, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
 }
 
 .grid-item {
@@ -78,13 +78,14 @@ html, body {
 /* Item cards (smaller + lighter) */
 .grid-item.item {
   font-size: 0.9em;
-  min-height: 130px;
+  min-height: 220px;
   padding: 12px;
   box-shadow: 0 0 6px rgba(222, 211, 124, 0.6);
-}
 
-.grid-item.item hr {
-  margin: 6px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .grid-item.item div {
@@ -128,8 +129,8 @@ html, body {
     grid-template-columns: repeat(2, 1fr);
   }
   .grid.item-view {
-    grid-template-columns: repeat(2, 2fr); /* ✅ 3 items per row */
-  }
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+}
   .grid {
     gap: 15px;
     padding: 0 15px 20px;
@@ -410,42 +411,33 @@ function showItems(category) {
   const items = data[category] || [];
 
   items.forEach(item => {
-    const div = document.createElement("div");
-div.onclick = () => openModal(item);
-    if (item.img) {
+  const div = document.createElement("div");
+  div.className = "grid-item item";
+  div.onclick = () => openModal(item);
+
+  if (item.img) {
     const img = document.createElement("img");
-    img.src = item.img;
+    img.src = item.img.trim();
     img.alt = item.name;
-    img.style.width = "80px";
-    img.style.height = "80px";
+    img.style.width = "100px";
+    img.style.height = "100px";
     img.style.objectFit = "contain";
-    img.style.marginBottom = "6px";
     div.appendChild(img);
   }
 
-    const name = document.createElement("div");
-    name.textContent = item.name;
-    name.style.flexGrow = "1";
-    name.style.display = "flex";
-    name.style.justifyContent = "center";
-    name.style.alignItems = "center";
-    name.style.textAlign = "center";
-    name.style.padding = "5px";
+  const name = document.createElement("div");
+  name.textContent = item.name;
+  name.style.fontWeight = "bold";
+  name.style.margin = "8px 0";
+  name.style.textAlign = "center";
 
-    const hr = document.createElement("hr");
-    hr.style.width = "100%";
+  const rate = document.createElement("div");
+  rate.textContent = item.rate ? `₹${item.rate}` : "Rate Unavailable";
 
-    const rate = document.createElement("div");
-    rate.textContent = item.rate ? `₹${item.rate}` : "Rate Unavailable";
-
-    div.appendChild(name);
-    div.appendChild(hr);
-    div.appendChild(rate);
-
-    categoryGrid.appendChild(div);
-  });
-}
-
+  div.appendChild(name);
+  div.appendChild(rate);
+  categoryGrid.appendChild(div);
+});
 backBtn.onclick = showCategories;
 
 showCategories();
