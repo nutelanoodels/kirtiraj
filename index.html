@@ -165,10 +165,50 @@ html, body {
     padding: 6px 12px;
   }
 }
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-box {
+  background: #fff;
+  padding: 20px;
+  width: 300px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.modal-box img {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+}
+
+.hidden {
+  display: none;
+}
+
+.qty {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.qty button {
+  padding: 5px 10px;
+}
 </style>
 </head>
 <body>
-
+  <button id="cartBtn" style="position:fixed;top:15px;right:15px;z-index:1000;">
+  🛒 Cart (<span id="cartCount">0</span>)
+  </button>
   <div class="header">
   <img src="logo2.png" alt="Kirtiraj Logo" class="logo" />
 </div>
@@ -318,7 +358,37 @@ html, body {
 
    const categoryGrid = document.getElementById("categoryGrid");
 const backBtn = document.getElementById("backBtn");
+let cart = [];
+let selectedItem = null;
+let quantity = 1;
 
+function openModal(item) {
+  selectedItem = item;
+  quantity = 1;
+
+  document.getElementById("modalImg").src = item.img || "";
+  document.getElementById("modalName").innerText = item.name;
+  document.getElementById("modalPrice").innerText =
+    item.rate ? `₹${item.rate}` : "Price unavailable";
+  document.getElementById("modalQty").innerText = quantity;
+
+  document.getElementById("productModal").classList.remove("hidden");
+}
+
+function closeModal() {
+  document.getElementById("productModal").classList.add("hidden");
+}
+
+function changeQty(val) {
+  quantity = Math.max(1, quantity + val);
+  document.getElementById("modalQty").innerText = quantity;
+}
+
+function addToCart() {
+  cart.push({ ...selectedItem, quantity });
+  document.getElementById("cartCount").innerText = cart.length;
+  closeModal();
+}
 function showCategories() {
   categoryGrid.className = "grid category-view";
   categoryGrid.innerHTML = "";
@@ -341,7 +411,7 @@ function showItems(category) {
 
   items.forEach(item => {
     const div = document.createElement("div");
-    div.className = "grid-item item";
+div.onclick = () => openModal(item);
     if (item.img) {
     const img = document.createElement("img");
     img.src = item.img;
@@ -381,6 +451,21 @@ backBtn.onclick = showCategories;
 showCategories();
 
   </script>
+<div id="productModal" class="modal hidden">
+  <div class="modal-box">
+    <span class="close" onclick="closeModal()">✖</span>
+    <img id="modalImg">
+    <h3 id="modalName"></h3>
+    <p id="modalPrice"></p>
 
+    <div class="qty">
+      <button onclick="changeQty(-1)">−</button>
+      <span id="modalQty">1</span>
+      <button onclick="changeQty(1)">+</button>
+    </div>
+
+    <button onclick="addToCart()">Add to Cart</button>
+  </div>
+</div>
 </body>
 </html>
