@@ -411,35 +411,37 @@ function showItems(category) {
   const items = data[category] || [];
 
   items.forEach(item => {
-  const div = document.createElement("div");
-  div.className = "grid-item item";
-  div.onclick = () => openModal(item);
+    const div = document.createElement("div");
+    div.className = "grid-item item";
+    div.onclick = () => openModal(item);
 
-  if (item.img) {
-    const img = document.createElement("img");
-    img.src = item.img.trim();
-    img.alt = item.name;
-    img.style.width = "100px";
-    img.style.height = "100px";
-    img.style.objectFit = "contain";
-    div.appendChild(img);
-  }
+    if (item.img) {
+      const img = document.createElement("img");
+      img.src = item.img.trim();
+      img.alt = item.name;
+      img.style.width = "100px";
+      img.style.height = "100px";
+      img.style.objectFit = "contain";
+      div.appendChild(img);
+    }
 
-  const name = document.createElement("div");
-  name.textContent = item.name;
-  name.style.fontWeight = "bold";
-  name.style.margin = "8px 0";
-  name.style.textAlign = "center";
+    const name = document.createElement("div");
+    name.textContent = item.name;
+    name.style.fontWeight = "bold";
+    name.style.margin = "8px 0";
+    name.style.textAlign = "center";
 
-  const rate = document.createElement("div");
-  rate.textContent = item.rate ? `₹${item.rate}` : "Rate Unavailable";
+    const rate = document.createElement("div");
+    rate.textContent = item.rate ? `₹${item.rate}` : "Rate Unavailable";
 
-  div.appendChild(name);
-  div.appendChild(rate);
-  categoryGrid.appendChild(div);
-});
+    div.appendChild(name);
+    div.appendChild(rate);
+    categoryGrid.appendChild(div);
+  });
+}
+
+// ⬇️ THESE MUST BE OUTSIDE FUNCTIONS
 backBtn.onclick = showCategories;
-
 showCategories();
 
   </script>
