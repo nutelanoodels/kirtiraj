@@ -18,7 +18,7 @@ def bootstrap_admin(request):
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("bootstrap-admin/", bootstrap_admin),  # TEMP – remove later
+    path("bootstrap-admin/", bootstrap_admin),
     path("api/", include("products.urls")),
     path("api/orders/", include("orders.urls")),
 ]
