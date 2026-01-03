@@ -683,6 +683,7 @@ function confirmOrder() {
   document.getElementById("userAddress").value = "";
 }
 // ⬇️ THESE MUST BE OUTSIDE FUNCTIONS
+document.getElementById("cartBtn").onclick = openCart;
 backBtn.onclick = showCategories;
 showCategories();
 
