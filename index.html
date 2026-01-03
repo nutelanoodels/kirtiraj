@@ -204,6 +204,39 @@ html, body {
 .qty button {
   padding: 5px 10px;
 }
+.cart-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.cart-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.cart-info {
+  flex: 1;
+}
+
+.cart-info strong {
+  display: block;
+  font-size: 0.9rem;
+}
+
+.cart-actions {
+  text-align: right;
+}
+
+.cart-actions button {
+  padding: 2px 6px;
+  margin: 0 2px;
+}
 </style>
 </head>
 <body>
@@ -386,7 +419,13 @@ function changeQty(val) {
 }
 
 function addToCart() {
-  cart.push({ ...selectedItem, quantity });
+  cart.push({
+    name: selectedItem.name,
+    rate: selectedItem.rate || 0,
+    img: selectedItem.img || "",
+    quantity
+  });
+
   document.getElementById("cartCount").innerText = cart.length;
   closeModal();
 }
@@ -454,26 +493,69 @@ function renderCart() {
 
   let total = 0;
 
+  if (cart.length === 0) {
+    cartItemsDiv.innerText = "Your cart is empty.";
+    document.getElementById("cartTotal").innerText = 0;
+    return;
+  }
+
   cart.forEach((item, index) => {
-    const itemDiv = document.createElement("div");
-    itemDiv.style.marginBottom = "10px";
+    const itemRow = document.createElement("div");
+    itemRow.className = "cart-item";
 
-    const price = item.rate ? item.rate * item.quantity : 0;
-    total += price;
+    // Image
+    const img = document.createElement("img");
+    img.src = item.img || "";
+    img.alt = item.name;
 
-    itemDiv.innerHTML = `
-      <strong>${item.name}</strong><br>
-      Qty: 
-      <button onclick="updateQty(${index}, -1)">−</button>
-      ${item.quantity}
-      <button onclick="updateQty(${index}, 1)">+</button>
-      <br>
-      ₹${price}
-      <br>
-      <button onclick="removeItem(${index})">Remove</button>
-    `;
+    // Info
+    const info = document.createElement("div");
+    info.className = "cart-info";
 
-    cartItemsDiv.appendChild(itemDiv);
+    const name = document.createElement("strong");
+    name.textContent = item.name;
+
+    const price = document.createElement("div");
+    price.textContent = `₹${item.rate || 0} × ${item.quantity}`;
+
+    info.appendChild(name);
+    info.appendChild(price);
+
+    // Actions
+    const actions = document.createElement("div");
+    actions.className = "cart-actions";
+
+    const minus = document.createElement("button");
+    minus.textContent = "−";
+    minus.onclick = () => updateQty(index, -1);
+
+    const qty = document.createElement("span");
+    qty.textContent = item.quantity;
+
+    const plus = document.createElement("button");
+    plus.textContent = "+";
+    plus.onclick = () => updateQty(index, 1);
+
+    const subtotal = document.createElement("div");
+    const itemTotal = (item.rate || 0) * item.quantity;
+    subtotal.textContent = `₹${itemTotal}`;
+    total += itemTotal;
+
+    const remove = document.createElement("button");
+    remove.textContent = "Remove";
+    remove.onclick = () => removeItem(index);
+
+    actions.appendChild(minus);
+    actions.appendChild(qty);
+    actions.appendChild(plus);
+    actions.appendChild(subtotal);
+    actions.appendChild(remove);
+
+    itemRow.appendChild(img);
+    itemRow.appendChild(info);
+    itemRow.appendChild(actions);
+
+    cartItemsDiv.appendChild(itemRow);
   });
 
   document.getElementById("cartTotal").innerText = total;
