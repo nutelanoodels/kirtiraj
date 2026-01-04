@@ -1,7 +1,8 @@
 from django.db import models
 
+
 class Order(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=255)
     phone = models.CharField(max_length=20)
     address = models.TextField()
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
@@ -12,10 +13,7 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, related_name="items", on_delete=models.CASCADE)
-    product_name = models.CharField(max_length=200)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product_name = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    quantity = models.PositiveIntegerField()
-
-    def total_price(self):
-        return self.price * self.quantity
+    quantity = models.IntegerField()

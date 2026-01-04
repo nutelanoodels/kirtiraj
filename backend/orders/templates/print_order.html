@@ -1,96 +1,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Order {{ order.id }}</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-    @media print {
-  button {
-    display: none;
-  }
-}
-    h2, h3 {
-      text-align: center;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-    }
-
-    th, td {
-      border: 1px solid #000;
-      padding: 8px;
-      font-size: 14px;
-    }
-
-    th {
-      background: #eee;
-    }
-
-    .total {
-      text-align: right;
-      font-weight: bold;
-      margin-top: 15px;
-    }
-
-    button {
-      margin-top: 20px;
-      padding: 10px 15px;
-      font-size: 16px;
-    }
-
-    @media print {
-      button {
-        display: none;
-      }
-    }
-  </style>
+    <title>Order {{ order.id }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h2 { margin-bottom: 10px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background: #f0f0f0;
+        }
+        @media print {
+            button { display: none; }
+        }
+    </style>
 </head>
 <body>
-  <button onclick="window.print()" style="
-  padding:12px 18px;
-  font-size:16px;
-  background:#1acb2f;
-  color:white;
-  border:none;
-  border-radius:6px;
-  margin-bottom:15px;
-">
-  🖨️ Print / Save as PDF
-</button>
-  <h2>Kirtiraj Order</h2>
 
-  <p><strong>Order ID:</strong> {{ order.id }}</p>
-  <p><strong>Name:</strong> {{ order.name }}</p>
-  <p><strong>Phone:</strong> {{ order.phone }}</p>
-  <p><strong>Address:</strong> {{ order.address }}</p>
+<button onclick="window.print()">🖨 Print</button>
 
-  <table>
-    <tr>
-      <th>Product</th>
-      <th>Qty</th>
-      <th>Price</th>
-    </tr>
-    {% for item in order.items.all %}
-    <tr>
-      <td>{{ item.product_name }}</td>
-      <td>{{ item.quantity }}</td>
-      <td>₹{{ item.price }}</td>
-    </tr>
-    {% endfor %}
-  </table>
+<h2>Order #{{ order.id }}</h2>
 
-  <div class="total">
-    Total: ₹{{ order.total_amount }}
-  </div>
+<p><strong>Name:</strong> {{ order.name }}</p>
+<p><strong>Phone:</strong> {{ order.phone }}</p>
+<p><strong>Address:</strong> {{ order.address }}</p>
 
-  <button onclick="window.print()">Print / Save as PDF</button>
+<table>
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in order.orderitem_set.all %}
+        <tr>
+            <td>{{ item.product_name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>₹{{ item.price }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Total: ₹{{ order.total_amount }}</h3>
 
 </body>
 </html>
