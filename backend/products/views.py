@@ -6,9 +6,5 @@ from .serializers import ProductSerializer
 @api_view(["GET"])
 def product_list(request):
     products = Product.objects.select_related("category")
-    serializer = ProductSerializer(
-        products,
-        many=True,
-        context={"request": request}
-    )
+    serializer = ProductSerializer(products, many=True)
     return Response(serializer.data)
