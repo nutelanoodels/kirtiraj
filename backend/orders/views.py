@@ -29,4 +29,5 @@ def create_order(request):
 
 def print_order(request, order_id):
     order = get_object_or_404(Order, id=order_id)
-    return render(request, "print_order.html", {"order": order})
+    # ✅ correct
+    return render(request, "orders/print_order.html", {"order": order})
