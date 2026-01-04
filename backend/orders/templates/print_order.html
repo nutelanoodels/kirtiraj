@@ -8,7 +8,11 @@
       font-family: Arial, sans-serif;
       margin: 20px;
     }
-
+    @media print {
+  button {
+    display: none;
+  }
+}
     h2, h3 {
       text-align: center;
     }
@@ -49,7 +53,17 @@
   </style>
 </head>
 <body>
-
+  <button onclick="window.print()" style="
+  padding:12px 18px;
+  font-size:16px;
+  background:#1acb2f;
+  color:white;
+  border:none;
+  border-radius:6px;
+  margin-bottom:15px;
+">
+  🖨️ Print / Save as PDF
+</button>
   <h2>Kirtiraj Order</h2>
 
   <p><strong>Order ID:</strong> {{ order.id }}</p>
