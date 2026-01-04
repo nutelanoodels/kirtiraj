@@ -329,9 +329,7 @@ function addToCart() {
   cart.push({
     name: selectedItem.name,
     rate: selectedItem.rate || 0,
-    img: p.image?.startsWith("http")
-  ? p.image
-  : `${API_BASE}${p.image}`,
+    img: selectedItem.img || "",
     quantity
   });
 
@@ -355,7 +353,7 @@ async function loadProducts() {
       data[category].push({
         name: p.name,
         rate: p.price,
-        img: p.image || ""
+        img: p.image_url || ""
       });
     });
 
