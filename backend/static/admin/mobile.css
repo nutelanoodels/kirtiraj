@@ -1,0 +1,35 @@
+/* Make inline forms mobile friendly */
+@media (max-width: 768px) {
+
+  .inline-group {
+    overflow-x: hidden !important;
+  }
+
+  .inline-group table {
+    display: block;
+    width: 100%;
+  }
+
+  .inline-group thead {
+    display: none;
+  }
+
+  .inline-group tbody,
+  .inline-group tr,
+  .inline-group td {
+    display: block;
+    width: 100%;
+  }
+
+  .inline-group tr {
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 6px;
+    background: #fafafa;
+  }
+
+  .inline-group td {
+    padding: 4px 0;
+  }
+}
