@@ -1,35 +1,38 @@
-/* Apply only on small screens */
+/* Force admin inlines to stack on mobile */
 @media (max-width: 768px) {
 
-  /* Make inline order items vertical */
-  .inline-group .tabular tr {
-    display: block;
+  .inline-group {
+    overflow-x: hidden !important;
+  }
+
+  .inline-related table,
+  .inline-related thead {
+    display: none !important;
+  }
+
+  .inline-related tbody,
+  .inline-related tr,
+  .inline-related td {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .inline-related tr {
     margin-bottom: 12px;
+    padding: 10px;
     border: 1px solid #ddd;
-    padding: 8px;
+    border-radius: 8px;
     background: #fafafa;
   }
 
-  .inline-group .tabular td,
-  .inline-group .tabular th {
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-    white-space: normal !important;
-    word-break: break-word;
+  .inline-related td {
+    border: none !important;
+    padding: 4px 0 !important;
   }
 
-  .inline-group .tabular th {
+  .inline-related td::before {
     font-weight: bold;
-    margin-top: 6px;
-  }
-
-  .inline-group .tabular td {
-    margin-bottom: 6px;
-  }
-
-  /* Remove table header row */
-  .inline-group .tabular thead {
-    display: none;
+    display: block;
+    margin-bottom: 2px;
   }
 }
