@@ -406,7 +406,7 @@ html, body {
   </div>
 
   <nav class="header-nav">
-    <a href="#categories">Shop</a>
+   <a href="#categoryGrid">Shop</a>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
   </nav>
@@ -741,39 +741,14 @@ ${itemsText}
   }
 }
 
-  try {
-    const response = await fetch(`${API_BASE}/api/orders/create/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name,
-        phone,
-        address,
-        total_amount: total,
-        items: cart
-      })
-    });
 
-    const result = await response.json();
-
-    if (!result.success) throw new Error("Order failed");
-
-    alert("Order placed successfully!");
-
-    cart = [];
-    document.getElementById("cartCount").innerText = 0;
-    renderCart();
-    closeUserModal();
-
-  } catch (err) {
-    console.error(err);
-    alert("Failed to place order");
-  }
-}
+ 
 // ⬇️ THESE MUST BE OUTSIDE FUNCTIONS
 document.getElementById("cartBtn").onclick = openCart;
 backBtn.onclick = showCategories;
-loadProducts();
+if (document.getElementById("categoryGrid")) {
+  loadProducts();
+}
   </script>
 <div id="productModal" class="modal hidden">
   <div class="modal-box">
