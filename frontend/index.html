@@ -293,7 +293,8 @@ html, body {
   <div class="grid" id="categoryGrid"></div>
 
   <script>
-    let data = {};
+    const API_BASE = "https://kirtiraj.onrender.com";
+let data = {};
 
 const categoryGrid = document.getElementById("categoryGrid");
 const backBtn = document.getElementById("backBtn");
@@ -328,7 +329,9 @@ function addToCart() {
   cart.push({
     name: selectedItem.name,
     rate: selectedItem.rate || 0,
-    img: selectedItem.img || "",
+    img: p.image?.startsWith("http")
+  ? p.image
+  : `${API_BASE}${p.image}`,
     quantity
   });
 
@@ -337,7 +340,7 @@ function addToCart() {
 }
 async function loadProducts() {
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/products/");
+    const response = await fetch(`${API_BASE}/api/products/`);
     const products = await response.json();
 
     data = {};
@@ -352,7 +355,7 @@ async function loadProducts() {
       data[category].push({
         name: p.name,
         rate: p.price,
-        img: p.image ? `http://127.0.0.1:8000${p.image}` : ""
+        img: p.image || ""
       });
     });
 
@@ -557,7 +560,7 @@ async function confirmOrder() {
   );
 
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/orders/create/", {
+    const response = await fetch(`${API_BASE}/api/orders/create/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
