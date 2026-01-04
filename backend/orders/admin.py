@@ -13,12 +13,27 @@ class OrderItemInline(admin.StackedInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "phone", "total_amount", "print_link")
+    list_display = (
+        "id",
+        "name",
+        "phone",
+        "total_amount",
+        "created_at",
+        "print_link",
+    )
     ordering = ("-created_at",)
     inlines = [OrderItemInline]
 
     def print_link(self, obj):
         url = reverse("orders:print", args=[obj.id])
-        return format_html('<a href="{}" target="_blank">🖨 Print</a>', url)
+        return format_html(
+            '<a href="{}" target="_blank">🖨 Print</a>',
+            url
+        )
 
     print_link.short_description = "Print"
+
+    class Media:
+        css = {
+            "all": ("admin/mobile.css",)
+        }
