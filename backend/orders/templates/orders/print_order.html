@@ -1,36 +1,136 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Order #{{ order.id }}</title>
+  <meta charset="utf-8">
+  <title>Order Bill</title>
+
   <style>
-    body { font-family: Arial; }
-    table { width: 100%; border-collapse: collapse; }
-    th, td { border: 1px solid #000; padding: 6px; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      color: #000;
+    }
+
+    .bill {
+      max-width: 380px;
+      margin: auto;
+      border: 1px dashed #333;
+      padding: 15px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 5px;
+    }
+
+    .center {
+      text-align: center;
+      font-size: 12px;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px dashed #333;
+      margin: 10px 0;
+    }
+
+    .info {
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 6px 4px;
+      border-bottom: 1px dotted #999;
+      text-align: left;
+    }
+
+    th {
+      font-weight: bold;
+    }
+
+    .right {
+      text-align: right;
+    }
+
+    .total {
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    @media print {
+      button {
+        display: none;
+      }
+    }
   </style>
 </head>
-<body onload="window.print()">
 
-<h2>Order #{{ order.id }}</h2>
-<p><strong>Name:</strong> {{ order.name }}</p>
-<p><strong>Phone:</strong> {{ order.phone }}</p>
-<p><strong>Address:</strong> {{ order.address }}</p>
+<body>
 
-<table>
-  <tr>
-    <th>Product</th>
-    <th>Qty</th>
-    <th>Price</th>
-  </tr>
-  {% for item in order.items.all %}
-  <tr>
-    <td>{{ item.product_name }}</td>
-    <td>{{ item.quantity }}</td>
-    <td>₹{{ item.price }}</td>
-  </tr>
-  {% endfor %}
-</table>
+<button onclick="window.print()">🖨 Print Bill</button>
 
-<h3>Total: ₹{{ order.total_amount }}</h3>
+<div class="bill">
+  <h2>Kirtiraj</h2>
+  <div class="center">Snacks & Namkeen</div>
+
+  <hr>
+
+  <div class="info">
+    <strong>Order ID:</strong> {{ order.id }}<br>
+    <strong>Date:</strong> {{ order.created_at|date:"d M Y" }}<br>
+    <strong>Time:</strong> {{ order.created_at|time:"h:i A" }}<br>
+    <strong>Name:</strong> {{ order.name }}<br>
+    <strong>Phone:</strong> {{ order.phone }}<br>
+    <strong>Address:</strong> {{ order.address }}
+  </div>
+
+  <hr>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th class="right">Qty</th>
+        <th class="right">Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <td>{{ item.product_name }}</td>
+        <td class="right">{{ item.quantity }}</td>
+        <td class="right">₹{{ item.price }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <hr>
+
+  <div class="right total">
+    Total: ₹{{ order.total_amount }}
+  </div>
+
+  <hr>
+
+  <div class="footer">
+    Thank you for your order 🙏<br>
+    Please visit again
+  </div>
+</div>
 
 </body>
 </html>

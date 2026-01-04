@@ -1,6 +1,6 @@
+from django.shortcuts import get_object_or_404, render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.shortcuts import get_object_or_404, render
 from .models import Order, OrderItem
 
 
@@ -28,4 +28,13 @@ def create_order(request):
 
 def print_order(request, order_id):
     order = get_object_or_404(Order, id=order_id)
-    return render(request, "orders/print_order.html", {"order": order})
+    items = OrderItem.objects.filter(order=order)
+
+    return render(
+        request,
+        "orders/print_order.html",
+        {
+            "order": order,
+            "items": items,
+        },
+    )
