@@ -1,35 +1,35 @@
-/* Make inline forms mobile friendly */
+/* Apply only on small screens */
 @media (max-width: 768px) {
 
-  .inline-group {
-    overflow-x: hidden !important;
-  }
-
-  .inline-group table {
+  /* Make inline order items vertical */
+  .inline-group .tabular tr {
     display: block;
-    width: 100%;
-  }
-
-  .inline-group thead {
-    display: none;
-  }
-
-  .inline-group tbody,
-  .inline-group tr,
-  .inline-group td {
-    display: block;
-    width: 100%;
-  }
-
-  .inline-group tr {
+    margin-bottom: 12px;
     border: 1px solid #ddd;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 6px;
+    padding: 8px;
     background: #fafafa;
   }
 
-  .inline-group td {
-    padding: 4px 0;
+  .inline-group .tabular td,
+  .inline-group .tabular th {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    white-space: normal !important;
+    word-break: break-word;
+  }
+
+  .inline-group .tabular th {
+    font-weight: bold;
+    margin-top: 6px;
+  }
+
+  .inline-group .tabular td {
+    margin-bottom: 6px;
+  }
+
+  /* Remove table header row */
+  .inline-group .tabular thead {
+    display: none;
   }
 }
