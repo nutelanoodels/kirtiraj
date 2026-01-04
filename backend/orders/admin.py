@@ -10,5 +10,10 @@ class OrderItemInline(admin.TabularInline):
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ("id", "name", "phone", "total_amount", "created_at")
-    inlines = [OrderItemInline]
     ordering = ("-created_at",)
+    inlines = [OrderItemInline]
+
+    class Media:
+        css = {
+            "all": ("admin/mobile.css",)
+        }
