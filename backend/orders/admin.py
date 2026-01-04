@@ -1,6 +1,6 @@
 from django.contrib import admin
-from django.utils.html import format_html
 from django.urls import reverse
+from django.utils.html import format_html
 from .models import Order, OrderItem
 
 
@@ -25,10 +25,10 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderItemInline]
 
     def print_button(self, obj):
-        url = reverse("orders_print", args=[obj.id])
+        url = reverse("print_order", args=[obj.id])
         return format_html(
-            '<a class="button" href="{}" target="_blank">Print</a>',
-            url,
+            '<a class="button" href="{}" target="_blank">🖨 Print</a>',
+            url
         )
 
     print_button.short_description = "Print"
