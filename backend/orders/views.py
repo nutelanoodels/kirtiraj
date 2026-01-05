@@ -43,4 +43,13 @@ def create_order(request):
 
 def print_order(request, order_id):
     order = get_object_or_404(Order, id=order_id)
-    return render(request, "orders/print_order.html", {"order": order})
+    items = order.items.all()  # 👈 THIS WAS MISSING
+
+    return render(
+        request,
+        "orders/print_order.html",
+        {
+            "order": order,
+            "items": items,
+        },
+    )
