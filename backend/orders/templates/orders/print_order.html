@@ -60,12 +60,19 @@
       text-align: right;
     }
 
+    .actions {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
     button {
-      margin-bottom: 10px;
+      padding: 8px 12px;
+      margin: 4px;
+      cursor: pointer;
     }
 
     @media print {
-      button {
+      .actions {
         display: none;
       }
     }
@@ -74,7 +81,10 @@
 
 <body>
 
-<button onclick="window.print()">🖨 Print Bill</button>
+<div class="actions">
+  <button onclick="shareOrder()">📦 Share with Delivery</button>
+  <button onclick="window.print()">🖨 Print</button>
+</div>
 
 <div class="bill">
   <h2>Kirtiraj</h2>
@@ -98,7 +108,6 @@
       <tr>
         <th>Item</th>
         <th class="right">Qty</th>
-        <th class="right">Price</th>
       </tr>
     </thead>
     <tbody>
@@ -106,7 +115,6 @@
       <tr>
         <td>{{ item.product_name }}</td>
         <td class="right">{{ item.quantity }}</td>
-        <td class="right">₹{{ item.price|floatformat:2 }}</td>
       </tr>
       {% endfor %}
     </tbody>
@@ -121,10 +129,36 @@
   <hr>
 
   <div class="center">
-    Thank you for your order 🙏<br>
-    Please visit again
+    Please deliver this order.
   </div>
 </div>
+
+<script>
+function shareOrder() {
+  const message = `
+📦 DELIVERY ORDER
+
+Order ID: {{ order.id }}
+Name: {{ order.name }}
+Phone: {{ order.phone }}
+
+Address:
+{{ order.address }}
+
+Items:
+{% for item in items %}
+- {{ item.product_name }} × {{ item.quantity }}
+{% endfor %}
+
+Total: ₹{{ order.total_amount|floatformat:2 }}
+`.trim();
+
+  window.open(
+    "https://wa.me/?text=" + encodeURIComponent(message),
+    "_blank"
+  );
+}
+</script>
 
 </body>
 </html>
