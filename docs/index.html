@@ -263,16 +263,60 @@ body {
   line-height: 1.7;
 }
 
-/* ===== CONTACT ===== */
+/* ===== CONTACT (CLEAN & CLICKABLE) ===== */
 .contact-section {
-  padding: 100px 24px;
+  padding: 100px 20px;
+  background: linear-gradient(180deg, #020617, #0b1c2d);
+}
+
+.contact-box {
+  max-width: 900px;
+  margin: auto;
+  text-align: center;
 }
 
 .contact-box h2 {
-  color: white;
+  color: #ffffff;
   font-size: 2.4rem;
+  margin-bottom: 40px;
 }
 
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.contact-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 28px 20px;
+  text-decoration: none;
+  color: #0f172a;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 28px 60px rgba(0,0,0,0.35);
+}
+
+.contact-card .icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.contact-card strong {
+  font-size: 1.1rem;
+}
+
+.contact-card p {
+  margin: 6px 0 0;
+  color: #475569;
+  font-weight: 500;
+}
 /* ===== MOBILE FIXES ===== */
 @media (max-width: 600px) {
 
@@ -399,7 +443,7 @@ body {
     <button class="buy-btn" onclick="confirmOrder()">Confirm Order</button>
   </div>
 </div>
-<section class="about-section">
+<section id="about" class="about-section">
   <div class="about-box">
     <h2>About Kirtiraj</h2>
 
@@ -412,50 +456,49 @@ body {
 
     <div class="about-highlights">
       <div class="about-card">
-  <strong>Traditional Recipes</strong>
-  Made using time-tested methods for authentic taste.
-</div>
+       <strong>Traditional Recipes</strong>
+       Made using time-tested methods for authentic taste.
+     </div>
 
-<div class="about-card">
+  <div class="about-card">
   <strong>Quality Ingredients</strong>
   Fresh, hygienic, and carefully selected raw materials.
-</div>
+ </div>
 
-<div class="about-card">
-  <strong>Homely Taste</strong>
-  Snacks that feel homemade and comforting.
-</div>
-
-<div class="about-card">
-  <strong>Fresh Orders</strong>
-  Prepared and packed with care for every customer.
-</div>
-    </div>
+  <div class="about-card">
+    <strong>Homely Taste</strong>
+    Snacks that feel homemade and comforting.
   </div>
+
+  <div class="about-card">
+    <strong>Fresh Orders</strong>
+    Prepared and packed with care for every customer.
+  </div>
+      </div>
+    </div>
 </section>
-<section class="contact-section">
+<section id="contact" class="contact-section">
   <div class="contact-box">
     <h2>Contact Us</h2>
 
     <div class="contact-grid">
-      <div class="contact-card">
-        <strong>📞 Phone</strong>
-        +91 99781 20889
-      </div>
+      <a class="contact-card" href="tel:+919978120889">
+        <span class="icon">📞</span>
+        <strong>Call Us</strong>
+        <p>+91 99781 20889</p>
+      </a>
 
-      <div class="contact-card">
-        <strong>💬 WhatsApp</strong>
-        <a href="https://wa.me/919978120889" target="_blank">
-          Chat on WhatsApp
-        </a>
-      </div>
+      <a class="contact-card" href="https://wa.me/919978120889" target="_blank">
+        <span class="icon">💬</span>
+        <strong>WhatsApp</strong>
+        <p>Chat with us</p>
+      </a>
 
-      <div class="contact-card">
-        <strong>📍 Location</strong>
-        <a href="https://share.google/bPcfSi6NEEffhx70W" target="_blank">
-          View on Google Maps
-        </a>
-      </div>
+      <a class="contact-card" href="https://share.google/bPcfSi6NEEffhx70W" target="_blank">
+        <span class="icon">📍</span>
+        <strong>Location</strong>
+        <p>View on Google Maps</p>
+      </a>
     </div>
   </div>
 </section>
