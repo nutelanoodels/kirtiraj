@@ -34,18 +34,16 @@ html, body {
 
 .grid {
   display: grid;
-  gap: 25px;
-  padding: 0 40px 40px;
-  width: 100%;
-  box-sizing: border-box;
+  gap: 16px;
+  padding: 0 16px 40px;
 }
 
 .grid.category-view {
-  grid-template-columns: repeat(3, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
 }
 
 .grid.item-view {
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
 }
 
 .grid-item {
@@ -62,10 +60,7 @@ html, body {
   box-shadow: 0 0 10px rgb(222, 211, 124);
 }
 
-.grid-item:hover {
-  background: #eaeaea;
-  transform: scale(1.03);
-}
+
 
 /* Category cards */
 .grid-item.category {
@@ -77,7 +72,6 @@ html, body {
 
 /* Item cards (smaller + lighter) */
 .grid-item.item {
-  font-size: 0.9em;
   min-height: 220px;
   padding: 12px;
   box-shadow: 0 0 6px rgba(222, 211, 124, 0.6);
@@ -111,30 +105,36 @@ html, body {
 
 /* 📱 Tablet */
 @media (max-width: 1024px) {
-  .grid.category-view {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .grid.item-view {
-    grid-template-columns: repeat(3, 1fr);
-  }
   .grid {
-    gap: 20px;
-    padding: 0 20px 30px;
-  }
+  display: grid;
+  gap: 16px;
+  padding: 0 16px 40px;
+}
+
+.grid.category-view {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
+.grid.item-view {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
 }
 
 /* 📱 Mobile */
 @media (max-width: 700px) {
-  .grid.category-view {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .grid.item-view {
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-}
   .grid {
-    gap: 15px;
-    padding: 0 15px 20px;
-  }
+  display: grid;
+  gap: 16px;
+  padding: 0 16px 40px;
+}
+
+.grid.category-view {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
+.grid.item-view {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
   .grid-item.category {
     font-size: 1em;
     min-height: 160px;
@@ -147,19 +147,34 @@ html, body {
 
 /* 📱 Extra small phones */
 @media (max-width: 480px) {
-  .grid.category-view {
-    grid-template-columns: 1fr; /* Keep categories stacked */
-  }
-  .grid.item-view {
-    grid-template-columns: repeat(2, 1fr); /* ✅ Still 3 per row */
-  }
-  .grid {
-    gap: 12px;
-  }
+ .grid {
+  display: grid;
+  gap: 16px;
+  padding: 0 16px 40px;
+}
+
+.grid.category-view {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
+.grid.item-view {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
   .grid-item.category {
     min-height: 140px;
     font-size: 0.95em;
   }
+  .item-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-top: 8px;
+}
+
+.item-price {
+  font-weight: 700;
+  color: #15803d;
+  margin-top: 4px;
+}
   .back-btn {
     margin-left: 10px;
     font-size: 0.9rem;
@@ -397,6 +412,33 @@ html, body {
   text-decoration: none;
   font-weight: bold;
 }
+.shop-section {
+  padding: 40px 16px;
+  background: #f7f7f7;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 24px;
+  font-weight: 700;
+}
+
+.grid-item.category {
+  background: linear-gradient(135deg, #fff7ed, #fff);
+  border: 2px solid #fde68a;
+  font-size: 1.1rem;
+  text-transform: capitalize;
+}
+.page-wrap {
+  max-width: 1200px;
+  margin: auto;
+}
+#categories,
+#about,
+#contact {
+  scroll-margin-top: 90px;
+}
 </style>
 </head>
 <body>
@@ -406,7 +448,7 @@ html, body {
   </div>
 
   <nav class="header-nav">
-   <a href="#categoryGrid">Shop</a>
+   <a href="#categories">Shop</a>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
   </nav>
@@ -417,10 +459,120 @@ html, body {
     </button>
   </div>
 </header>
-  <button class="back-btn" id="backBtn" style="display: none;">← Back to Categories</button>
-  <div class="grid" id="categoryGrid"></div>
+<main class="page-wrap">
+  <section id="categories" class="shop-section">
+  <h2 class="section-title">Shop Our Products</h2>
 
-  <script>
+  <button class="back-btn" id="backBtn" style="display:none;">
+    ← Back to Categories
+  </button>
+
+  <div class="grid" id="categoryGrid"></div>
+</section>
+</main>
+  
+
+  
+<div id="productModal" class="modal hidden">
+  <div class="modal-box">
+    <span class="close" onclick="closeModal()">✖</span>
+    <img id="modalImg">
+    <h3 id="modalName"></h3>
+    <p id="modalPrice"></p>
+
+    <div class="qty">
+      <button onclick="changeQty(-1)">−</button>
+      <span id="modalQty">1</span>
+      <button onclick="changeQty(1)">+</button>
+    </div>
+
+    <button onclick="addToCart()">Add to Cart</button>
+  </div>
+</div>
+  <div id="cartModal" class="modal hidden">
+  <div class="modal-box">
+    <span class="close" onclick="closeCart()">✖</span>
+    <h3>Your Cart</h3>
+    <div id="cartItems" class="cart-items"></div>
+    <hr>
+    <div class="cart-footer">
+  <strong>Total: ₹<span id="cartTotal">0</span></strong>
+ <button class="buy-btn" onclick="openUserModal()">Buy Now</button>
+  </div>
+  </div>
+</div>
+<div id="userModal" class="modal hidden">
+  <div class="modal-box">
+    <span class="close" onclick="closeUserModal()">✖</span>
+    <h3>Enter Your Details</h3>
+
+    <input id="userName" type="text" placeholder="Your Name" style="width:100%;margin-bottom:10px;padding:8px;">
+    <input id="userPhone" type="tel" placeholder="whatsapp Number" style="width:100%;margin-bottom:10px;padding:8px;">
+    <textarea id="userAddress" placeholder="Address" style="width:100%;margin-bottom:10px;padding:8px;"></textarea>
+
+    <button class="buy-btn" onclick="confirmOrder()">Confirm Order</button>
+  </div>
+</div>
+<section class="about-section">
+  <div class="about-box">
+    <h2>About Kirtiraj</h2>
+
+    <p>
+      Kirtiraj is a family-run snacks and namkeen brand known for its
+      authentic taste and traditional recipes. Every item is prepared
+      with care, quality ingredients, and the same flavors that have
+      been loved for generations.
+    </p>
+
+    <div class="about-highlights">
+      <div class="about-card">
+        <strong>🍘 Traditional Recipes</strong>
+        Made using time-tested methods for authentic taste.
+      </div>
+
+      <div class="about-card">
+        <strong>🌿 Quality Ingredients</strong>
+        Fresh, hygienic, and carefully selected raw materials.
+      </div>
+
+      <div class="about-card">
+        <strong>🏠 Homely Taste</strong>
+        Snacks that feel homemade and comforting.
+      </div>
+
+      <div class="about-card">
+        <strong>📦 Fresh Orders</strong>
+        Prepared and packed with care for every customer.
+      </div>
+    </div>
+  </div>
+</section>
+<section class="contact-section">
+  <div class="contact-box">
+    <h2>Contact Us</h2>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <strong>📞 Phone</strong>
+        +91 74859 98443
+      </div>
+
+      <div class="contact-card">
+        <strong>💬 WhatsApp</strong>
+        <a href="https://wa.me/917485998443" target="_blank">
+          Chat on WhatsApp
+        </a>
+      </div>
+
+      <div class="contact-card">
+        <strong>📍 Address</strong>
+        Kirtiraj Snacks & Namkeen<br>
+        Gujarat, India
+      </div>
+    </div>
+  </div>
+</section>
+<script>
     const API_BASE = "https://kirtiraj.onrender.com";
 let data = {};
 
@@ -495,7 +647,9 @@ function showCategories() {
   categoryGrid.className = "grid category-view";
   categoryGrid.innerHTML = "";
   backBtn.style.display = "none";
-
+  if (Object.keys(data).length === 0) {
+  categoryGrid.innerHTML = "<p style='text-align:center'>No products available.</p>";
+}
   Object.keys(data).forEach(category => {
     const div = document.createElement("div");
     div.className = "grid-item category";
@@ -512,33 +666,28 @@ function showItems(category) {
   const items = data[category] || [];
 
   items.forEach(item => {
-    const div = document.createElement("div");
-    div.className = "grid-item item";
-    div.onclick = () => openModal(item);
+  const card = document.createElement("div");
+  card.className = "grid-item item";
+  card.onclick = () => openModal(item);
 
-    if (item.img) {
-      const img = document.createElement("img");
-      img.src = item.img.trim();
-      img.alt = item.name;
-      img.style.width = "100px";
-      img.style.height = "100px";
-      img.style.objectFit = "contain";
-      div.appendChild(img);
-    }
+  const img = document.createElement("img");
+  img.src = item.img || "placeholder.png";
+  img.alt = item.name;
 
-    const name = document.createElement("div");
-    name.textContent = item.name;
-    name.style.fontWeight = "bold";
-    name.style.margin = "8px 0";
-    name.style.textAlign = "center";
+  const name = document.createElement("div");
+  name.className = "item-name";
+  name.textContent = item.name;
 
-    const rate = document.createElement("div");
-    rate.textContent = item.rate ? `₹${item.rate}` : "Rate Unavailable";
+  const price = document.createElement("div");
+  price.className = "item-price";
+  price.textContent = item.rate ? `₹${item.rate}` : "";
 
-    div.appendChild(name);
-    div.appendChild(rate);
-    categoryGrid.appendChild(div);
-  });
+  card.appendChild(img);
+  card.appendChild(name);
+  card.appendChild(price);
+
+  categoryGrid.appendChild(card);
+});
 }
 function openCart() {
   renderCart();
@@ -749,105 +898,6 @@ backBtn.onclick = showCategories;
 if (document.getElementById("categoryGrid")) {
   loadProducts();
 }
-  </script>
-<div id="productModal" class="modal hidden">
-  <div class="modal-box">
-    <span class="close" onclick="closeModal()">✖</span>
-    <img id="modalImg">
-    <h3 id="modalName"></h3>
-    <p id="modalPrice"></p>
-
-    <div class="qty">
-      <button onclick="changeQty(-1)">−</button>
-      <span id="modalQty">1</span>
-      <button onclick="changeQty(1)">+</button>
-    </div>
-
-    <button onclick="addToCart()">Add to Cart</button>
-  </div>
-</div>
-  <div id="cartModal" class="modal hidden">
-  <div class="modal-box">
-    <span class="close" onclick="closeCart()">✖</span>
-    <h3>Your Cart</h3>
-    <div id="cartItems" class="cart-items"></div>
-    <hr>
-    <div class="cart-footer">
-  <strong>Total: ₹<span id="cartTotal">0</span></strong>
- <button class="buy-btn" onclick="openUserModal()">Buy Now</button>
-  </div>
-  </div>
-</div>
-<div id="userModal" class="modal hidden">
-  <div class="modal-box">
-    <span class="close" onclick="closeUserModal()">✖</span>
-    <h3>Enter Your Details</h3>
-
-    <input id="userName" type="text" placeholder="Your Name" style="width:100%;margin-bottom:10px;padding:8px;">
-    <input id="userPhone" type="tel" placeholder="whatsapp Number" style="width:100%;margin-bottom:10px;padding:8px;">
-    <textarea id="userAddress" placeholder="Address" style="width:100%;margin-bottom:10px;padding:8px;"></textarea>
-
-    <button class="buy-btn" onclick="confirmOrder()">Confirm Order</button>
-  </div>
-</div>
-<section class="about-section">
-  <div class="about-box">
-    <h2>About Kirtiraj</h2>
-
-    <p>
-      Kirtiraj is a family-run snacks and namkeen brand known for its
-      authentic taste and traditional recipes. Every item is prepared
-      with care, quality ingredients, and the same flavors that have
-      been loved for generations.
-    </p>
-
-    <div class="about-highlights">
-      <div class="about-card">
-        <strong>🍘 Traditional Recipes</strong>
-        Made using time-tested methods for authentic taste.
-      </div>
-
-      <div class="about-card">
-        <strong>🌿 Quality Ingredients</strong>
-        Fresh, hygienic, and carefully selected raw materials.
-      </div>
-
-      <div class="about-card">
-        <strong>🏠 Homely Taste</strong>
-        Snacks that feel homemade and comforting.
-      </div>
-
-      <div class="about-card">
-        <strong>📦 Fresh Orders</strong>
-        Prepared and packed with care for every customer.
-      </div>
-    </div>
-  </div>
-</section>
-<section class="contact-section">
-  <div class="contact-box">
-    <h2>Contact Us</h2>
-
-    <div class="contact-grid">
-      <div class="contact-card">
-        <strong>📞 Phone</strong>
-        +91 74859 98443
-      </div>
-
-      <div class="contact-card">
-        <strong>💬 WhatsApp</strong>
-        <a href="https://wa.me/917485998443" target="_blank">
-          Chat on WhatsApp
-        </a>
-      </div>
-
-      <div class="contact-card">
-        <strong>📍 Address</strong>
-        Kirtiraj Snacks & Namkeen<br>
-        Gujarat, India
-      </div>
-    </div>
-  </div>
-</section>
+</script>
 </body>
 </html>
