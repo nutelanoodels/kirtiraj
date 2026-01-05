@@ -1,6 +1,5 @@
 from products.models import Product  # 👈 add this import
 
-
 @api_view(["POST"])
 def create_order(request):
     data = request.data
