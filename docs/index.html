@@ -790,21 +790,26 @@ async function confirmOrder() {
   try {
     // 1️⃣ Save order in backend
     const response = await fetch(`${API_BASE}/api/orders/create/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name,
-        phone,
-        address,
-        items: cart, // backend already expects this
-      }),
-    });
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    name,
+    phone,
+    address,
+    items: cart.map(item => ({
+      name: item.name,
+      quantity: item.quantity
+    }))
+  }),
+});
 
-    const result = await response.json();
+const result = await response.json();
 
-    if (!result.success) {
-      throw new Error("Order failed");
-    }
+if (!response.ok) {
+  console.error("Backend error:", result);
+  alert(result.detail || "Failed to place order");
+  return;
+}
 
     // 2️⃣ Build WhatsApp message (NO PRICE)
     const itemsText = cart
