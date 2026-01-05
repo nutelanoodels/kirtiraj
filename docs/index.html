@@ -309,7 +309,93 @@ body {
     grid-template-columns: 1fr 1fr;
   }
 }
+/* ===============================
+   HARD MOBILE FIX (FINAL)
+   =============================== */
+@media (max-width: 768px) {
 
+  /* ---- GLOBAL SAFETY ---- */
+  html, body {
+    overflow-x: hidden;
+  }
+
+  /* ---- HEADER FIX ---- */
+  .site-header {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 12px;
+    text-align: center;
+  }
+
+  .logo {
+    height: 60px;
+    max-width: 90%;
+  }
+
+  .header-nav {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    font-size: 0.95rem;
+  }
+
+  .header-right {
+    margin-top: 4px;
+  }
+
+  /* ---- SHOP CONTAINER FIX ---- */
+  .shop-section {
+    padding: 40px 12px 50px;
+    margin: 20px 8px;
+    border-radius: 20px;
+  }
+
+  /* ---- TITLE ---- */
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  /* ---- CATEGORY GRID (THIS WAS THE BIG ISSUE) ---- */
+  .grid.category-view {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .grid-item.category {
+    width: 100%;
+    height: 110px;
+    font-size: 0.95rem;
+    padding: 12px;
+    border-radius: 18px;
+    box-sizing: border-box;
+  }
+
+  /* ---- ITEM GRID ---- */
+  .grid.item-view {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .grid-item.item {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .grid-item.item img {
+    width: 100%;
+    height: 90px;
+    max-width: 100%;
+    object-fit: contain;
+  }
+
+  /* ---- MODALS ---- */
+  .modal-box {
+    width: 94%;
+    max-width: 340px;
+  }
+}
 </style>
 </head>
 <body>
