@@ -34,16 +34,18 @@ html, body {
 
 .grid {
   display: grid;
-  gap: 16px;
-  padding: 0 16px 40px;
+  gap: 25px;
+  padding: 0 40px 40px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .grid.category-view {
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(3, minmax(200px, 1fr));
 }
 
 .grid.item-view {
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
 }
 
 .grid-item {
@@ -105,36 +107,30 @@ html, body {
 
 /* 📱 Tablet */
 @media (max-width: 1024px) {
+  .grid.category-view {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .grid.item-view {
+    grid-template-columns: repeat(3, 1fr);
+  }
   .grid {
-  display: grid;
-  gap: 16px;
-  padding: 0 16px 40px;
-}
-
-.grid.category-view {
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-}
-
-.grid.item-view {
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-}
+    gap: 20px;
+    padding: 0 20px 30px;
+  }
 }
 
 /* 📱 Mobile */
 @media (max-width: 700px) {
+  .grid.category-view {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid.item-view {
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+}
   .grid {
-  display: grid;
-  gap: 16px;
-  padding: 0 16px 40px;
-}
-
-.grid.category-view {
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-}
-
-.grid.item-view {
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-}
+    gap: 15px;
+    padding: 0 15px 20px;
+  }
   .grid-item.category {
     font-size: 1em;
     min-height: 160px;
@@ -147,34 +143,19 @@ html, body {
 
 /* 📱 Extra small phones */
 @media (max-width: 480px) {
- .grid {
-  display: grid;
-  gap: 16px;
-  padding: 0 16px 40px;
-}
-
-.grid.category-view {
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-}
-
-.grid.item-view {
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-}
+  .grid.category-view {
+    grid-template-columns: 1fr; /* Keep categories stacked */
+  }
+  .grid.item-view {
+    grid-template-columns: repeat(2, 1fr); /* ✅ Still 3 per row */
+  }
+  .grid {
+    gap: 12px;
+  }
   .grid-item.category {
     min-height: 140px;
     font-size: 0.95em;
   }
-  .item-name {
-  font-weight: 600;
-  font-size: 0.95rem;
-  margin-top: 8px;
-}
-
-.item-price {
-  font-weight: 700;
-  color: #15803d;
-  margin-top: 4px;
-}
   .back-btn {
     margin-left: 10px;
     font-size: 0.9rem;
@@ -666,28 +647,33 @@ function showItems(category) {
   const items = data[category] || [];
 
   items.forEach(item => {
-  const card = document.createElement("div");
-  card.className = "grid-item item";
-  card.onclick = () => openModal(item);
+    const div = document.createElement("div");
+    div.className = "grid-item item";
+    div.onclick = () => openModal(item);
 
-  const img = document.createElement("img");
-  img.src = item.img || "placeholder.png";
-  img.alt = item.name;
+    if (item.img) {
+      const img = document.createElement("img");
+      img.src = item.img.trim();
+      img.alt = item.name;
+      img.style.width = "100px";
+      img.style.height = "100px";
+      img.style.objectFit = "contain";
+      div.appendChild(img);
+    }
 
-  const name = document.createElement("div");
-  name.className = "item-name";
-  name.textContent = item.name;
+    const name = document.createElement("div");
+    name.textContent = item.name;
+    name.style.fontWeight = "bold";
+    name.style.margin = "8px 0";
+    name.style.textAlign = "center";
 
-  const price = document.createElement("div");
-  price.className = "item-price";
-  price.textContent = item.rate ? `₹${item.rate}` : "";
+    const rate = document.createElement("div");
+    rate.textContent = item.rate ? `₹${item.rate}` : "Rate Unavailable";
 
-  card.appendChild(img);
-  card.appendChild(name);
-  card.appendChild(price);
-
-  categoryGrid.appendChild(card);
-});
+    div.appendChild(name);
+    div.appendChild(rate);
+    categoryGrid.appendChild(div);
+  });
 }
 function openCart() {
   renderCart();
