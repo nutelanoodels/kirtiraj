@@ -27,15 +27,7 @@ body {
 }
 
 /* subtle grain overlay */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-  opacity: 0.08;
-  pointer-events: none;
-  z-index: 0;
-}
+
 /* ===== GLOBAL ===== */
 html, body {
   margin: 0;
@@ -164,7 +156,7 @@ html, body {
 }
 
 .grid-item.category::before {
-  content: "🥨";
+  
   position: absolute;
   top: 18px;
   left: 18px;
@@ -290,65 +282,44 @@ html, body {
 }
 /* ===== ABOUT SECTION ===== */
 .about-section {
-  margin: 120px auto 80px;
-  padding: 80px 24px;
-  background: linear-gradient(
-    180deg,
-    rgba(255,247,237,0.9),
-    rgba(255,255,255,0.95)
-  );
-  border-radius: 32px;
-  box-shadow: 0 30px 70px rgba(0,0,0,0.12);
-  position: relative;
+  padding: 100px 24px;
 }
 
 .about-box {
   max-width: 900px;
   margin: auto;
+  background: white;
+  border-radius: 28px;
+  padding: 48px 40px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.12);
   text-align: center;
 }
 
 .about-box h2 {
-  font-size: 2.6rem;
-  font-weight: 900;
+  font-size: 2.2rem;
+  margin-bottom: 16px;
   color: #7c2d12;
-  margin-bottom: 20px;
 }
 
 .about-box p {
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: #3f3f46;
-  max-width: 760px;
-  margin: 0 auto 40px;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #3f2a1d;
 }
 
-/* Highlight cards */
 .about-highlights {
+  margin-top: 40px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 24px;
-  margin-top: 40px;
 }
 
 .about-card {
-  background: white;
-  padding: 28px 22px;
-  border-radius: 22px;
-  box-shadow: 0 14px 35px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.about-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 26px 60px rgba(0,0,0,0.18);
-}
-
-.about-card strong {
-  display: block;
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-  color: #92400e;
+  background: #fffaf2;
+  border-radius: 18px;
+  padding: 20px;
+  font-weight: 600;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.08);
 }
 /* ===== CONTACT SECTION ===== */
 .contact-section {
@@ -502,24 +473,24 @@ html, body {
 
     <div class="about-highlights">
       <div class="about-card">
-        <strong>🍘 Traditional Recipes</strong>
-        Made using time-tested methods for authentic taste.
-      </div>
+  <strong>Traditional Recipes</strong>
+  Made using time-tested methods for authentic taste.
+</div>
 
-      <div class="about-card">
-        <strong>🌿 Quality Ingredients</strong>
-        Fresh, hygienic, and carefully selected raw materials.
-      </div>
+<div class="about-card">
+  <strong>Quality Ingredients</strong>
+  Fresh, hygienic, and carefully selected raw materials.
+</div>
 
-      <div class="about-card">
-        <strong>🏠 Homely Taste</strong>
-        Snacks that feel homemade and comforting.
-      </div>
+<div class="about-card">
+  <strong>Homely Taste</strong>
+  Snacks that feel homemade and comforting.
+</div>
 
-      <div class="about-card">
-        <strong>📦 Fresh Orders</strong>
-        Prepared and packed with care for every customer.
-      </div>
+<div class="about-card">
+  <strong>Fresh Orders</strong>
+  Prepared and packed with care for every customer.
+</div>
     </div>
   </div>
 </section>
