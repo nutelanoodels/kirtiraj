@@ -1,43 +1,58 @@
+from django.shortcuts import get_object_or_404, render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from decimal import Decimal
+
+from .models import Order, OrderItem
+
 
 @api_view(["POST"])
 def create_order(request):
     data = request.data
 
-    items = data.get("items", [])
-
-    if not items:
-        return Response({"detail": "No items provided"}, status=400)
-
-    # ✅ Calculate total safely on backend
-    total_amount = Decimal("0.00")
+    # 🔴 Defensive checks (avoid 500s)
+    required_fields = ["name", "phone", "address", "items"]
+    for field in required_fields:
+        if field not in data:
+            return Response(
+                {"success": False, "detail": f"Missing field: {field}"},
+                status=400
+            )
 
     order = Order.objects.create(
         name=data["name"],
         phone=data["phone"],
         address=data["address"],
-        total_amount=0,  # temporary
+        total_amount=0,  # calculated later if needed
     )
 
-    for item in items:
-        # ⚠️ TEMP: price = 0 (since you're not charging online yet)
-        price = Decimal("0.00")
+    total = 0
+
+    for item in data["items"]:
+        price = item.get("rate", 0)
+        qty = item.get("quantity", 1)
 
         OrderItem.objects.create(
             order=order,
             product_name=item["name"],
             price=price,
-            quantity=item["quantity"],
+            quantity=qty,
         )
 
-        total_amount += price * item["quantity"]
+        total += price * qty
 
-    order.total_amount = total_amount
+    order.total_amount = total
     order.save()
 
     return Response({
         "success": True,
         "order_id": order.id
     })
+
+
+def print_order(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    return render(
+        request,
+        "orders/print_order.html",
+        {"order": order}
+    )
