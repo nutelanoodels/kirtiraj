@@ -10,28 +10,22 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
-        """
-        Normalize phone number to +91XXXXXXXXXX
-        """
         phone = self.phone.strip()
+        digits = re.sub(r"\D", "", phone)
 
-        # Remove all non-digits
-        phone_digits = re.sub(r"\D", "", phone)
+        if digits.startswith("91") and len(digits) == 12:
+            digits = digits[2:]
 
-        # Handle Indian numbers
-        if phone_digits.startswith("91") and len(phone_digits) == 12:
-            phone_digits = phone_digits[2:]
-
-        if len(phone_digits) == 10:
-            self.phone = f"+91{phone_digits}"
+        if len(digits) == 10:
+            self.phone = f"+91{digits}"
         else:
-            # fallback (store as-is, but still with +)
-            self.phone = f"+{phone_digits}"
+            self.phone = f"+{digits}"
 
         super().save(*args, **kwargs)
 
     def __str__(self):
         return f"Order #{self.id}"
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(

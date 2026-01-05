@@ -4,11 +4,6 @@ from django.utils.html import format_html
 
 from .models import Order, OrderItem
 
-try:
-    from .utils import build_whatsapp_message
-except Exception:
-    build_whatsapp_message = None
-
 
 class OrderItemInline(admin.StackedInline):
     model = OrderItem
@@ -32,25 +27,15 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderItemInline]
 
     def whatsapp_link(self, obj):
-        if not build_whatsapp_message:
-            return "WhatsApp error"
-
-        try:
-            message = build_whatsapp_message(obj)
-            phone = obj.phone.replace("+", "")
-            url = f"https://wa.me/{phone}?text={message}"
-            return format_html('<a href="{}" target="_blank">💬 WhatsApp</a>', url)
-        except Exception as e:
-            return f"Error"
+        phone = obj.phone.replace("+", "")
+        message = f"New Order #{obj.id}"
+        url = f"https://wa.me/{phone}?text={message}"
+        return format_html('<a href="{}" target="_blank">💬 WhatsApp</a>', url)
 
     whatsapp_link.short_description = "WhatsApp"
 
     def print_link(self, obj):
-        try:
-            url = reverse("orders:print", args=[obj.id])
-            return format_html('<a href="{}" target="_blank">🖨 Print</a>', url)
-        except Exception:
-            return "Print error"
+        url = reverse("orders:print", args=[obj.id])
+        return format_html('<a href="{}" target="_blank">🖨 Print</a>', url)
 
-    class Media:
-        css = {"all": ("admin/mobile.css",)}
+    print_link.short_description = "Print"

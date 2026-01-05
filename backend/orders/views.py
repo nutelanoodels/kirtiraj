@@ -21,7 +21,7 @@ def create_order(request):
 
     for item in data["items"]:
         product = Product.objects.get(name=item["name"])
-        qty = item["quantity"]
+        qty = int(item["quantity"])
 
         OrderItem.objects.create(
             order=order,
@@ -43,7 +43,7 @@ def create_order(request):
 
 def print_order(request, order_id):
     order = get_object_or_404(Order, id=order_id)
-    items = order.items.all()  # 👈 THIS WAS MISSING
+    items = order.items.all()
 
     return render(
         request,
