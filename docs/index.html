@@ -5,6 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Category Grid</title>
  <style>
+  /* ===== ANIMATED BACKGROUND ===== */
+body {
+  background: linear-gradient(
+    120deg,
+    #fff7ed,
+    #fef3c7,
+    #fffbeb,
+    #fff7ed
+  );
+  background-size: 300% 300%;
+  animation: bgMove 18s ease infinite;
+  position: relative;
+  overflow-x: hidden;
+}
+
+@keyframes bgMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* subtle grain overlay */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
+}
 /* ===== GLOBAL ===== */
 html, body {
   margin: 0;
@@ -60,25 +91,36 @@ html, body {
 
 /* ===== SHOP SECTION ===== */
 .shop-section {
-  padding: 48px 0 32px;
+  padding: 70px 0 60px;
+  position: relative;
+  z-index: 1;
 }
 
 .section-title {
   text-align: center;
-  font-size: 2rem;
-  font-weight: 800;
-  margin-bottom: 8px;
+  font-size: 2.6rem;
+  font-weight: 900;
+  color: #7c2d12;
+  letter-spacing: -0.5px;
 }
 
 .section-title::after {
   content: "Fresh • Handmade • Traditional";
   display: block;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #777;
-  margin-top: 6px;
+  margin-top: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #92400e;
+}
+.grid-item.category {
+  animation: float 6s ease-in-out infinite;
 }
 
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
 /* ===== GRID ===== */
 .grid {
   display: grid;
@@ -97,22 +139,43 @@ html, body {
 }
 
 /* ===== CATEGORY CARD ===== */
+
 .grid-item.category {
-  background: linear-gradient(145deg, #fff7ed, #ffffff);
+  background: linear-gradient(145deg, #ffffff, #fff7ed);
+  border-radius: 22px;
+  padding: 34px 20px;
+  font-size: 1.3rem;
+  font-weight: 800;
+  text-transform: capitalize;
+  color: #7c2d12;
   border: 2px solid #fde68a;
-  border-radius: 18px;
-  padding: 28px 16px;
-  text-align: center;
-  font-size: 1.2rem;
-  font-weight: 700;
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.08),
+    inset 0 0 0 rgba(255,255,255,0);
   cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.grid-item.category::after {
+  content: "→";
+  position: absolute;
+  bottom: 18px;
+  right: 22px;
+  font-size: 1.4rem;
+  opacity: 0;
+  transition: all 0.3s ease;
 }
 
 .grid-item.category:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 30px rgba(0,0,0,0.12);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow:
+    0 22px 45px rgba(0,0,0,0.15);
+}
+
+.grid-item.category:hover::after {
+  opacity: 1;
+  transform: translateX(4px);
 }
 
 /* ===== ITEM CARD ===== */
