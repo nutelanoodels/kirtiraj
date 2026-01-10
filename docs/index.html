@@ -548,7 +548,7 @@ function addToCart() {
 }
 async function loadProducts() {
   try {
-    const response = await fetch(`${API_BASE}/api/products/`);
+    const response = await fetch(`${API_BASE}/api/`);
     const products = await response.json();
 
     data = {};
