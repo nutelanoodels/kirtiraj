@@ -5,6 +5,10 @@ from .serializers import ProductSerializer
 
 @api_view(["GET"])
 def product_list(request):
-    products = Product.objects.select_related("category")
+    products = (
+        Product.objects
+        .filter(is_available=True)   # 🔥 THIS IS THE KEY LINE
+        .select_related("category")
+    )
     serializer = ProductSerializer(products, many=True)
     return Response(serializer.data)
