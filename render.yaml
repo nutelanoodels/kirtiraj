@@ -1,3 +1,8 @@
+databases:
+  - name: kirtiraj-db
+    databaseName: kirtiraj
+    user: kirtiraj_user
+
 services:
   - type: web
     name: kirtiraj
@@ -7,11 +12,19 @@ services:
     startCommand: python manage.py migrate && python manage.py create_admin && gunicorn core.wsgi:application --bind 0.0.0.0:$PORT --workers 2
     envVars:
       - key: DATABASE_URL
-        sync: false
+        fromDatabase:
+          name: kirtiraj-db
+          property: connectionString
       - key: SECRET_KEY
+        generateValue: true
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
         sync: false
       - key: ADMIN_USERNAME
-        sync: false
+        value: "admin"
       - key: ADMIN_PASSWORD
         sync: false
       - key: ADMIN_EMAIL
