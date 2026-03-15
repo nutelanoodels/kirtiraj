@@ -2,13 +2,12 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+import time
 
 
-# Commands that require a live database connection.
-# During Render's BUILD phase, the internal Postgres hostname
-# (dpg-xxx-a) is not yet resolvable. We catch connection errors
-# for these commands so the build doesn't fail.
-# At runtime the DB is reachable and everything works normally.
+# Commands that need a live DB connection.
+# During Render BUILD phase, the internal Postgres hostname isn't reachable.
+# During START phase it is reachable but may take a few seconds to be ready.
 _DB_COMMANDS = {"migrate", "create_admin"}
 
 _DB_ERROR_HINTS = (
@@ -16,7 +15,12 @@ _DB_ERROR_HINTS = (
     "could not translate host name",
     "Connection refused",
     "could not connect to server",
+    "the database system is starting up",
+    "remaining connection slots are reserved",
 )
+
+MAX_RETRIES = 5
+RETRY_DELAY = 4  # seconds between retries
 
 
 def main():
@@ -33,18 +37,38 @@ def main():
 
     cmd = sys.argv[1] if len(sys.argv) > 1 else ""
 
-    try:
+    if cmd in _DB_COMMANDS:
+        last_exc = None
+        for attempt in range(1, MAX_RETRIES + 1):
+            try:
+                execute_from_command_line(sys.argv)
+                last_exc = None
+                break  # success — stop retrying
+            except Exception as exc:
+                err = str(exc)
+                if any(hint in err for hint in _DB_ERROR_HINTS):
+                    last_exc = exc
+                    if attempt < MAX_RETRIES:
+                        print(
+                            f"⚠️  DB not ready (attempt {attempt}/{MAX_RETRIES}), "
+                            f"retrying in {RETRY_DELAY}s…"
+                        )
+                        time.sleep(RETRY_DELAY)
+                    else:
+                        # Exhausted retries — if this is the build phase,
+                        # exit 0 so collectstatic can still run.
+                        # At runtime the DB should always be reachable.
+                        print(
+                            f"\n⚠️  DB still unreachable after {MAX_RETRIES} attempts.\n"
+                            f"   Skipping '{cmd}' (likely build phase).\n"
+                        )
+                        sys.exit(0)
+                else:
+                    raise  # non-connection error — propagate immediately
+        if last_exc is not None:
+            raise last_exc
+    else:
         execute_from_command_line(sys.argv)
-    except Exception as exc:
-        err = str(exc)
-        if cmd in _DB_COMMANDS and any(hint in err for hint in _DB_ERROR_HINTS):
-            print(
-                f"\n⚠️  Skipping '{cmd}' — database not reachable during build.\n"
-                "   This is normal on Render. The command will run automatically\n"
-                "   once the service starts via the start command.\n"
-            )
-            sys.exit(0)   # exit 0 so the build step succeeds
-        raise
 
 
 if __name__ == '__main__':
