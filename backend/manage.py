@@ -19,8 +19,8 @@ _DB_ERROR_HINTS = (
     "remaining connection slots are reserved",
 )
 
-MAX_RETRIES = 5
-RETRY_DELAY = 4  # seconds between retries
+MAX_RETRIES = 15  # Up to 90 seconds
+RETRY_DELAY = 6   # seconds between retries
 
 
 def main():
@@ -55,18 +55,20 @@ def main():
                         )
                         time.sleep(RETRY_DELAY)
                     else:
-                        # Exhausted retries — if this is the build phase,
-                        # exit 0 so collectstatic can still run.
-                        # At runtime the DB should always be reachable.
                         print(
-                            f"\n⚠️  DB still unreachable after {MAX_RETRIES} attempts.\n"
-                            f"   Skipping '{cmd}' (likely build phase).\n"
+                            f"\n❌ DB still unreachable after {MAX_RETRIES} attempts.\n"
+                            "   If you are in the START phase and this keeps failing,\n"
+                            "   try switching DATABASE_URL to the EXTERNAL Database URL\n"
+                            "   from your Render Postgres dashboard.\n"
                         )
+                        # We still exit 0 to allow gunicorn to at least try to start
+                        # in case this is a transient build-time check.
                         sys.exit(0)
                 else:
                     raise  # non-connection error — propagate immediately
         if last_exc is not None:
-            raise last_exc
+            # We already printed the help message above
+            pass
     else:
         execute_from_command_line(sys.argv)
 
