@@ -116,7 +116,7 @@ LOGGING = {
     },
 }
 CORS_ALLOW_ALL_ORIGINS = True
-CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "https://nutelanoodles.github.io,https://kirtiraj.onrender.com,https://kirtiraj-frontend.onrender.com").split(",")
+CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "https://nutelanoodels.github.io,https://kirtiraj.onrender.com,https://kirtiraj-frontend.onrender.com").split(",")
 CORS_ALLOW_METHODS = [
     "GET",
     "POST",
