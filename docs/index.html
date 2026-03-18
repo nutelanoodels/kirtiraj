@@ -1067,6 +1067,8 @@
       </div>
       <div class="form-group"><label>WhatsApp Number</label><input id="oPhone" type="tel"
           placeholder="+91 98765 43210" /></div>
+      <div class="form-group"><label>Email Address</label><input id="oEmail" type="email"
+          placeholder="email@example.com" /></div>
       <div class="form-group"><label>Delivery Address</label><textarea id="oAddress"
           placeholder="House no., Street, City..."></textarea></div>
       <button class="form-submit" id="orderBtn" onclick="confirmOrder()">✅ Confirm Order</button>
@@ -1079,7 +1081,7 @@
       <div class="success-icon">🎉</div>
       <div class="success-msg">
         <h3>Order Placed!</h3>
-        <p>Thank you! Your order has been received. WhatsApp is opening so you can confirm with us directly.</p>
+        <p>Thank you! Your order has been received. You will receive a confirmation email shortly.</p>
       </div>
       <button class="success-btn" onclick="closeSuccess()">Continue Shopping</button>
     </div>
@@ -1239,8 +1241,9 @@
     async function confirmOrder() {
       const name = document.getElementById("oName").value.trim();
       const phone = document.getElementById("oPhone").value.trim();
+      const email = document.getElementById("oEmail").value.trim();
       const address = document.getElementById("oAddress").value.trim();
-      if (!name || !phone || !address) { showToast("⚠️ Please fill all fields"); return; }
+      if (!name || !phone || !address) { showToast("⚠️ Please fill all required fields"); return; }
       if (cart.length === 0) { showToast("⚠️ Your cart is empty"); return; }
       const btn = document.getElementById("orderBtn");
       btn.disabled = true; btn.textContent = "Placing order…";
@@ -1248,17 +1251,13 @@
         const res = await fetch(`${API}/api/orders/create/`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, phone, address, items: cart.map(i => ({ name: i.name, quantity: i.qty })) })
+          body: JSON.stringify({ name, phone, email, address, items: cart.map(i => ({ name: i.name, quantity: i.qty })) })
         });
         const result = await res.json();
         if (!res.ok) { throw new Error(result.detail || "Failed"); }
-        // Build WhatsApp message
-        const itemsText = cart.map(i => `• ${i.name} × ${i.qty} — ₹${i.price * i.qty}`).join("\n");
-        const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-        const msg = `🧾 *New Order — Kirtiraj*\n\nOrder ID: ${result.order_id}\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\n\n*Items:*\n${itemsText}\n\n*Total: ₹${total}*\n\nThank you for ordering! 🙏`;
-        window.open(`https://wa.me/${OWNER_WA}?text=${encodeURIComponent(msg)}`, "_blank");
+        
         cart = []; updateCartBadge();
-        ["oName", "oPhone", "oAddress"].forEach(id => document.getElementById(id).value = "");
+        ["oName", "oPhone", "oEmail", "oAddress"].forEach(id => document.getElementById(id).value = "");
         hide("orderOverlay");
         show("successOverlay");
       } catch (err) {
