@@ -33,3 +33,8 @@ services:
         sync: false
       - key: PYTHON_VERSION
         value: "3.13.4"
+
+  - type: static
+    name: kirtiraj-frontend
+    plan: free
+    publishDir: docs
