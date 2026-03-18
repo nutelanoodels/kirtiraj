@@ -1,11 +1,13 @@
 databases:
   - name: kirtiraj-db
+    plan: free
     databaseName: kirtiraj
     user: kirtiraj_user
 
 services:
   - type: web
     name: kirtiraj
+    plan: free
     runtime: python
     rootDir: backend
     buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
