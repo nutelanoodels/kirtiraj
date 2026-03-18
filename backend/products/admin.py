@@ -9,14 +9,18 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("image_preview", "name", "price", "category", "is_available")
+    list_display = ("name", "price", "category", "is_available", "image_preview")
     list_filter = ("category", "is_available")
     search_fields = ("name",)
-    list_editable = ("price", "is_available")
+    # Temporarily disabled to rule out issues
+    # list_editable = ("price", "is_available")
 
     def image_preview(self, obj):
-        if obj.image:
-            return format_html('<img src="{}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;" />', obj.image.url)
+        try:
+            if obj.image:
+                return format_html('<img src="{}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;" />', obj.image.url)
+        except Exception:
+            return "Error loading image"
         return "No Image"
     
     image_preview.short_description = "Preview"
