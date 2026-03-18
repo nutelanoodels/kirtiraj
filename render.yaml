@@ -31,6 +31,12 @@ services:
         sync: false
       - key: ADMIN_EMAIL
         sync: false
+      - key: WHATSAPP_API_TOKEN
+        sync: false
+      - key: WHATSAPP_INSTANCE_ID
+        sync: false
+      - key: ADMIN_PHONE
+        value: "919173760611"
       - key: PYTHON_VERSION
         value: "3.13.4"
 

@@ -1,11 +1,42 @@
+import requests
 from django.shortcuts import get_object_or_404, render
-from django.core.mail import send_mail
 from django.conf import settings
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from products.models import Product
 from .models import Order, OrderItem
+
+
+def send_whatsapp(phone, message):
+    """
+    Sends a WhatsApp message using a third-party API (e.g., UltraMsg).
+    Configurable via environment variables.
+    """
+    api_url = getattr(settings, "WHATSAPP_API_URL", None)
+    api_token = getattr(settings, "WHATSAPP_API_TOKEN", None)
+    instance_id = getattr(settings, "WHATSAPP_INSTANCE_ID", None)
+
+    if not api_url or not api_token:
+        print("WhatsApp API not configured. Logging message instead:")
+        print(f"TO: {phone}\nMSG: {message}")
+        return False
+
+    # Example for UltraMsg style API
+    # You can swap this for Twilio or any other provider
+    try:
+        payload = {
+            "token": api_token,
+            "to": phone,
+            "body": message,
+        }
+        # UltraMsg usually needs the instance_id in the URL
+        url = api_url.format(instance_id=instance_id) if instance_id else api_url
+        response = requests.post(url, data=payload, timeout=10)
+        return response.status_code == 200
+    except Exception as e:
+        print(f"WhatsApp sending failed: {str(e)}")
+        return False
 
 
 @api_view(["POST"])
@@ -44,47 +75,29 @@ def create_order(request):
     order.total_amount = total
     order.save()
 
-    # Send Emails
-    try:
-        subject = f"Order Confirmation #{order.id} — Kirtiraj"
-        message = f"Hello {order.name},\n\n"
-        message += f"Thank you for your order! We have received it and are preparing your fresh, handmade snacks.\n\n"
-        message += f"Order ID: #{order.id}\n"
-        message += f"Total amount: ₹{order.total_amount}\n\n"
-        message += "Items:\n" + "\n".join(items_summary) + "\n\n"
-        message += f"Delivery Address:\n{order.address}\n\n"
-        message += "We will contact you shortly regarding the delivery.\n\n"
-        message += "Best Regards,\nTeam Kirtiraj"
+    # Construct Message
+    message = f"🧾 *Order Confirmation #{order.id} — Kirtiraj*\n\n"
+    message += f"Hello {order.name},\n\n"
+    message += f"Thank you! We've received your order and are preparing your fresh, handmade snacks. 🥨\n\n"
+    message += f"Order ID: #{order.id}\n"
+    message += f"Total: ₹{order.total_amount}\n\n"
+    message += "*Items:*\n" + "\n".join(items_summary) + "\n\n"
+    message += f"*Delivery Address:*\n{order.address}\n\n"
+    message += "We'll message you again once it's dispatched! 🙏"
 
-        # 1. Send to Customer
-        if order.email:
-            send_mail(
-                subject,
-                message,
-                settings.DEFAULT_FROM_EMAIL,
-                [order.email],
-                fail_silently=True,
-            )
+    # 1. Send to Customer
+    send_whatsapp(order.phone, message)
 
-        # 2. Send to Owner
-        owner_subject = f"NEW ORDER RECEIVED: #{order.id} — {order.name}"
-        owner_message = f"You have a new order from {order.name} ({order.phone}).\n\n"
-        owner_message += f"Order ID: #{order.id}\n"
-        owner_message += f"Customer Email: {order.email or 'N/A'}\n"
-        owner_message += f"Address: {order.address}\n\n"
-        owner_message += "Order Details:\n" + "\n".join(items_summary) + "\n\n"
-        owner_message += f"TOTAL: ₹{order.total_amount}"
+    # 2. Send to Owner (Admin Alerts)
+    admin_phone = getattr(settings, "ADMIN_PHONE", "919173760611")
+    owner_message = f"🔔 *NEW ORDER RECEIVED*\n\n"
+    owner_message += f"From: {order.name}\n"
+    owner_message += f"Phone: {order.phone}\n"
+    owner_message += f"Order ID: #{order.id}\n\n"
+    owner_message += "*Items:*\n" + "\n".join(items_summary) + "\n\n"
+    owner_message += f"*TOTAL: ₹{order.total_amount}*"
 
-        send_mail(
-            owner_subject,
-            owner_message,
-            settings.DEFAULT_FROM_EMAIL,
-            [settings.ADMIN_EMAIL],
-            fail_silently=True,
-        )
-    except Exception as e:
-        # We don't want to fail the order if the email fails, but we should log it
-        print(f"Email sending failed: {str(e)}")
+    send_whatsapp(admin_phone, owner_message)
 
     return Response({
         "success": True,

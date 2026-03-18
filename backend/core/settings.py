@@ -132,12 +132,8 @@ CLOUDINARY_STORAGE = {
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-# Email Settings
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")
-EMAIL_PORT = int(os.getenv("EMAIL_PORT", 587))
-EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "True").lower() == "true"
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
-DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
-ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "nutelanoodels@gmail.com")
+# WhatsApp Settings (Automated Notifications)
+WHATSAPP_API_URL = os.getenv("WHATSAPP_API_URL", "https://api.ultramsg.com/{instance_id}/messages/chat")
+WHATSAPP_API_TOKEN = os.getenv("WHATSAPP_API_TOKEN")
+WHATSAPP_INSTANCE_ID = os.getenv("WHATSAPP_INSTANCE_ID")
+ADMIN_PHONE = os.getenv("ADMIN_PHONE", "919173760611")
