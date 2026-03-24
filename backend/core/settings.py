@@ -132,8 +132,8 @@ CLOUDINARY_STORAGE = {
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-# WhatsApp Settings (Automated Notifications)
-WHATSAPP_API_URL = os.getenv("WHATSAPP_API_URL", "https://api.ultramsg.com/{instance_id}/messages/chat")
-WHATSAPP_API_TOKEN = os.getenv("WHATSAPP_API_TOKEN")
-WHATSAPP_INSTANCE_ID = os.getenv("WHATSAPP_INSTANCE_ID")
+# WhatsApp Settings — CallMeBot (free)
+# Owner must register once: https://www.callmebot.com/blog/free-api-whatsapp-messages/
 ADMIN_PHONE = os.getenv("ADMIN_PHONE", "919173760611")
+CALLMEBOT_OWNER_API_KEY = os.getenv("CALLMEBOT_OWNER_API_KEY")       # required for owner alerts
+CALLMEBOT_CUSTOMER_API_KEY = os.getenv("CALLMEBOT_CUSTOMER_API_KEY") # optional; only works if customer self-registered

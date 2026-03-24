@@ -1,0 +1,178 @@
+import os
+import django
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
+django.setup()
+
+from products.models import Category, Product
+
+data = {
+    "Papad / Mathia / Chorafali": [
+      { "name": "Gulla 6pcs", "size": 0.085, "rate": 20, "img" : "gulla.png" },
+      { "name": "Chorafali Papad 500g", "size": 0.5, "rate": 150, "img" : "chorafali.png" },
+      { "name": "Mathia Papad 500g", "size": 0.5, "rate": 150 , "img" : "mathia.png" },
+      { "name": "Green Chilli Mathia Papad 500g", "size": 0.5, "rate": 170, "img" : "gcmathia.jpeg" },
+      { "name": "Suvari Papad 200gm", "size": 0.2, "img" : "suvari.png" },
+      { "name": "Single Mari Papad 250g", "size": 0.25, "img" : "singalmari.jpeg" },
+      { "name": "Single Mari Papad 500g", "size": 0.5, "rate": 150, "img" : "singalmari.jpeg" },
+      { "name": "Single Mari Disco Papad 400gm", "size": 0.4, "rate": 150  },
+      { "name": "Punjabi Double Mari Papad 250g", "size": 0.25, "img" : "doubalmari.jpeg" },
+      { "name": "Punjabi Double Mari Papad 500grm", "size": 0.5, "rate": 160, "img" : "doubalmari.jpeg" },
+      { "name": "Punjabi Doublemari Disco Papad 400grm", "size": 0.4, "rate": 160 },
+      { "name": "Jeera Papad 250g", "size": 0.25, "rate": 80 },
+      { "name": "Jeera Disco Papad 400grm", "size": 0.4 },
+      { "name": "Jeera Mari Papad 250g", "size": 0.25, "rate": 85 },
+      { "name": "Rajwadi Papad 250g", "size": 0.25, "rate": 85 },
+      { "name": "Garlic Papad 250g", "size": 0.25, "rate": 85 },
+      { "name": "Green Garlic Papad 500g", "size": 0.5 },
+      { "name": "Moong Udad Papad 500g", "size": 0.5, "rate": 170 }
+    ],
+    "Coockies / Khari / Toast": [
+      { "name": "Atta Biscuit (wheat Cookies)", "size": 0.2, "rate": 80 },
+      { "name": "Austrlian Cookies 200gm", "size": 0.2, "rate": 110 },
+      { "name": "Chocolate Chips Cookies 200g", "size": 0.2, "rate": 90 },
+      { "name": "Dry Fruit Biscuit 200g", "size": 0.2, "rate": 110 },
+      { "name": "Mix Cookies 200g", "size": 0.2, "rate": 110 },
+      { "name": "Multigrain Cookies 200gm", "size": 0.2, "rate": 110 },
+      { "name": "Surti Nankhatai 200g", "size": 0.2, "rate": 110 },
+      { "name": "Wheat Biscuit 200g", "size": 0.2, "rate": 90 },
+      { "name": "Tuti Fruti Toast 300g", "size": 0.3, "rate": 120 },
+      { "name": "Wheat Toast 300g", "size": 0.3, "rate": 120 },
+      { "name": "Jeera Toast 300g", "size": 0.3, "rate": 120 },
+      { "name": "Wheat Toast Mini 200gm", "size": 0.2, "rate": 100 },
+      { "name": "Jeera Toast Mini 200gm", "size": 0.2, "rate": 100 },
+      { "name": "Jeera Khari 200gm", "size": 0.2, "rate": 90 ,"img" : "jeerakhari.jpeg"},
+      { "name": "Plain Khari 200gm", "size": 0.2, "rate": 90 ,"img" : "plainkhari.jpeg"},
+      { "name": "Wheat Khari 200gm", "size": 0.2, "rate": 90, "img" : "wheatkhari.jpeg" },
+      { "name": "Wheat Methi Masala Khari 200gm", "size": 0.2, "rate": 90, "img" : "methikhari.jpeg" }
+    ],
+    "Khakhra": [
+      { "name": "Bajari Dhebra Khakhra 200g", "size": 0.2, "rate": 60 },
+      { "name": "Chatpata Khakhra 200g", "size": 0.2, "rate": 60 },
+      { "name": "Garlic Khakhra 200g", "size": 0.2, "rate": 70 },
+      { "name": "Hot & Spicy Khakhra 200g", "size": 0.2, "rate": 70 },
+      { "name": "Jeera Khakhra 500g", "size": 0.5, "rate": 130 },
+      { "name": "Masala Khakhra 500g", "size": 0.5, "rate": 130 },
+      { "name": "Mathiya Khakhra 200g", "size": 0.2, "rate": 130 },
+      { "name": "Methi Khakhra 500gms", "size": 0.5, "rate": 130 },
+      { "name": "Methi Masala Khakhra 200g", "size": 0.2, "rate": 70 },
+      { "name": "Multi Grain Khakhra 200g", "size": 0.2, "rate": 70 },
+      { "name": "Panipuri Khakhra 200g", "size": 0.2, "rate": 60 },
+      { "name": "Plain Khakhra 500g", "size": 0.5, "rate": 130 }
+    ],
+    "Khichiya": [
+      { "name": "Bajra Khichiya 250gm", "size": 0.25, "rate": 75,"img" : "bajrakhichiya.png" },
+      { "name": "Green Chilli Rice Papadi 400gm - Mini", "size": 0.4, "rate": 130,"img" : "greenchillikhichiya.png" },
+      { "name": "Green Chilli Rice Papadi 250gm", "size": 0.25, "rate": 75 , "img" : "greenchillikhichiya.png"},
+      { "name": "Jeera Rice Papadi 250g", "size": 0.25, "rate": 75, "img" : "jeerakhichiya.png" },
+      { "name": "Jeera Rice Papadi 400g - Mini", "size": 0.4, "rate": 130, "img" : "jeerakhichiya.png" },
+      { "name": "Jowar Khichiya 250gm", "size": 0.25, "rate": 75 , "img" : "jowarkhichiya.png"},
+      { "name": "Moraiya Papadi 200g - Mini", "size": 0.2, "rate": 70 },
+      { "name": "Rajwadi Rice Papadi 400g - Mini", "size": 0.4, "rate": 130, "img" : "rajwadikhichiya.png" },
+      { "name": "Rajwadi Rice Papadi 250gm", "size": 0.25, "rate": 75 ,  "img" : "rajwadikhichiya.png"},
+      { "name": "Sabudana Chamcho", "size": 0.4, "rate": 120 },
+      { "name": "Sabudana Chakri", "size": 0.4, "rate": 120 }
+    ],
+   "Namkeen": [
+  { "name": "Vadhvani Marcha 200g", "size": 0.2, "rate": 85 },
+  { "name": "Hing 50g", "size": 0.05, "rate": 110 },
+  { "name": "Panipuri 500g", "size": 0.5 },
+  { "name": "Thick Mathia 200g", "size": 0.2, "rate": 85 },
+  { "name": "Bhel Mix 150g", "size": 0.15, "rate": 75 },
+  { "name": "Chakri 250gms", "size": 0.25, "rate": 100 },
+  { "name": "Fire Puri 200g", "size": 0.2, "rate": 75 },
+  { "name": "Masala Puri 200g", "size": 0.2, "rate": 65 ,"img" : "masalapuri.jpeg"},
+  { "name": "Methi Puri 200g", "size": 0.2, "rate": 75 , "img" : "methipuri.jpeg"},
+  { "name": "Namak Para 200g", "size": 0.2, "rate": 75 },
+  { "name": "Methi Para 200g", "size": 0.2, "rate": 75 },
+  { "name": "Shakarpara 200g", "size": 0.2, "rate": 75 },
+  { "name": "Bhatha Kani Gathiya 200g", "size": 0.2, "rate": 80 ,"img" : "bhatkanigathiya.jpeg"},
+  { "name": "Bhavnagri Methi Gathiya 200g", "size": 0.2, "rate": 65 },
+  { "name": "Bhavnagri Gathiya 200g", "size": 0.2, "rate": 65 },
+  { "name": "Chakri Gathiya 200g", "size": 0.2, "rate": 65 },
+  { "name": "Masala Gathiya 200g", "size": 0.2, "rate": 65 },
+  { "name": "Mora Gathiya 200g", "size": 0.2, "rate": 65 },
+  { "name": "Khamni Sev 200g", "size": 0.2, "rate": 85, "img" : "khamnisev.jpeg" },
+  { "name": "Masala Sev 200g", "size": 0.2, "rate": 65 },
+  { "name": "Nylon Sev 200g", "size": 0.2, "rate": 65 },
+  { "name": "Ratlami Sev 200g", "size": 0.2, "rate": 70 },
+  { "name": "Usal Sev 200g", "size": 0.2, "rate": 80 ,"img" : "usalsev.jpeg"},
+  { "name": "Fulwadi 200g", "size": 0.2, "rate": 85 ,"img" : "fulvadi.jpeg"},
+  { "name": "Tam Tam 200g", "size": 0.2, "rate": 85 ,"img" : "tamtam.jpeg"},
+  { "name": "Masala Papadi 200g", "size": 0.2 },
+  { "name": "Plain Papadi Namkin 200gm", "size": 0.2 },
+  { "name": "Bhadrani Moong 200g", "size": 0.2, "rate": 65 },
+  { "name": "Chana Dal 200g", "size": 0.2, "rate": 70 },
+  { "name": "Chanajor Garam 200g", "size": 0.2, "rate": 65 },
+  { "name": "Chapta Mug 200g", "size": 0.2, "rate": 60 },
+  { "name": "Dal Moth 200g", "size": 0.2, "rate": 60 },
+  { "name": "Sing Bhujia 200g", "size": 0.2, "rate": 60 },
+  { "name": "Soya Chips 200g", "size": 0.2, "rate": 75 },
+  { "name": "Soya Stick 200g", "size": 0.2, "rate": 75 },
+  { "name": "Farali Chevdo Spicy 200g", "size": 0.2, "rate": 65 },
+  { "name": "Indori Mix 200g", "size": 0.2, "rate": 65 },
+  { "name": "Mix Chavanu 200g", "size": 0.2, "rate": 90, "img" : "mixchavanu.jpg" },
+  { "name": "Kenyan Chevdo 200gm", "size": 0.2, "rate": 85 },
+  { "name": "Navrang Chevdo 200gms", "size": 0.2, "rate": 85 },
+  { "name": "New Gujarati Chevdo 400g", "size": 0.4, "rate": 160 },
+  { "name": "Papad Chavanu 200g", "size": 0.2, "rate": 85, "img" : "papadchavanu.jpeg" },
+  { "name": "Nylon Pauva 200gm", "size": 0.2, "rate": 75 },
+  { "name": "Surati Chavanu 200g", "size": 0.2, "rate": 85 },
+  { "name": "Wheat Chevdo 200g", "size": 0.2, "rate": 95, "img" : "wheatchevdo.jpeg" }
+],
+"Roasted - Namkeen": [
+      { "name": "Bajra Puff Roasted 200g", "size": 0.2, "rate": 90 },
+      { "name": "Channa Dal Roasted 200g", "size": 0.2 },
+      { "name": "Channa Pudina Dal Roasted 200gm", "size": 0.2, "rate": 90 },
+      { "name": "Moong Jor Roasted 200g", "size": 0.2, "rate": 90 },
+      { "name": "Moong Roasted 200g", "size": 0.2 },
+      { "name": "Navratan Mix Roasted 200gms", "size": 0.2, "rate": 100 },
+      { "name": "Total Diet Roasted 200g", "size": 0.2, "rate": 100 },
+      { "name": "Wheat Puff 200gm", "size": 0.2, "rate": 90 }
+    ],
+    "Mukhwas": [
+      { "name": "Alsi Mukhwas 150g", "size": 0.15 },
+      { "name": "Banarasi Paan 220gm", "size": 0.22 },
+      { "name": "Chulbuli Imli 200gm", "size": 0.2 },
+      { "name": "Dhana Dal 180g", "size": 0.18 },
+      { "name": "Jal Jeera Shots 200g", "size": 0.2 },
+      { "name": "Kalkatti Paan 220gm", "size": 0.22 },
+      { "name": "Keri Ni Gotli 100gm", "size": 0.1 },
+      { "name": "Mix Fruit Shots 200gm", "size": 0.2 },
+      { "name": "Natural Mukhwas 130gm", "size": 0.13 },
+      { "name": "Paan Shot 170gm", "size": 0.17, "rate": 110 },
+      { "name": "Til Alsi Dhana Dal 150g", "size": 0.15 }
+    ]
+  }
+
+def run():
+    for cat_name, products in data.items():
+        category, created = Category.objects.get_or_create(name=cat_name)
+        if created:
+            print(f"Created category: {cat_name}")
+        
+        for p in products:
+            product, p_created = Product.objects.get_or_create(
+                name=p["name"],
+                defaults={
+                    "price": p.get("rate", 0),
+                    "size": p.get("size", None),
+                    "category": category,
+                    "is_available": True
+                }
+            )
+            
+            if not p_created:
+                # Update existing
+                product.price = p.get("rate", 0)
+                product.size = p.get("size", None)
+                product.category = category
+                product.save()
+                verb = "Updated"
+            else:
+                verb = "Created"
+            
+            print(f"{verb} product: {p['name']}")
+
+if __name__ == "__main__":
+    run()
