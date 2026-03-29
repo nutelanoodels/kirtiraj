@@ -1273,7 +1273,7 @@
 
     <!-- MOBILE NAV -->
     <div class="mobile-nav" id="mobileNav">
-        <button class="close-nav" onclick="closeMobileNav()"><svg class="icon" style="width:40px; height:40px;"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+        <button class="close-nav" onclick="closeMobileNav()">✕</button>
         <a href="#shop" onclick="closeMobileNav()">Shop</a>
         <a href="#contact" onclick="closeMobileNav()">Contact</a>
         <a href="#location" onclick="closeMobileNav()">Location</a>
@@ -1380,9 +1380,7 @@
     <!-- PRODUCT MODAL -->
     <div class="overlay" id="prodOverlay" onclick="closeProdModal(event)">
         <div class="modal" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closeProdModal()">
-                <svg class="icon"><path d="M18 6 6 18M6 6l12 12"/></svg>
-            </button>
+            <button class="modal-close" onclick="closeProdModal()">✕</button>
             <div class="modal-img-wrap">
                 <img id="mImg" src="" alt=""
                     onerror="this.style.display='none'; document.getElementById('mIcon').style.display='block';" />
@@ -1404,7 +1402,7 @@
     <div class="cart-sidebar" id="cartSidebar">
         <div class="cart-head">
             <h3>Your Cart</h3>
-            <button onclick="closeCart()"><svg class="icon"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+            <button onclick="closeCart()">✕</button>
         </div>
         <div class="cart-body" id="cartBody"></div>
         <div class="cart-foot" id="cartFoot" style="display:none">
@@ -1416,9 +1414,7 @@
     <!-- ORDER FORM -->
     <div class="overlay" id="orderOverlay" onclick="closeOrderForm(event)">
         <div class="modal" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closeOrderForm()">
-                <svg class="icon"><path d="M18 6 6 18M6 6l12 12"/></svg>
-            </button>
+            <button class="modal-close" onclick="closeOrderForm()">✕</button>
             <div class="form-title">Delivery Info</div>
             <div class="form-group">
                 <label>Full Name</label>
