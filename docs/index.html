@@ -1454,6 +1454,7 @@
         <div class="cart-body" id="cartBody"></div>
         <div class="cart-foot" id="cartFoot" style="display:none">
             <div class="cart-total"><span>Total</span><span id="cartTotal">₹0</span></div>
+            <div id="cartInfo" style="font-size:0.85rem; color:var(--text-muted); font-weight:600; margin-top:-16px; margin-bottom:24px;"></div>
             <button class="modal-add-btn" onclick="openOrderForm()">Checkout →</button>
         </div>
     </div>
@@ -1474,9 +1475,6 @@
             <div class="form-group">
                 <label>Delivery Address</label>
                 <textarea id="oAddress"></textarea>
-            </div>
-            <div id="checkoutSummary" class="checkout-summary">
-                <!-- Dynamically populated -->
             </div>
             <button class="form-submit" id="orderBtn" onclick="confirmOrder()">Confirm Order</button>
         </div>
@@ -1674,8 +1672,10 @@
             }
             body.innerHTML = "";
             let total = 0;
+            let totalQty = 0;
             cart.forEach((item, i) => {
                 total += item.price * item.qty;
+                totalQty += item.qty;
                 const row = document.createElement("div"); row.className = "cart-item";
                 row.innerHTML = `
                     <div class="cart-item-img">${item.img ? `<img src="${item.img}" style="width:100%;height:100%;border-radius:12px;object-fit:cover;"/>` : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-weight:900; opacity:0.1; color:var(--brand);">K</div>`}</div>
@@ -1693,6 +1693,7 @@
                 body.appendChild(row);
             });
             document.getElementById("cartTotal").textContent = `₹${total}`;
+            document.getElementById("cartInfo").textContent = `${cart.length} unique items • ${totalQty} total quantity`;
             foot.style.display = "block";
         }
 
@@ -1701,17 +1702,6 @@
 
         function openOrderForm() { 
             closeCart(); 
-            const summary = document.getElementById("checkoutSummary");
-            let total = 0;
-            let itemsHtml = cart.map(item => {
-                total += item.price * item.qty;
-                return `<div class="checkout-item"><span>${item.name} (${item.qty})</span><span>₹${item.price * item.qty}</span></div>`;
-            }).join("");
-            
-            summary.innerHTML = `
-                ${itemsHtml}
-                <div class="checkout-total"><span>Total Payable</span><span>₹${total}</span></div>
-            `;
             show("orderOverlay"); 
         }
         function closeOrderForm(e) { if (!e || e.target === document.getElementById("orderOverlay")) { hide("orderOverlay"); document.body.style.overflow = ""; } }
