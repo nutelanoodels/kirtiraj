@@ -85,7 +85,7 @@ def create_order(request):
             f"🧾 *Order Confirmed #{order.id} — Kirtiraj*\n\n"
             f"Hello {order.name},\n\n"
             f"Thank you! We've received your order and are preparing your fresh, "
-            f"handmade snacks. 🥨\n\n"
+            f"snacks. 🥨\n\n"
             f"*Order ID:* #{order.id}\n"
             f"*Total:* ₹{order.total_amount}\n\n"
             f"*Items:*\n{items_text}\n\n"
