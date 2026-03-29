@@ -132,8 +132,8 @@ CLOUDINARY_STORAGE = {
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-# WhatsApp Settings — CallMeBot (free)
-# Owner must register once: https://www.callmebot.com/blog/free-api-whatsapp-messages/
+# Telegram Settings — Free & Reliable
+# Create bot via @BotFather, get ID via @userinfobot
 ADMIN_PHONE = os.getenv("ADMIN_PHONE", "919173760611")
-CALLMEBOT_OWNER_API_KEY = os.getenv("CALLMEBOT_OWNER_API_KEY")       # required for owner alerts
-CALLMEBOT_CUSTOMER_API_KEY = os.getenv("CALLMEBOT_CUSTOMER_API_KEY") # optional; only works if customer self-registered
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+TELEGRAM_OWNER_CHAT_ID = os.getenv("TELEGRAM_OWNER_CHAT_ID")# Your personal Chat ID

@@ -31,9 +31,9 @@ services:
         sync: false
       - key: ADMIN_EMAIL
         sync: false
-      - key: WHATSAPP_API_TOKEN
+      - key: TELEGRAM_BOT_TOKEN
         sync: false
-      - key: WHATSAPP_INSTANCE_ID
+      - key: TELEGRAM_OWNER_CHAT_ID
         sync: false
       - key: ADMIN_PHONE
         value: "919173760611"

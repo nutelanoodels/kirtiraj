@@ -12,3 +12,4 @@ whitenoise==6.11.0
 cloudinary
 django-cloudinary-storage
 reportlab==4.1.0
+requests

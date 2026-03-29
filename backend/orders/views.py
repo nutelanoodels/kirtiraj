@@ -8,39 +8,34 @@ from rest_framework.response import Response
 from products.models import Product
 from .models import Order, OrderItem
 
-CALLMEBOT_URL = "https://api.callmebot.com/whatsapp.php"
-
-
-def send_callmebot(phone, message, apikey):
+def send_telegram_message(message):
     """
-    Sends a WhatsApp message using CallMeBot (free service).
-    The recipient must have registered their number with CallMeBot first.
-    See: https://www.callmebot.com/blog/free-api-whatsapp-messages/
-
-    phone   — international format without '+', e.g. '919173760611'
-    message — plain text (emoji supported)
-    apikey  — the personal API key CallMeBot assigned to that phone number
+    Sends a message to the owner's Telegram chat via Bot API.
     """
-    if not apikey:
-        print(f"[CallMeBot] No API key provided. Logging message for {phone}:\n{message}")
+    token = getattr(settings, "TELEGRAM_BOT_TOKEN", None)
+    chat_id = getattr(settings, "TELEGRAM_OWNER_CHAT_ID", None)
+
+    if not token or not chat_id:
+        print(f"[Telegram] Missing credentials. Logged: {message}")
         return False
 
+    url = f"https://api.telegram.org/bot{token}/sendMessage"
+    payload = {
+        "chat_id": chat_id,
+        "text": message,
+        "parse_mode": "Markdown"
+    }
+
     try:
-        params = {
-            "phone": phone,
-            "text": message,
-            "apikey": apikey,
-        }
-        url = f"{CALLMEBOT_URL}?{urllib.parse.urlencode(params)}"
-        response = requests.get(url, timeout=10)
+        response = requests.post(url, json=payload, timeout=10)
         if response.status_code == 200:
-            print(f"[CallMeBot] Message sent to {phone}")
+            print("[Telegram] Alert sent successfully")
             return True
         else:
-            print(f"[CallMeBot] Failed for {phone}: {response.status_code} — {response.text}")
+            print(f"[Telegram] Error: {response.text}")
             return False
     except Exception as e:
-        print(f"[CallMeBot] Exception while sending to {phone}: {e}")
+        print(f"[Telegram] Exception: {e}")
         return False
 
 
@@ -95,26 +90,8 @@ def create_order(request):
         f"We'll message you again once it's dispatched! 🙏"
     )
 
-    # Customer must have registered their number with CallMeBot.
-    # CALLMEBOT_CUSTOMER_API_KEY is optional — fails silently if absent.
-    customer_apikey = getattr(settings, "CALLMEBOT_CUSTOMER_API_KEY", None)
-    customer_phone = order.phone.replace("+", "").replace(" ", "")
-    send_callmebot(customer_phone, customer_message, customer_apikey)
-
-    # ── 2. Owner order summary message ────────────────────────────────────────
-    owner_message = (
-        f"🔔 *NEW ORDER — Kirtiraj*\n\n"
-        f"👤 *Customer:* {order.name}\n"
-        f"📞 *Phone:* {order.phone}\n"
-        f"🆔 *Order ID:* #{order.id}\n\n"
-        f"🛒 *Items:*\n{items_text}\n\n"
-        f"📦 *Delivery Address:*\n{order.address}\n\n"
-        f"💰 *TOTAL: ₹{order.total_amount}*"
-    )
-
-    owner_phone = getattr(settings, "ADMIN_PHONE", "919173760611")
-    owner_apikey = getattr(settings, "CALLMEBOT_OWNER_API_KEY", None)
-    send_callmebot(owner_phone, owner_message, owner_apikey)
+    # Notify Owner via Telegram
+    send_telegram_message(owner_message)
 
     return Response({
         "success": True,
