@@ -41,73 +41,84 @@ def send_telegram_message(message):
 
 @api_view(["POST"])
 def create_order(request):
-    data = request.data
+    try:
+        data = request.data
+        print(f"[Debug] Received order request: {data}")
 
-    order = Order.objects.create(
-        name=data["name"],
-        phone=data["phone"],
-        email=data.get("email"),
-        address=data["address"],
-        total_amount=0,
-    )
+        order = Order.objects.create(
+            name=data["name"],
+            phone=data["phone"],
+            email=data.get("email"),
+            address=data["address"],
+            total_amount=0,
+        )
 
-    total = 0
-    items_summary = []
+        total = 0
+        items_summary = []
 
-    for item in data["items"]:
-        try:
-            product = Product.objects.get(name=item["name"])
-            qty = int(item["quantity"])
+        for item in data["items"]:
+            try:
+                product = Product.objects.get(name=item["name"])
+                qty = int(item["quantity"])
 
-            OrderItem.objects.create(
-                order=order,
-                product_name=product.name,
-                price=product.price,
-                quantity=qty,
-            )
+                OrderItem.objects.create(
+                    order=order,
+                    product_name=product.name,
+                    price=product.price,
+                    quantity=qty,
+                )
 
-            item_total = product.price * qty
-            total += item_total
-            items_summary.append(f"• {product.name} × {qty} — ₹{item_total}")
-        except Product.DoesNotExist:
-            continue
+                item_total = product.price * qty
+                total += item_total
+                items_summary.append(f"• {product.name} × {qty} — ₹{item_total}")
+            except Product.DoesNotExist:
+                print(f"[Debug] Product not found: {item.get('name')}")
+                continue
 
-    order.total_amount = total
-    order.save()
+        order.total_amount = total
+        order.save()
 
-    items_text = "\n".join(items_summary)
+        items_text = "\n".join(items_summary)
 
-    # ── 1. Customer confirmation message ──────────────────────────────────────
-    customer_message = (
-        f"🧾 *Order Confirmed #{order.id} — Kirtiraj*\n\n"
-        f"Hello {order.name},\n\n"
-        f"Thank you! We've received your order and are preparing your fresh, "
-        f"handmade snacks. 🥨\n\n"
-        f"*Order ID:* #{order.id}\n"
-        f"*Total:* ₹{order.total_amount}\n\n"
-        f"*Items:*\n{items_text}\n\n"
-        f"*Delivery Address:*\n{order.address}\n\n"
-        f"We'll message you again once it's dispatched! 🙏"
-    )
+        # ── 1. Customer confirmation message (Construct text only) ──
+        customer_message = (
+            f"🧾 *Order Confirmed #{order.id} — Kirtiraj*\n\n"
+            f"Hello {order.name},\n\n"
+            f"Thank you! We've received your order and are preparing your fresh, "
+            f"handmade snacks. 🥨\n\n"
+            f"*Order ID:* #{order.id}\n"
+            f"*Total:* ₹{order.total_amount}\n\n"
+            f"*Items:*\n{items_text}\n\n"
+            f"*Delivery Address:*\n{order.address}\n\n"
+            f"We'll message you again once it's dispatched! 🙏"
+        )
 
-    # ── 2. Owner order summary message ────────────────────────────────────────
-    owner_message = (
-        f"🔔 *NEW ORDER — Kirtiraj*\n\n"
-        f"👤 *Customer:* {order.name}\n"
-        f"📞 *Phone:* {order.phone}\n"
-        f"🆔 *Order ID:* #{order.id}\n\n"
-        f"🛒 *Items:*\n{items_text}\n\n"
-        f"📦 *Delivery Address:*\n{order.address}\n\n"
-        f"💰 *TOTAL: ₹{order.total_amount}*"
-    )
+        # ── 2. Owner order summary message ──
+        owner_message = (
+            f"🔔 *NEW ORDER — Kirtiraj*\n\n"
+            f"👤 *Customer:* {order.name}\n"
+            f"📞 *Phone:* {order.phone}\n"
+            f"🆔 *Order ID:* #{order.id}\n\n"
+            f"🛒 *Items:*\n{items_text}\n\n"
+            f"📦 *Delivery Address:*\n{order.address}\n\n"
+            f"💰 *TOTAL: ₹{order.total_amount}*"
+        )
 
-    # Notify Owner via Telegram
-    send_telegram_message(owner_message)
+        # Notify Owner via Telegram
+        send_telegram_message(owner_message)
 
-    return Response({
-        "success": True,
-        "order_id": order.id,
-    })
+        return Response({
+            "success": True,
+            "order_id": order.id,
+        })
+    except Exception as e:
+        import traceback
+        print(f"[Error] Failed to create order: {e}")
+        traceback.print_exc()
+        return Response({
+            "success": False,
+            "error": str(e)
+        }, status=500)
 
 
 def print_order(request, order_id):
