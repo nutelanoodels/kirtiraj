@@ -490,7 +490,7 @@
 
         .sticky-shop-header {
             position: sticky;
-            top: 72px;
+            top: 152px;
             z-index: 900;
             background: var(--bg);
             margin: -20px -5% 20px;
@@ -502,6 +502,10 @@
             border-bottom: 1px solid transparent;
         }
 
+        .header.scrolled + .cat-nav-wrapper + .sticky-shop-header {
+            top: 142px;
+        }
+
         .sticky-shop-header.stuck {
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(12px);
@@ -509,6 +513,87 @@
             border-bottom: 1px solid var(--border);
             box-shadow: var(--shadow-sm);
             padding: 15px 5%;
+        }
+
+        /* CATEGORY NAV BAR */
+        .cat-nav-wrapper {
+            position: fixed;
+            top: 72px;
+            left: 0;
+            right: 0;
+            z-index: 950;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 0;
+            transition: var(--transition);
+            display: flex;
+            justify-content: center;
+        }
+
+        .header.scrolled + .cat-nav-wrapper {
+            top: 64px;
+        }
+
+        .cat-nav-container {
+            display: flex;
+            gap: 12px;
+            padding: 0 5%;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        .cat-nav-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .cat-nav-item {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 10px 16px;
+            background: #18181b;
+            color: rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            min-width: 85px;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .cat-nav-item i {
+            font-size: 1.6rem;
+            line-height: 1;
+        }
+
+        .cat-nav-item span {
+            font-size: 0.8rem;
+            font-weight: 800;
+        }
+
+        .cat-nav-item.active {
+            background: white;
+            color: #18181b;
+            border-color: var(--brand);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .cat-nav-item.active color {
+            color: #18181b;
+        }
+
+        .cat-nav-item:hover:not(.active) {
+            background: #27272a;
+            color: white;
+            transform: translateY(-2px);
         }
 
         /* CONTACT SECTION */
@@ -1226,6 +1311,13 @@
             </div>
         </div>
     </header>
+    
+    <!-- CATEGORY NAV -->
+    <div class="cat-nav-wrapper" id="catNavWrapper">
+        <div class="cat-nav-container" id="catNavBar">
+            <!-- Dynamically populated -->
+        </div>
+    </div>
 
     <!-- HERO -->
     <section class="hero">
@@ -1374,6 +1466,15 @@
         let selectedItem = null;
         let qty = 1;
 
+        const categoryIcons = {
+            "Papad": "🫓",
+            "Khakhra": "🧇",
+            "Namkeen": "🍟",
+            "Sweets": "🍬",
+            "Others": "🎁",
+            "All": "🏠"
+        };
+
         // Visuals
         window.addEventListener('scroll', () => {
             const h = document.getElementById('header');
@@ -1408,9 +1509,42 @@
                     if (!allData[cat]) allData[cat] = [];
                     allData[cat].push({ name: p.name, price: parseFloat(p.price) || 0, img: p.image || "" });
                 });
+                renderCatNav();
                 showCategories();
             } catch (e) {
                 grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:120px 0;color:#ef4444;font-weight:800;font-size:1.3rem;">❌ Connection error. Please try again later.</div>`;
+            }
+        }
+
+        function renderCatNav() {
+            const nav = document.getElementById("catNavBar");
+            nav.innerHTML = "";
+            
+            // All option
+            const allBtn = document.createElement("div");
+            allBtn.className = "cat-nav-item active";
+            allBtn.id = "cat-nav-all";
+            allBtn.innerHTML = `<i>${categoryIcons["All"]}</i><span>All</span>`;
+            allBtn.onclick = () => { setActiveCat("All"); showCategories(); };
+            nav.appendChild(allBtn);
+
+            Object.keys(allData).forEach(cat => {
+                const btn = document.createElement("div");
+                btn.className = "cat-nav-item";
+                btn.id = `cat-nav-${cat.replace(/\s+/g, '-')}`;
+                btn.innerHTML = `<i>${categoryIcons[cat] || categoryIcons["Others"]}</i><span>${cat}</span>`;
+                btn.onclick = () => { setActiveCat(cat); showItems(cat); };
+                nav.appendChild(btn);
+            });
+        }
+
+        function setActiveCat(selected) {
+            document.querySelectorAll(".cat-nav-item").forEach(item => item.classList.remove("active"));
+            const targetId = selected === "All" ? "cat-nav-all" : `cat-nav-${selected.replace(/\s+/g, '-')}`;
+            const target = document.getElementById(targetId);
+            if (target) {
+                target.classList.add("active");
+                target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             }
         }
 
@@ -1418,6 +1552,7 @@
         function getEmoji(s) { return ""; }
 
         function showCategories() {
+            setActiveCat("All");
             const grid = document.getElementById("productGrid");
             grid.className = "grid cat-grid";
             grid.innerHTML = "";
@@ -1428,13 +1563,14 @@
                 const d = document.createElement("div");
                 d.className = "cat-card";
                 d.innerHTML = `<div class="cat-name">${cat}</div>`;
-                d.onclick = () => showItems(cat);
+                d.onclick = () => { setActiveCat(cat); showItems(cat); };
                 grid.appendChild(d);
             });
-            window.scrollTo({ top: document.getElementById('shop').offsetTop - 80, behavior: 'smooth' });
+            window.scrollTo({ top: document.getElementById('shop').offsetTop - 140, behavior: 'smooth' });
         }
 
         function showItems(cat) {
+            setActiveCat(cat);
             const grid = document.getElementById("productGrid");
             grid.className = "grid prod-grid";
             grid.innerHTML = "";
@@ -1456,7 +1592,7 @@
                 d.onclick = () => openProdModal(item, cat);
                 grid.appendChild(d);
             });
-            window.scrollTo({ top: document.getElementById('shop').offsetTop - 80, behavior: 'smooth' });
+            window.scrollTo({ top: document.getElementById('shop').offsetTop - 140, behavior: 'smooth' });
         }
 
         function openProdModal(item, cat) {
