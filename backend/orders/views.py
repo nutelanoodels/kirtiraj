@@ -90,6 +90,17 @@ def create_order(request):
         f"We'll message you again once it's dispatched! 🙏"
     )
 
+    # ── 2. Owner order summary message ────────────────────────────────────────
+    owner_message = (
+        f"🔔 *NEW ORDER — Kirtiraj*\n\n"
+        f"👤 *Customer:* {order.name}\n"
+        f"📞 *Phone:* {order.phone}\n"
+        f"🆔 *Order ID:* #{order.id}\n\n"
+        f"🛒 *Items:*\n{items_text}\n\n"
+        f"📦 *Delivery Address:*\n{order.address}\n\n"
+        f"💰 *TOTAL: ₹{order.total_amount}*"
+    )
+
     # Notify Owner via Telegram
     send_telegram_message(owner_message)
 
