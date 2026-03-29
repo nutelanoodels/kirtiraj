@@ -539,8 +539,8 @@
             justify-content: center;
             gap: 4px;
             padding: 10px 16px;
-            background: #18181b;
-            color: rgba(255, 255, 255, 0.5);
+            background: var(--brand);
+            color: white;
             border-radius: 20px;
             cursor: pointer;
             transition: var(--transition);
@@ -561,17 +561,17 @@
 
         .cat-nav-item.active {
             background: white;
-            color: #18181b;
+            color: var(--brand);
             border-color: var(--brand);
             box-shadow: var(--shadow-sm);
         }
 
         .cat-nav-item.active color {
-            color: #18181b;
+            color: var(--brand);
         }
 
         .cat-nav-item:hover:not(.active) {
-            background: #27272a;
+            background: var(--brand-hover);
             color: white;
             transform: translateY(-2px);
         }
@@ -1473,7 +1473,7 @@
                     allData[cat].push({ name: p.name, price: parseFloat(p.price) || 0, img: p.image || "" });
                 });
                 renderCatNav();
-                showCategories();
+                showCategories(false);
             } catch (e) {
                 grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:120px 0;color:#ef4444;font-weight:800;font-size:1.3rem;">❌ Connection error. Please try again later.</div>`;
             }
@@ -1514,7 +1514,7 @@
 
         function getIcon(s) { return ""; }
 
-        function showCategories() {
+        function showCategories(shouldScroll = true) {
             setActiveCat("All");
             const grid = document.getElementById("productGrid");
             grid.className = "grid cat-grid";
@@ -1529,7 +1529,9 @@
                 d.onclick = () => { setActiveCat(cat); showItems(cat); };
                 grid.appendChild(d);
             });
-            window.scrollTo({ top: document.getElementById('shop').offsetTop - 140, behavior: 'smooth' });
+            if (shouldScroll) {
+                window.scrollTo({ top: document.getElementById('shop').offsetTop - 140, behavior: 'smooth' });
+            }
         }
 
         function showItems(cat) {
