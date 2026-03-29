@@ -87,6 +87,9 @@ def create_order(request):
             f"Thank you! We've received your order and are preparing your fresh, "
             f"snacks. 🥨\n\n"
             f"*Order ID:* #{order.id}\n"
+            f"*Summary:* \n"
+            f"Total items: {len(data['items'])}\n"
+            f"Total quantity: {sum(int(item['quantity']) for item in data['items'])}\n\n"
             f"*Total:* ₹{order.total_amount}\n\n"
             f"*Items:*\n{items_text}\n\n"
             f"*Delivery Address:*\n{order.address}\n\n"
@@ -101,6 +104,9 @@ def create_order(request):
             f"🆔 *Order ID:* #{order.id}\n\n"
             f"🛒 *Items:*\n{items_text}\n\n"
             f"📦 *Delivery Address:*\n{order.address}\n\n"
+            f"📊 *Stats:*\n"
+            f"Total items: {len(data['items'])}\n"
+            f"Total quantity: {sum(int(item['quantity']) for item in data['items'])}\n\n"
             f"💰 *TOTAL: ₹{order.total_amount}*"
         )
 
