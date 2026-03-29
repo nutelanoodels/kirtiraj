@@ -1693,7 +1693,7 @@
                 body.appendChild(row);
             });
             document.getElementById("cartTotal").textContent = `₹${total}`;
-            document.getElementById("cartInfo").textContent = `${cart.length} items • ${totalQty} total quantity`;
+            document.getElementById("cartInfo").innerHTML = `Total items: ${cart.length}<br/>Total quantity: ${totalQty}`;
             foot.style.display = "block";
         }
 
