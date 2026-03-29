@@ -164,6 +164,22 @@
             font-weight: 900;
         }
 
+        .icon {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+
+        .icon-sm {
+            width: 16px;
+            height: 16px;
+            stroke-width: 3;
+        }
+
         .burger {
             display: none;
             flex-direction: column;
@@ -1257,7 +1273,7 @@
 
     <!-- MOBILE NAV -->
     <div class="mobile-nav" id="mobileNav">
-        <button class="close-nav" onclick="closeMobileNav()">Close</button>
+        <button class="close-nav" onclick="closeMobileNav()"><svg class="icon" style="width:40px; height:40px;"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
         <a href="#shop" onclick="closeMobileNav()">Shop</a>
         <a href="#contact" onclick="closeMobileNav()">Contact</a>
         <a href="#location" onclick="closeMobileNav()">Location</a>
@@ -1279,7 +1295,7 @@
         </nav>
         <div class="header-actions">
             <button class="cart-btn" onclick="openCart()">
-                <span>Cart</span>
+                <svg class="icon icon-sm"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                 <span class="cart-badge" id="cartCount">0</span>
             </button>
             <div class="burger" onclick="openMobileNav()">
@@ -1310,7 +1326,9 @@
     <!-- SHOP -->
     <section class="shop" id="shop">
         <div class="sticky-shop-header" id="shopHeader">
-            <button class="back-btn" id="backBtn" onclick="showCategories()">Back</button>
+            <button class="back-btn" id="backBtn" onclick="showCategories()">
+                <svg class="icon icon-sm" style="margin-right:4px;"><path d="m15 18-6-6 6-6"/></svg> Back
+            </button>
             <div class="section-header" style="margin-bottom: 0; text-align: left;">
                 <div class="section-tag" style="margin-bottom: 0;">Menu</div>
                 <h2 class="section-title" style="font-size: clamp(1.4rem, 5vw, 2.2rem);">Explore Our Menu</h2>
@@ -1362,7 +1380,9 @@
     <!-- PRODUCT MODAL -->
     <div class="overlay" id="prodOverlay" onclick="closeProdModal(event)">
         <div class="modal" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closeProdModal()" style="font-size:0.9rem; font-weight:800;">Close</button>
+            <button class="modal-close" onclick="closeProdModal()">
+                <svg class="icon"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </button>
             <div class="modal-img-wrap">
                 <img id="mImg" src="" alt=""
                     onerror="this.style.display='none'; document.getElementById('mIcon').style.display='block';" />
@@ -1371,9 +1391,9 @@
             <h3 id="mName"></h3>
             <div class="modal-price" id="mPrice"></div>
             <div class="qty-ctrl">
-                <button onclick="changeQty(-1)" style="font-size:0.8rem;">Less</button>
+                <button onclick="changeQty(-1)"><svg class="icon icon-sm"><path d="M5 12h14"/></svg></button>
                 <span class="qty-val" id="mQty">1</span>
-                <button onclick="changeQty(1)" style="font-size:0.8rem;">More</button>
+                <button onclick="changeQty(1)"><svg class="icon icon-sm"><path d="M12 5v14M5 12h14"/></svg></button>
             </div>
             <button class="modal-add-btn" id="mAddBtn" onclick="addToCart()">Add to Order</button>
         </div>
@@ -1384,7 +1404,7 @@
     <div class="cart-sidebar" id="cartSidebar">
         <div class="cart-head">
             <h3>Your Cart</h3>
-            <button onclick="closeCart()" style="font-size:0.8rem; font-weight:800; border-radius:8px; width:auto; padding:0 12px;">Close</button>
+            <button onclick="closeCart()"><svg class="icon"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
         </div>
         <div class="cart-body" id="cartBody"></div>
         <div class="cart-foot" id="cartFoot" style="display:none">
@@ -1396,7 +1416,9 @@
     <!-- ORDER FORM -->
     <div class="overlay" id="orderOverlay" onclick="closeOrderForm(event)">
         <div class="modal" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closeOrderForm()" style="font-size:0.9rem; font-weight:800;">Close</button>
+            <button class="modal-close" onclick="closeOrderForm()">
+                <svg class="icon"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </button>
             <div class="form-title">Delivery Info</div>
             <div class="form-group">
                 <label>Full Name</label>
@@ -1616,11 +1638,11 @@
                         <div class="cart-item-price">₹${item.price} x ${item.qty}</div>
                     </div>
                     <div class="cart-item-actions">
-                        <button class="ci-btn" onclick="updateQty(${i},-1)" style="font-size:0.7rem;">Less</button>
+                        <button class="ci-btn" onclick="updateQty(${i},-1)"><svg class="icon icon-sm"><path d="M5 12h14"/></svg></button>
                         <span class="ci-qty">${item.qty}</span>
-                        <button class="ci-btn" onclick="updateQty(${i},1)" style="font-size:0.7rem;">More</button>
+                        <button class="ci-btn" onclick="updateQty(${i},1)"><svg class="icon icon-sm"><path d="M12 5v14M5 12h14"/></svg></button>
                     </div>
-                    <button class="ci-remove" onclick="removeItem(${i})" style="font-size:0.7rem;">Remove</button>
+                    <button class="ci-remove" onclick="removeItem(${i})"><svg class="icon icon-sm"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
                 `;
                 body.appendChild(row);
             });
