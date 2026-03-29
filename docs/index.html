@@ -1166,9 +1166,9 @@
         <button class="close-nav" onclick="closeMobileNav()">✕</button>
         <a href="#shop" onclick="closeMobileNav()">Shop</a>
         <a href="#contact" onclick="closeMobileNav()">Contact</a>
-        <div style="margin-top: 20px; text-align: center;">
-            <a href="#contact" onclick="closeMobileNav()" style="font-weight: 800; font-size: 1.2rem; color: var(--text); display: block; margin-bottom: 8px;">Location</a>
-            <p style="font-size: 1rem; color: var(--text-muted); padding: 0 40px;">Shop no 34 Shaligram Square, Gota, Ahmedabad</p>
+        <a href="#location" onclick="closeMobileNav()">Location</a>
+        <div style="margin-top: 20px; text-align: center; border-top: 1px solid var(--border); padding-top: 20px;">
+            <p style="font-size: 0.95rem; color: var(--text-muted); padding: 0 40px;">Shop no 34 Shaligram Square, Gota, Ahmedabad</p>
         </div>
     </div>
 
@@ -1181,6 +1181,7 @@
         <nav class="nav">
             <a href="#shop">Shop</a>
             <a href="#contact">Contact</a>
+            <a href="#location">Location</a>
         </nav>
         <div class="header-actions">
             <button class="cart-btn" onclick="openCart()">
@@ -1229,30 +1230,30 @@
         </div>
         <div class="contact-cards">
             <a class="contact-card" href="tel:+919173760611">
-                <div class="ci"><svg class="icon icon-lg icon-brand">
-                        <path
-                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.28-2.28a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
-                        </path>
-                    </svg></div>
+                <div class="ci"><svg class="icon icon-lg icon-brand"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.28-2.28a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div>
                 <h4>Call Us</h4>
                 <p>+91 91737 60611</p>
             </a>
             <a class="contact-card" href="https://wa.me/919978120889" target="_blank">
-                <div class="ci"><svg class="icon icon-lg icon-brand" viewBox="0 0 24 24">
-                        <path
-                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 .011 5.403.006 12.039c0 2.121.55 4.19 1.594 6.01L0 24l6.105-1.602a11.832 11.832 0 005.937 1.637h.005c6.637 0 12.039-5.403 12.044-12.039a11.824 11.824 0 00-3.417-8.467z">
-                        </path>
-                    </svg></div>
+                <div class="ci"><svg class="icon icon-lg icon-brand" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 .011 5.403.006 12.039c0 2.121.55 4.19 1.594 6.01L0 24l6.105-1.602a11.832 11.832 0 005.937 1.637h.005c6.637 0 12.039-5.403 12.044-12.039a11.824 11.824 0 00-3.417-8.467z"></path></svg></div>
                 <h4>WhatsApp</h4>
                 <p>Quick chat & support</p>
             </a>
-            <a class="location-card" href="https://share.google/bPcfSi6NEEffhx70W" target="_blank">
-                <div class="ci"><svg class="icon icon-lg icon-brand">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z">
-                        </path>
-                    </svg></div>
-                <h4>Location</h4>
+        </div>
+    </section>
+
+    <!-- LOCATION -->
+    <section class="contact" id="location" style="background: var(--bg); border-top: 1px solid var(--border);">
+        <div class="section-header">
+            <div class="section-tag">Find Us</div>
+            <h2 class="section-title">Our Store</h2>
+        </div>
+        <div class="contact-cards" style="max-width: 600px;">
+            <a class="location-card" href="https://share.google/bPcfSi6NEEffhx70W" target="_blank" style="background: var(--surface);">
+                <div class="ci"><svg class="icon icon-lg icon-brand"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path></svg></div>
+                <h4>Main Store</h4>
                 <p>Shop no 34 Shaligram Square, Op.Osia Hypermarket, Gota, Ahmedabad</p>
+                <div style="margin-top: 16px; color: var(--brand); font-weight: 800; font-size: 0.9rem;">Tap for Directions →</div>
             </a>
         </div>
     </section>
