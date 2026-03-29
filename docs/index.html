@@ -557,7 +557,10 @@
                     method: "POST", headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ name, phone, email:"", address, items: cart.map(i => ({ name: i.name, quantity: i.qty })) })
                 });
-                if (!res.ok) throw new Error("Failed to place order.");
+                if (!res.ok) {
+                    const errData = await res.json().catch(() => ({}));
+                    throw new Error(errData.error || "Failed to place order.");
+                }
                 cart = []; updateCartBadge();
                 ["oName", "oPhone", "oAddress"].forEach(id => document.getElementById(id).value = "");
                 hide("orderOverlay");
