@@ -1038,6 +1038,53 @@
             resize: none;
         }
 
+        .checkout-summary {
+            background: #F8FAFC;
+            padding: 20px;
+            border-radius: 20px;
+            margin: 24px 0;
+            border: 1px dashed var(--border);
+        }
+
+        .checkout-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .checkout-total {
+            border-top: 1px solid var(--border);
+            margin-top: 12px;
+            padding-top: 12px;
+            display: flex;
+            justify-content: space-between;
+            font-weight: 900;
+            font-size: 1.2rem;
+            color: var(--brand);
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 18px;
+            border-radius: 999px;
+            background: var(--brand);
+            color: white;
+            border: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 10px 25px -5px rgba(234, 88, 12, 0.4);
+            transition: var(--transition);
+        }
+
+        .form-submit:hover {
+            background: var(--brand-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px -5px rgba(234, 88, 12, 0.5);
+        }
+
         /* TOAST */
         .toast {
             position: fixed;
@@ -1428,6 +1475,9 @@
                 <label>Delivery Address</label>
                 <textarea id="oAddress"></textarea>
             </div>
+            <div id="checkoutSummary" class="checkout-summary">
+                <!-- Dynamically populated -->
+            </div>
             <button class="form-submit" id="orderBtn" onclick="confirmOrder()">Confirm Order</button>
         </div>
     </div>
@@ -1649,7 +1699,21 @@
         function updateQty(i, d) { cart[i].qty += d; if (cart[i].qty <= 0) cart.splice(i, 1); updateCartBadge(); renderCart(); }
         function removeItem(i) { cart.splice(i, 1); updateCartBadge(); renderCart(); }
 
-        function openOrderForm() { closeCart(); show("orderOverlay"); }
+        function openOrderForm() { 
+            closeCart(); 
+            const summary = document.getElementById("checkoutSummary");
+            let total = 0;
+            let itemsHtml = cart.map(item => {
+                total += item.price * item.qty;
+                return `<div class="checkout-item"><span>${item.name} (${item.qty})</span><span>₹${item.price * item.qty}</span></div>`;
+            }).join("");
+            
+            summary.innerHTML = `
+                ${itemsHtml}
+                <div class="checkout-total"><span>Total Payable</span><span>₹${total}</span></div>
+            `;
+            show("orderOverlay"); 
+        }
         function closeOrderForm(e) { if (!e || e.target === document.getElementById("orderOverlay")) { hide("orderOverlay"); document.body.style.overflow = ""; } }
 
         async function confirmOrder() {
