@@ -24,7 +24,7 @@ class ProductAdmin(admin.ModelAdmin):
             if obj.image:
                 return format_html(
                     '<img src="{}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;" />',
-                    obj.image.url,
+                    obj.image,
                 )
         except Exception:
             return "—"
