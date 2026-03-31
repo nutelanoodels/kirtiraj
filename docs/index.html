@@ -1319,6 +1319,22 @@
                 font-size: 1rem;
             }
 
+            /* SKELETON LOADERS */
+            @keyframes shimmer {
+                0% { background-position: -200% 0; }
+                100% { background-position: 200% 0; }
+            }
+
+            .skeleton {
+                background: linear-gradient(90deg, #f0f0f0 25%, #f8f8f8 50%, #f0f0f0 75%);
+                background-size: 200% 100%;
+                animation: shimmer 1.5s infinite linear;
+                border-radius: var(--radius);
+            }
+
+            .sk-cat { height: 140px; border-radius: var(--radius-lg); }
+            .sk-prod { height: 320px; border-radius: var(--radius-lg); }
+
             .prod-card {
                 padding: 10px;
             }
@@ -1683,20 +1699,56 @@
         // Fetch
         async function loadProducts() {
             const grid = document.getElementById("productGrid");
-            grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:120px 0;color:var(--text-muted);font-weight:700;font-size:1.3rem;">⏳ Loading fresh menu...</div>`;
+            const cached = localStorage.getItem('kirtiraj_menu');
+
+            // Quick display from cache (SWR)
+            if (cached) {
+                try {
+                    const data = JSON.parse(cached);
+                    allData = data;
+                    renderCatNav();
+                    showCategories(false);
+                } catch(e) { localStorage.removeItem('kirtiraj_menu'); }
+            }
+
+            // If nothing cached, show skeletons
+            if (!Object.keys(allData).length) {
+                renderSkeleton();
+            }
+
             try {
                 const res = await fetch(`${API}/api/`);
+                if (!res.ok) throw new Error("API Error");
                 const products = await res.json();
-                allData = {};
+                
+                const newData = {};
                 products.forEach(p => {
                     const cat = p.category || "Others";
-                    if (!allData[cat]) allData[cat] = [];
-                    allData[cat].push({ name: p.name, price: parseFloat(p.price) || 0, img: p.image || "" });
+                    if (!newData[cat]) newData[cat] = [];
+                    newData[cat].push({ name: p.name, price: parseFloat(p.price) || 0, img: p.image || "" });
                 });
-                renderCatNav();
-                showCategories(false);
+
+                // Update only if data changed to avoid flickering
+                if (JSON.stringify(newData) !== JSON.stringify(allData)) {
+                    allData = newData;
+                    localStorage.setItem('kirtiraj_menu', JSON.stringify(allData));
+                    renderCatNav();
+                    showCategories(false);
+                }
             } catch (e) {
-                grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:120px 0;color:#ef4444;font-weight:800;font-size:1.3rem;">❌ Connection error. Please try again later.</div>`;
+                console.error(e);
+                if (!Object.keys(allData).length) {
+                    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:120px 0;color:#ef4444;font-weight:800;font-size:1.3rem;">❌ Connection error. Please check your internet.</div>`;
+                }
+            }
+        }
+
+        function renderSkeleton() {
+            const grid = document.getElementById("productGrid");
+            grid.innerHTML = "";
+            grid.className = "grid cat-grid";
+            for(let i=0; i<6; i++) {
+                grid.innerHTML += `<div class="skeleton sk-cat"></div>`;
             }
         }
 
