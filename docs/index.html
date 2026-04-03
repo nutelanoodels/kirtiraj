@@ -246,59 +246,17 @@
             margin-bottom: -40px;
         }
 
-        .hero-tree {
+        .hero-brand-img {
             width: 100%;
-            height: 100%;
-            overflow: visible;
+            filter: drop-shadow(0 15px 35px rgba(0,0,0,0.12));
+            animation: float 4s ease-in-out infinite;
         }
 
-        .tree-path, .branch {
-            fill: none;
-            stroke: #D97706; /* Golden Amber */
-            stroke-width: 8;
-            stroke-linecap: round;
-            opacity: 0.8;
-        }
-
-        .branch {
-            stroke-width: 4;
-        }
-
-        .bubble {
-            cursor: pointer;
-            transition: var(--transition);
-            animation: bubbleFloat 4s ease-in-out infinite;
-            animation-delay: var(--d);
-        }
-
-        @keyframes bubbleFloat {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-8px) scale(1.05); }
-        }
-
-        .bubble circle {
-            fill: var(--brand-light);
-            stroke: var(--brand);
-            stroke-width: 2;
-            transition: var(--transition);
-        }
-
-        .bubble text {
-            fill: var(--brand);
-            font-size: 14px;
-            font-weight: 800;
-            text-anchor: middle;
-            pointer-events: none;
-            font-family: 'Outfit', sans-serif;
-        }
-
-        .bubble:hover circle {
-            fill: var(--brand);
-            transform: scale(1.1);
-        }
-
-        .bubble:hover text {
-            fill: white;
+        @media (max-width: 768px) {
+            .tree-wrapper {
+                max-width: 350px;
+                margin-bottom: -20px;
+            }
         }
 
         .logo-overlay {
@@ -1546,87 +1504,9 @@
     <!-- HERO -->
     <section class="hero">
         <div class="hero-container">
-            <!-- PRODUCT TREE SVG -->
             <div class="tree-wrapper">
-                <svg viewBox="0 0 800 800" class="hero-tree">
-                    <!-- Tree Trunk and Branches -->
-                    <path class="tree-path" d="M400,750 Q400,600 400,450 Q400,300 400,100" />
-                    <!-- Left Branches -->
-                    <path class="branch" d="M400,600 Q300,550 200,500" />
-                    <path class="branch" d="M400,500 Q250,450 150,350" />
-                    <path class="branch" d="M400,400 Q200,350 120,250" />
-                    <!-- Right Branches -->
-                    <path class="branch" d="M400,600 Q500,550 600,500" />
-                    <path class="branch" d="M400,500 Q550,450 650,350" />
-                    <path class="branch" d="M400,400 Q600,350 680,250" />
-                    
-                    <!-- Snack Bubbles -->
-                    <!-- Top Center -->
-                    <g class="bubble" style="--d: 0s">
-                        <circle cx="400" cy="150" r="45" />
-                        <text x="400" y="155">મઠીયા</text>
-                    </g>
-                    <!-- Left Side High -->
-                    <g class="bubble" style="--d: 0.2s">
-                        <circle cx="220" cy="220" r="48" />
-                        <text x="220" y="225">ચોળાફળી</text>
-                    </g>
-                    <g class="bubble" style="--d: 0.4s">
-                        <circle cx="100" cy="300" r="42" />
-                        <text x="100" y="305">ખારી</text>
-                    </g>
-                    <!-- Right Side High -->
-                    <g class="bubble" style="--d: 0.3s">
-                        <circle cx="580" cy="220" r="48" />
-                        <text x="580" y="225">પાપડ</text>
-                    </g>
-                    <g class="bubble" style="--d: 0.5s">
-                        <circle cx="700" cy="300" r="42" />
-                        <text x="700" y="305">સેવ</text>
-                    </g>
-                    <!-- Mid Left -->
-                    <g class="bubble" style="--d: 0.6s">
-                        <circle cx="180" cy="420" r="45" />
-                        <text x="180" y="425">ચવાણું</text>
-                    </g>
-                    <g class="bubble" style="--d: 0.8s">
-                        <circle cx="280" cy="330" r="40" />
-                        <text x="280" y="335">ચેવડો</text>
-                    </g>
-                    <!-- Mid Right -->
-                    <g class="bubble" style="--d: 0.7s">
-                        <circle cx="620" cy="420" r="45" />
-                        <text x="620" y="425">વેફર</text>
-                    </g>
-                    <g class="bubble" style="--d: 0.9s">
-                        <circle cx="520" cy="330" r="40" />
-                        <text x="520" y="335">ખાખરા</text>
-                    </g>
-                    <!-- Lower Left -->
-                    <g class="bubble" style="--d: 1s">
-                        <circle cx="220" cy="550" r="38" />
-                        <text x="220" y="555">ફરાળી</text>
-                    </g>
-                    <g class="bubble" style="--d: 1.2s">
-                        <circle cx="320" cy="500" r="35" />
-                        <text x="320" y="505">ગાંઠિયા</text>
-                    </g>
-                    <!-- Lower Right -->
-                    <g class="bubble" style="--d: 1.1s">
-                        <circle cx="580" cy="550" r="38" />
-                        <text x="580" y="555">દાળ</text>
-                    </g>
-                    <g class="bubble" style="--d: 1.3s">
-                        <circle cx="480" cy="500" r="35" />
-                        <text x="480" y="505">પુરી</text>
-                    </g>
-                </svg>
-                <!-- Brand Logo Overlay at Base -->
-                <div class="logo-overlay">
-                    <img src="logo3.webp" alt="Kirtiraj" class="hero-brand-img">
-                </div>
+                <img src="hero_tree.png" alt="Product Tree" class="hero-brand-img" style="width:100%; height:auto;">
             </div>
-            
             <div class="hero-actions">
                 <button class="btn-primary" style="margin-top: 30px" onclick="document.getElementById('shop').scrollIntoView()">Start Shopping →</button>
             </div>
