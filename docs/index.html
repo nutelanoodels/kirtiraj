@@ -1487,7 +1487,7 @@
     <!-- HERO -->
     <section class="hero">
         <div>
-            <div class="hero-badge">Verified Fresh snacks</div>
+            <div class="hero-badge">Taste an Authentic Homely Recipe</div>
             <h1>Premium Snacks<br /><span>Delivered Fresh</span></h1>
             <p>Experience the ultimate crunch. Delightfully seasoned, authentically crafted, and completely
                 irresistible. Order now for pure satisfaction.</p>
@@ -1672,6 +1672,7 @@
         let cart = [];
         let selectedItem = null;
         let qty = 1;
+        let currentView = { type: 'cats', cat: null };
 
         const categoryIcons = {};
 
@@ -1705,6 +1706,16 @@
             if (cached) {
                 try {
                     const data = JSON.parse(cached);
+                    // Sort cached data to ensure products with images are on top immediately
+                    Object.keys(data).forEach(cat => {
+                        data[cat].sort((a, b) => {
+                            const hasImgA = a.img && a.img.trim() !== "";
+                            const hasImgB = b.img && b.img.trim() !== "";
+                            if (hasImgA && !hasImgB) return -1;
+                            if (!hasImgA && hasImgB) return 1;
+                            return a.name.localeCompare(b.name);
+                        });
+                    });
                     allData = data;
                     renderCatNav();
                     showCategories(false);
@@ -1728,12 +1739,27 @@
                     newData[cat].push({ name: p.name, price: parseFloat(p.price) || 0, img: p.image || "" });
                 });
 
+                // Sort products in each category: images first, then name
+                Object.keys(newData).forEach(cat => {
+                    newData[cat].sort((a, b) => {
+                        const hasImgA = a.img && a.img.trim() !== "";
+                        const hasImgB = b.img && b.img.trim() !== "";
+                        if (hasImgA && !hasImgB) return -1;
+                        if (!hasImgA && hasImgB) return 1;
+                        return a.name.localeCompare(b.name);
+                    });
+                });
+
                 // Update only if data changed to avoid flickering
                 if (JSON.stringify(newData) !== JSON.stringify(allData)) {
                     allData = newData;
                     localStorage.setItem('kirtiraj_menu', JSON.stringify(allData));
                     renderCatNav();
-                    showCategories(false);
+                    if (currentView.type === 'items') {
+                        showItems(currentView.cat, false); // Update without scrolling
+                    } else {
+                        showCategories(false);
+                    }
                 }
             } catch (e) {
                 console.error(e);
@@ -1788,6 +1814,7 @@
         function getIcon(s) { return ""; }
 
         function showCategories(shouldScroll = true) {
+            currentView = { type: 'cats', cat: null };
             setActiveCat("All");
             const grid = document.getElementById("productGrid");
             grid.className = "grid cat-grid";
@@ -1807,7 +1834,8 @@
             }
         }
 
-        function showItems(cat) {
+        function showItems(cat, shouldScroll = true) {
+            currentView = { type: 'items', cat: cat };
             setActiveCat(cat);
             const grid = document.getElementById("productGrid");
             grid.className = "grid prod-grid";
@@ -1816,7 +1844,17 @@
             document.querySelector(".section-title").textContent = cat;
             document.querySelector(".section-tag").textContent = "Category";
 
-            (allData[cat] || []).forEach(item => {
+            const items = (allData[cat] || []).slice();
+            // HARD SORT: Guaranteed sorting at render time (Images first)
+            items.sort((a, b) => {
+                const hasImgA = !!(a.img && a.img.trim() !== "");
+                const hasImgB = !!(b.img && b.img.trim() !== "");
+                if (hasImgA && !hasImgB) return -1;
+                if (!hasImgA && hasImgB) return 1;
+                return a.name.localeCompare(b.name);
+            });
+
+            items.forEach(item => {
                 const d = document.createElement("div");
                 d.className = "prod-card";
                 d.innerHTML = `
@@ -1830,7 +1868,9 @@
                 d.onclick = () => openProdModal(item, cat);
                 grid.appendChild(d);
             });
-            window.scrollTo({ top: document.getElementById('shop').offsetTop - 140, behavior: 'smooth' });
+            if (shouldScroll) {
+                window.scrollTo({ top: document.getElementById('shop').offsetTop - 140, behavior: 'smooth' });
+            }
         }
 
         function openProdModal(item, cat) {
