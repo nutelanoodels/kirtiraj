@@ -50,13 +50,13 @@ def main():
                     last_exc = exc
                     if attempt < MAX_RETRIES:
                         print(
-                            f"⚠️  DB not ready (attempt {attempt}/{MAX_RETRIES}), "
-                            f"retrying in {RETRY_DELAY}s…"
+                            f"⚠️  DB not ready (attempt {attempt}/{MAX_RETRIES}): {err}. "
+                            f"Retrying in {RETRY_DELAY}s…"
                         )
                         time.sleep(RETRY_DELAY)
                     else:
                         print(
-                            f"\n❌ DB still unreachable after {MAX_RETRIES} attempts.\n"
+                            f"\n❌ DB still unreachable after {MAX_RETRIES} attempts. Error: {err}\n"
                             "   If you are in the START phase and this keeps failing,\n"
                             "   try switching DATABASE_URL to the EXTERNAL Database URL\n"
                             "   from your Render Postgres dashboard.\n"
