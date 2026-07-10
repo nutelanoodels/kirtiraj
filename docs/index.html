@@ -1420,6 +1420,152 @@
                 grid-template-columns: repeat(2, 1fr);
             }
         }
+
+        /* REDESIGNED INLINE QUANTITY SELECTOR */
+        .qty-selector-inline {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--brand-light);
+            border-radius: var(--radius);
+            padding: 4px;
+            width: 100%;
+            border: 2px solid var(--brand);
+            height: 48px;
+            box-sizing: border-box;
+        }
+        
+        .qty-selector-inline button {
+            background: var(--surface);
+            color: var(--brand);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .qty-selector-inline button:hover {
+            background: var(--brand);
+            color: white;
+        }
+        
+        .qty-selector-inline span {
+            font-weight: 900;
+            font-size: 1.15rem;
+            color: var(--brand);
+        }
+
+        .add-btn-inline {
+            width: 100%;
+            height: 48px;
+            border-radius: var(--radius);
+            background: var(--brand);
+            border: none;
+            color: white;
+            font-weight: 800;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(234, 88, 12, 0.2);
+        }
+
+        .add-btn-inline:hover {
+            background: var(--brand-hover);
+            transform: scale(1.02);
+            box-shadow: 0 6px 15px rgba(234, 88, 12, 0.3);
+        }
+
+        /* FLOATING BOTTOM CART BAR */
+        .floating-cart-bar {
+            position: fixed;
+            bottom: 24px;
+            left: 5%;
+            right: 5%;
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--brand);
+            color: white;
+            border-radius: 20px;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 15px 35px rgba(234, 88, 12, 0.4);
+            z-index: 1500;
+            transform: translateY(150px);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .floating-cart-bar.show {
+            transform: translateY(0);
+        }
+
+        .floating-cart-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            text-align: left;
+        }
+
+        .floating-cart-title {
+            font-weight: 900;
+            font-size: 1.15rem;
+            letter-spacing: -0.01em;
+        }
+
+        .floating-cart-sub {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            font-weight: 600;
+        }
+
+        .floating-cart-btn {
+            background: white;
+            color: var(--brand);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .floating-cart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* CATEGORY SECTION STYLING */
+        .category-section {
+            margin-bottom: 60px;
+            scroll-margin-top: 140px; /* offset for sticky headers */
+        }
+
+        .category-section-header {
+            margin-bottom: 24px;
+            border-left: 5px solid var(--brand);
+            padding-left: 12px;
+            text-align: left;
+        }
+
+        .category-section-title {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--text);
+        }
     </style>
 </head>
 
@@ -1661,167 +1807,19 @@
         <img class="lightbox-content" id="lightboxImg" src="" alt="" onclick="event.stopPropagation()">
     </div>
 
+    <!-- FLOATING BOTTOM CART BAR -->
+    <div class="floating-cart-bar" id="floatingCartBar">
+        <div class="floating-cart-info">
+            <div class="floating-cart-title" id="floatCartTitle">🛒 0 Items | Total: ₹0</div>
+            <div class="floating-cart-sub">Fresh snacks ready to order</div>
+        </div>
+        <button class="floating-cart-btn" onclick="openCart()">
+            <span>View Cart</span>
+            <svg class="icon icon-sm" style="stroke: currentColor;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+    </div>
+
     <script>
-        // JS LOGIC
-        const API = "https://kirtiraj.onrender.com";
-        let allData = {};
-        let cart = [];
-        let selectedItem = null;
-        let qty = 1;
-        let currentView = { type: 'cats', cat: null };
-
-        const categoryIcons = {};
-
-        const productImageMap = {
-            "Gulla 6pcs": "gulla.png",
-            "Chorafali Papad 500g": "chorafali.png",
-            "Chorafali Papad 500gm": "chorafali.png",
-            "Mathia Papad 500g": "mathia.png",
-            "Mathia Papad 500gm": "mathia.png",
-            "Green Chilli Mathia Papad 500g": "gcmathia.jpeg",
-            "Suvari Papad 200gm": "suvari.png",
-            "Suvari Papad 200g": "suvari.png",
-            "Single Mari Papad 250g": "singalmari.png",
-            "Single Mari Papad 250gm": "singalmari.png",
-            "Single Mari Papad 500g": "singalmari.png",
-            "Single Mari Papad 500grm": "singalmari.png",
-            "Punjabi Double Mari Papad 250g": "doubalmari.png",
-            "Punjabi Double Mari Papad 250gm": "doubalmari.png",
-            "Punjabi Double Mari Papad 500grm": "doubalmari.png",
-            "Punjabi Double Mari Papad 500g": "doubalmari.png",
-            "Jeera Khari 200gm": "jeerakhari.jpeg",
-            "Jeera Khari 200g": "jeerakhari.jpeg",
-            "Plain Khari 200gm": "plainkhari.jpeg",
-            "Plain Khari 200g": "plainkhari.jpeg",
-            "Wheat Khari 200gm": "wheatkhari.jpeg",
-            "Wheat Khari 200g": "wheatkhari.jpeg",
-            "Wheat Methi Masala Khari 200gm": "methikhari.jpeg",
-            "Wheat Methi Masala Khari 200g": "methikhari.jpeg",
-            "Bajra Khichiya 250gm": "bajrakhichiya.png",
-            "Bajra Khichiya 250g": "bajrakhichiya.png",
-            "Green Chilli Rice Papadi 400gm - Mini": "greenchillikhichiya.png",
-            "Green Chilli Rice Papadi 400g Mini": "greenchillikhichiya.png",
-            "Green Chilli Rice Papadi 250gm": "greenchillikhichiya.png",
-            "Green Chilli Rice Papadi 250g": "greenchillikhichiya.png",
-            "Jeera Rice Papadi 250g": "jeerakhichiya.png",
-            "Jeera Rice Papadi 250gm": "jeerakhichiya.png",
-            "Jeera Rice Papadi 400g - Mini": "jeerakhichiya.png",
-            "Jeera Rice Papadi 400g Mini": "jeerakhichiya.png",
-            "Jowar Khichiya 250gm": "jowarkhichiya.png",
-            "Jowar Khichiya 250g": "jowarkhichiya.png",
-            "Rajwadi Rice Papadi 400g - Mini": "rajwadikhichiya.png",
-            "Rajwadi Rice Papadi 400g Mini": "rajwadikhichiya.png",
-            "Rajwadi Rice Papadi 250gm": "rajwadikhichiya.png",
-            "Rajwadi Rice Papadi 250g": "rajwadikhichiya.png",
-            "Fire Puri 200g": "firepuri.jpeg",
-            "Fire Puri 200gm": "firepuri.jpeg",
-            "Masala Puri 200g": "masalapuri.jpeg",
-            "Masala Puri 200gm": "masalapuri.jpeg",
-            "Methi Puri 200g": "methipuri.jpeg",
-            "Methi Puri 200gm": "methipuri.jpeg",
-            "Bhatha Kani Gathiya 200g": "bhatkanigathiya.png",
-            "Bhatha Kani Gathiya 200gm": "bhatkanigathiya.png",
-            "Khamni Sev 200g": "khamnisev.jpeg",
-            "Khamni Sev 200gm": "khamnisev.jpeg",
-            "Usal Sev 200g": "usalsev.png",
-            "Usal Sev 200gm": "usalsev.png",
-            "Fulwadi 200g": "fulwadi.png",
-            "Fulwadi 200gm": "fulwadi.png",
-            "Tam Tam 200g": "tamtam.jpeg",
-            "Tam Tam 200gm": "tamtam.jpeg",
-            "Mix Chavanu 200g": "mixchavanu.png",
-            "Mix Chavanu 200gm": "mixchavanu.png",
-            "Papad Chavanu 200g": "papadchavanu.jpeg",
-            "Papad Chavanu 200gm": "papadchavanu.jpeg",
-            "Wheat Chevdo 200g": "wheatchevdo.jpeg",
-            "Wheat Chevdo 200gm": "wheatchevdo.jpeg",
-
-            // New mappings from the newly added images
-            "Bhadrani Moong 200g": "bhadranimoong.png",
-            "Bhadrani Moong 200gm": "bhadranimoong.png",
-            "Bhavnagri Gathiya 200g": "bhavnagri gathiya.png",
-            "Bhavnagri Gathiya 200gm": "bhavnagri gathiya.png",
-            "Bhel Mix 150g": "bhelmix.png",
-            "Bhel Mix 150gm": "bhelmix.png",
-            "Chocolate Chips Cookies 200g": "cc.png",
-            "Chocolate Chips Cookies 200gm": "cc.png",
-            "Chanajor Garam 200g": "chanajor.png",
-            "Chanajor Garam 200gm": "chanajor.png",
-            "Chapta Mug 200g": "chaptamoong.png",
-            "Chapta Mug 200gm": "chaptamoong.png",
-            "Dal Moth 200g": "dalmoth.png",
-            "Dal Moth 200gm": "dalmoth.png",
-            "Dry Fruit Biscuit 200g": "dryfruitcookies.png",
-            "Dry Fruit Biscuit 200gm": "dryfruitcookies.png",
-            "Garlic Papad 250g": "garlic.png",
-            "Garlic Papad 250gm": "garlic.png",
-            "Green Garlic Papad 500g": "green garlic.png",
-            "Green Garlic Papad 500gm": "green garlic.png",
-            "Indori Mix 200g": "indori mix.png",
-            "Indori Mix 200gm": "indori mix.png",
-            "Jeera Papad 250g": "jeera.png",
-            "Jeera Papad 250gm": "jeera.png",
-            "Jeera Khakhra 500g": "jeerakhakhra.png",
-            "Jeera Khakhra 500gms": "jeerakhakhra.png",
-            "Jeera Mari Papad 250g": "jeeramari.png",
-            "Jeera Mari Papad 250gm": "jeeramari.png",
-            "Jeera Toast Mini 200g": "jeeratoastmini.png",
-            "Jeera Toast Mini 200gm": "jeeratoastmini.png",
-            "Masala Khakhra 500g": "masalakhakhra.png",
-            "Masala Khakhra 500gms": "masalakhakhra.png",
-            "Methi Para 200g": "methipara.png",
-            "Methi Para 200gm": "methipara.png",
-            "Namak Para 200g": "namakpara.png",
-            "Namak Para 200gm": "namakpara.png",
-            "Nylon Sev 200g": "nylonsev.png",
-            "Nylon Sev 200gm": "nylonsev.png",
-            "Panipuri Khakhra 200g": "panipurikhakhra.png",
-            "Panipuri Khakhra 200gm": "panipurikhakhra.png",
-            "Plain Khakhra 500g": "plainkhakhra.png",
-            "Plain Khakhra 500gms": "plainkhakhra.png",
-            "Rajwadi Papad 250g": "rajwadi.png",
-            "Rajwadi Papad 250gm": "rajwadi.png",
-            "Ratlami Sev 200g": "ratlami sev.png",
-            "Ratlami Sev 200gm": "ratlami sev.png",
-            "Shakarpara 200g": "shakarpara.png",
-            "Shakarpara 200gm": "shakarpara.png",
-            "Sing Bhujia 200g": "singbhujya.png",
-            "Sing Bhujia 200gm": "singbhujya.png",
-            "Soya Stick 200g": "soyastick.png",
-            "Soya Stick 200gm": "soyastick.png",
-            "Surti Nankhatai 200g": "surtinankhatai.png",
-            "Surti Nankhatai 200gm": "surtinankhatai.png",
-            "Thick Mathia 200g": "thickmathiya.png",
-            "Thick Mathia 200gm": "thickmathiya.png",
-            "Tuti Fruti Toast 300g": "tootifrutitoast.png",
-            "Tuti Fruti Toast 300gm": "tootifrutitoast.png",
-            "Wheat Toast Mini 200g": "wheattoastmini.png",
-            "Wheat Toast Mini 200gm": "wheattoastmini.png",
-            "Almond Coconut Cookies": "almondcoconutcookies.png",
-            "Almond Fantasy Cookies": "almondfantasycookies.png"
-        };
-
-        // Visuals
-        window.addEventListener('scroll', () => {
-            const h = document.getElementById('header');
-            if (window.scrollY > 20) h.classList.add('scrolled');
-            else h.classList.remove('scrolled');
-
-            const sh = document.getElementById('shopHeader');
-            if (sh) {
-                const rect = sh.getBoundingClientRect();
-                if (rect.top <= 80) sh.classList.add('stuck');
-                else sh.classList.remove('stuck');
-            }
-        });
-
-        function openMobileNav() { document.getElementById("mobileNav").classList.add("open"); document.body.style.overflow = "hidden"; }
-        function closeMobileNav() { document.getElementById("mobileNav").classList.remove("open"); document.body.style.overflow = ""; }
-
-        function showToast(msg) { const t = document.getElementById("toast"); t.textContent = msg; t.classList.add("show"); setTimeout(() => t.classList.remove("show"), 2800); }
-        function show(id) { document.getElementById(id).classList.add("show"); document.body.style.overflow = "hidden"; }
-        function hide(id) { document.getElementById(id).classList.remove("show"); }
-
         // Fetch
         async function loadProducts() {
             const grid = document.getElementById("productGrid");
@@ -1887,11 +1885,7 @@
                     allData = newData;
                     localStorage.setItem('kirtiraj_menu', JSON.stringify(allData));
                     renderCatNav();
-                    if (currentView.type === 'items') {
-                        showItems(currentView.cat, false); // Update without scrolling
-                    } else {
-                        showCategories(false);
-                    }
+                    showCategories(false);
                 }
             } catch (e) {
                 console.error(e);
@@ -1919,7 +1913,7 @@
             allBtn.className = "cat-nav-item active";
             allBtn.id = "cat-nav-all";
             allBtn.innerHTML = `<span>All</span>`;
-            allBtn.onclick = () => { setActiveCat("All"); showCategories(); };
+            allBtn.onclick = () => { setActiveCat("All"); window.scrollTo({ top: document.getElementById('shop').offsetTop - 140, behavior: 'smooth' }); };
             nav.appendChild(allBtn);
 
             Object.keys(allData).forEach(cat => {
@@ -1927,7 +1921,7 @@
                 btn.className = "cat-nav-item";
                 btn.id = `cat-nav-${cat.replace(/\s+/g, '-')}`;
                 btn.innerHTML = `<span>${cat}</span>`;
-                btn.onclick = () => { setActiveCat(cat); showItems(cat); };
+                btn.onclick = () => { showItems(cat); };
                 nav.appendChild(btn);
             });
         }
@@ -1942,94 +1936,146 @@
             }
         }
 
-
         function getIcon(s) { return ""; }
 
         function showCategories(shouldScroll = true) {
             currentView = { type: 'cats', cat: null };
-            setActiveCat("All");
             const grid = document.getElementById("productGrid");
-            grid.className = "grid cat-grid";
+            grid.className = "grid-single-page";
             grid.innerHTML = "";
             document.getElementById("backBtn").classList.remove("visible");
             document.querySelector(".section-title").textContent = "Explore Our Menu";
             document.querySelector(".section-tag").textContent = "Menu";
+
             Object.keys(allData).forEach(cat => {
-                const d = document.createElement("div");
-                d.className = "cat-card";
-                d.innerHTML = `<div class="cat-name">${cat}</div>`;
-                d.onclick = () => { setActiveCat(cat); showItems(cat); };
-                grid.appendChild(d);
+                const section = document.createElement("div");
+                section.className = "category-section";
+                section.id = `cat-sec-${cat.replace(/\s+/g, '-')}`;
+
+                const header = document.createElement("div");
+                header.className = "category-section-header";
+                header.innerHTML = `<h3 class="category-section-title">${cat}</h3>`;
+                section.appendChild(header);
+
+                const prodGrid = document.createElement("div");
+                prodGrid.className = "grid prod-grid";
+
+                const items = (allData[cat] || []).slice();
+                items.forEach(item => {
+                    const cartItem = cart.find(c => c.name === item.name);
+                    const currentQty = cartItem ? cartItem.qty : 0;
+
+                    const d = document.createElement("div");
+                    d.className = "prod-card";
+
+                    let actionHtml = "";
+                    if (currentQty === 0) {
+                        actionHtml = `<button class="add-btn-inline" onclick="event.stopPropagation(); addToCartDirect('${item.name.replace(/'/g, "\\'")}', ${item.price})">ADD +</button>`;
+                    } else {
+                        actionHtml = `
+                            <div class="qty-selector-inline" onclick="event.stopPropagation();">
+                                <button onclick="changeQtyDirect('${item.name.replace(/'/g, "\\'")}', -1)">−</button>
+                                <span>${currentQty}</span>
+                                <button onclick="changeQtyDirect('${item.name.replace(/'/g, "\\'")}', 1)">+</button>
+                            </div>
+                        `;
+                    }
+
+                    d.innerHTML = `
+                        <div class="prod-img-wrap">
+                            ${item.img ? `<img src="${item.img}" alt="${item.name}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"/>` : `<div style="font-size:3rem; font-weight:900; color:var(--brand); opacity:0.1;">K</div>`}
+                            <div style="display:none; font-size:3rem; font-weight:900; color:var(--brand); opacity:0.1;">K</div>
+                        </div>
+                        <div class="prod-name">${item.name}</div>
+                        <div class="prod-price">₹${item.price}</div>
+                        <div style="margin-top:auto; width:100%;">
+                            ${actionHtml}
+                        </div>
+                    `;
+                    prodGrid.appendChild(d);
+                });
+
+                section.appendChild(prodGrid);
+                grid.appendChild(section);
             });
+
             if (shouldScroll) {
                 window.scrollTo({ top: document.getElementById('shop').offsetTop - 140, behavior: 'smooth' });
             }
         }
 
-        function showItems(cat, shouldScroll = true) {
-            currentView = { type: 'items', cat: cat };
+        function showItems(cat) {
             setActiveCat(cat);
-            const grid = document.getElementById("productGrid");
-            grid.className = "grid prod-grid";
-            grid.innerHTML = "";
-            document.getElementById("backBtn").classList.add("visible");
-            document.querySelector(".section-title").textContent = cat;
-            document.querySelector(".section-tag").textContent = "Category";
-
-            const items = (allData[cat] || []).slice();
-            // HARD SORT: Guaranteed sorting at render time (Images first)
-            items.sort((a, b) => {
-                const hasImgA = !!(a.img && a.img.trim() !== "");
-                const hasImgB = !!(b.img && b.img.trim() !== "");
-                if (hasImgA && !hasImgB) return -1;
-                if (!hasImgA && hasImgB) return 1;
-                return a.name.localeCompare(b.name);
-            });
-
-            items.forEach(item => {
-                const d = document.createElement("div");
-                d.className = "prod-card";
-                d.innerHTML = `
-                    <div class="prod-img-wrap">
-                        ${item.img ? `<img src="${item.img}" alt="${item.name}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"/>` : `<div style="font-size:3rem; font-weight:900; color:var(--brand); opacity:0.1;">K</div>`}
-                    </div>
-                    <div class="prod-name">${item.name}</div>
-                    <div class="prod-price">₹${item.price}</div>
-                    <button class="add-btn" onclick="event.stopPropagation();quickAdd(${JSON.stringify({ name: item.name, price: item.price, img: item.img }).replace(/"/g, '&quot;')})">Quick Add</button>
-                `;
-                d.onclick = () => openProdModal(item, cat);
-                grid.appendChild(d);
-            });
-            if (shouldScroll) {
-                window.scrollTo({ top: document.getElementById('shop').offsetTop - 140, behavior: 'smooth' });
+            const section = document.getElementById(`cat-sec-${cat.replace(/\s+/g, '-')}`);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
             }
         }
 
-        function openProdModal(item, cat) {
-            selectedItem = item; qty = 1;
-            document.getElementById("mImg").style.display = item.img ? "block" : "none";
-            document.getElementById("mIcon").style.display = item.img ? "none" : "block";
-            document.getElementById("mImg").src = item.img || "";
-            document.getElementById("mName").textContent = item.name;
-            document.getElementById("mPrice").textContent = `₹${item.price}`;
-            document.getElementById("mQty").textContent = 1;
-            document.getElementById("mAddBtn").innerHTML = `Add to Order • ₹${(item.price * qty).toFixed(1)}`;
-            show("prodOverlay");
-        }
-        function closeProdModal(e) { if (!e || e.target === document.getElementById("prodOverlay")) { hide("prodOverlay"); document.body.style.overflow = ""; } }
-
-        function changeQty(d) {
-            qty = Math.max(1, qty + d);
-            document.getElementById("mQty").textContent = qty;
-            if (selectedItem) document.getElementById("mAddBtn").innerHTML = `Add to Order • ₹${(selectedItem.price * qty).toFixed(1)}`;
+        function updateFloatingCartBar() {
+            const bar = document.getElementById("floatingCartBar");
+            const title = document.getElementById("floatCartTitle");
+            if (cart.length > 0) {
+                const totalQty = cart.reduce((s, i) => s + i.qty, 0);
+                const totalPrice = cart.reduce((s, i) => s + i.price * i.qty, 0);
+                title.textContent = `🛒 ${totalQty} Item${totalQty > 1 ? 's' : ''} | Total: ₹${totalPrice}`;
+                bar.classList.add("show");
+            } else {
+                bar.classList.remove("show");
+            }
         }
 
-        function addToCart() {
-            pushToCart(selectedItem, qty);
-            closeProdModal();
-            showToast(`${selectedItem.name} added!`);
+        function addToCartDirect(name, price) {
+            let img = "";
+            for (const cat in allData) {
+                const found = allData[cat].find(i => i.name === name);
+                if (found) {
+                    img = found.img || "";
+                    break;
+                }
+            }
+            pushToCart({ name, price, img }, 1);
+            showToast(`${name} added!`);
         }
-        function quickAdd(item) { pushToCart(item, 1); showToast(`${item.name} added!`); }
+
+        function changeQtyDirect(name, change) {
+            const index = cart.findIndex(c => c.name === name);
+            if (index !== -1) {
+                cart[index].qty += change;
+                if (cart[index].qty <= 0) {
+                    cart.splice(index, 1);
+                    showToast(`${name} removed!`);
+                }
+                updateCartBadge();
+                renderCart();
+            }
+        }
+
+        // Scroll spy to highlight active category in top nav
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.category-section');
+            let activeCat = "All";
+            
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 160 && rect.bottom >= 160) {
+                    activeCat = section.id.replace('cat-sec-', '').replace(/-/g, ' ');
+                }
+            });
+            
+            if (window.scrollY < 200) {
+                activeCat = "All";
+            }
+            
+            setActiveCat(activeCat);
+        });
+
+        // Keep local mappings of modals to prevent errors but disable them since they are not used
+        function openProdModal(item, cat) {}
+        function closeProdModal(e) {}
+        function changeQty(d) {}
+        function addToCart() {}
+        function quickAdd(item) {}
 
         function pushToCart(item, q) {
             const existing = cart.find(c => c.name === item.name);
@@ -2037,7 +2083,13 @@
             updateCartBadge();
         }
 
-        function updateCartBadge() { document.getElementById("cartCount").textContent = cart.reduce((s, i) => s + i.qty, 0); }
+        function updateCartBadge() {
+            document.getElementById("cartCount").textContent = cart.reduce((s, i) => s + i.qty, 0);
+            updateFloatingCartBar();
+            if (Object.keys(allData).length > 0) {
+                showCategories(false);
+            }
+        }
 
         function openCart() { renderCart(); show("cartOverlay"); document.getElementById("cartSidebar").classList.add("show"); }
         function closeCart() { hide("cartOverlay"); document.getElementById("cartSidebar").classList.remove("show"); document.body.style.overflow = ""; }
@@ -2094,24 +2146,45 @@
             const btn = document.getElementById("orderBtn");
             btn.disabled = true; btn.textContent = "Processing...";
             try {
-                const res = await fetch(`${API}/api/orders/create/`, {
+                // 1. Submit to Backend API in the background
+                await fetch(`${API}/api/orders/create/`, {
                     method: "POST", headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ name, phone, email: "", address, items: cart.map(i => ({ name: i.name, quantity: i.qty })) })
                 });
-                if (!res.ok) {
-                    const errData = await res.json().catch(() => ({}));
-                    throw new Error(errData.error || "Failed to place order.");
-                }
-                cart = []; updateCartBadge();
-                ["oName", "oPhone", "oAddress"].forEach(id => document.getElementById(id).value = "");
-                hide("orderOverlay");
-                show("successOverlay");
             } catch (err) {
-                showToast("❌ " + err.message);
-            } finally {
-                btn.disabled = false; btn.textContent = "Confirm Order";
-                document.body.style.overflow = "";
+                console.error("Error submitting order to backend:", err);
             }
+
+            // 2. Generate WhatsApp URL
+            let messageText = `*New Order from Kirtiraj Snacks*\n\n`;
+            messageText += `*Customer Details:*\n`;
+            messageText += `👤 Name: ${name}\n`;
+            messageText += `📞 Phone: ${phone}\n`;
+            messageText += `📍 Address: ${address}\n\n`;
+            messageText += `*Ordered Items:*\n`;
+            
+            let total = 0;
+            cart.forEach(item => {
+                const itemTotal = item.price * item.qty;
+                total += itemTotal;
+                messageText += `• ${item.name} x ${item.qty} = ₹${itemTotal}\n`;
+            });
+            messageText += `\n*Total Amount: ₹${total}*\n`;
+            messageText += `\nThank you! Please confirm my order.`;
+
+            const encodedMessage = encodeURIComponent(messageText);
+            const adminPhone = "919173760611"; // Kirtiraj Owner
+            const whatsappUrl = `https://wa.me/${adminPhone}?text=${encodedMessage}`;
+
+            // 3. Clear cart and UI
+            cart = []; 
+            updateCartBadge();
+            ["oName", "oPhone", "oAddress"].forEach(id => document.getElementById(id).value = "");
+            hide("orderOverlay");
+            show("successOverlay");
+
+            // 4. Open WhatsApp
+            window.open(whatsappUrl, "_blank");
         }
         function closeSuccess() { hide("successOverlay"); document.body.style.overflow = ""; }
 
