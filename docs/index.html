@@ -1820,6 +1820,114 @@
     </div>
 
     <script>
+        const API = new URLSearchParams(window.location.search).get("api") || "https://kirtiraj.onrender.com";
+
+        let allData = {};
+        let cart = [];
+        let currentView = { type: "cats", cat: null };
+        const categoryOrder = [
+            "Papad / Mathia / Chorafali",
+            "Namkeen",
+            "Khakhra",
+            "Coockies / Khari / Toast",
+            "Khichiya",
+            "Roasted - Namkeen",
+            "Mukhwas"
+        ];
+        const productImageMap = {
+            "Gulla 6pcs": "gulla.png",
+            "Chorafali Papad 500g": "chorafali.png",
+            "Mathia Papad 500g": "mathia.png",
+            "Green Chilli Mathia Papad 500g": "gcmathia.jpeg",
+            "Suvari Papad 200gm": "suvari.png",
+            "Single Mari Papad 250g": "singalmari.png",
+            "Single Mari Papad 500g": "singalmari.png",
+            "Punjabi Double Mari Papad 250g": "doubalmari.png",
+            "Punjabi Double Mari Papad 500grm": "doubalmari.png",
+            "Jeera Papad 250g": "jeera.png",
+            "Jeera Mari Papad 250g": "jeeramari.png",
+            "Rajwadi Papad 250g": "rajwadi.png",
+            "Garlic Papad 250g": "garlic.png",
+            "Green Garlic Papad 500g": "green garlic.png",
+            "Chocolate Chips Cookies 200g": "cc.png",
+            "Dry Fruit Biscuit 200g": "dryfruitcookies.png",
+            "Surti Nankhatai 200g": "surtinankhatai.png",
+            "Wheat Toast Mini 200gm": "wheattoastmini.png",
+            "Jeera Toast Mini 200gm": "jeeratoastmini.png",
+            "Jeera Khari 200gm": "jeerakhari.jpeg",
+            "Plain Khari 200gm": "plainkhari.jpeg",
+            "Wheat Khari 200gm": "wheatkhari.jpeg",
+            "Wheat Methi Masala Khari 200gm": "methikhari.jpeg",
+            "Jeera Khakhra 500g": "jeerakhakhra.png",
+            "Masala Khakhra 500g": "masalakhakhra.png",
+            "Panipuri Khakhra 200g": "panipurikhakhra.png",
+            "Plain Khakhra 500g": "plainkhakhra.png",
+            "Bajra Khichiya 250gm": "bajrakhichiya.png",
+            "Green Chilli Rice Papadi 400gm - Mini": "greenchillikhichiya.png",
+            "Green Chilli Rice Papadi 250gm": "greenchillikhichiya.png",
+            "Jeera Rice Papadi 250g": "jeerakhichiya.png",
+            "Jeera Rice Papadi 400g - Mini": "jeerakhichiya.png",
+            "Jowar Khichiya 250gm": "jowarkhichiya.png",
+            "Rajwadi Rice Papadi 400g - Mini": "rajwadikhichiya.png",
+            "Rajwadi Rice Papadi 250gm": "rajwadikhichiya.png",
+            "Thick Mathia 200g": "thickmathiya.png",
+            "Bhel Mix 150g": "bhelmix.png",
+            "Fire Puri 200g": "firepuri.jpeg",
+            "Masala Puri 200g": "masalapuri.jpeg",
+            "Methi Puri 200g": "methipuri.jpeg",
+            "Namak Para 200g": "namakpara.png",
+            "Methi Para 200g": "methipara.png",
+            "Shakarpara 200g": "shakarpara.png",
+            "Bhatha Kani Gathiya 200g": "bhatkanigathiya.png",
+            "Bhavnagri Gathiya 200g": "bhavnagri gathiya.png",
+            "Khamni Sev 200g": "khamnisev.jpeg",
+            "Nylon Sev 200g": "nylonsev.png",
+            "Ratlami Sev 200g": "ratlami sev.png",
+            "Usal Sev 200g": "usalsev.png",
+            "Fulwadi 200g": "fulwadi.png",
+            "Tam Tam 200g": "tamtam.jpeg",
+            "Bhadrani Moong 200g": "bhadranimoong.png",
+            "Chanajor Garam 200g": "chanajor.png",
+            "Chapta Mug 200g": "chaptamoong.png",
+            "Dal Moth 200g": "dalmoth.png",
+            "Sing Bhujia 200g": "singbhujya.png",
+            "Soya Stick 200g": "soyastick.png",
+            "Indori Mix 200g": "indori mix.png",
+            "Mix Chavanu 200g": "mixchavanu.png",
+            "Papad Chavanu 200g": "papadchavanu.jpeg",
+            "Wheat Chevdo 200g": "wheatchevdo.jpeg"
+        };
+        let toastTimer;
+
+        function show(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.classList.add("show");
+            document.body.style.overflow = "hidden";
+        }
+
+        function hide(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.classList.remove("show");
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            if (!toast) return;
+            toast.textContent = message;
+            toast.classList.add("show");
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove("show"), 2400);
+        }
+
+        function getOrderedCategories() {
+            const categories = Object.keys(allData);
+            const known = categoryOrder.filter(cat => categories.includes(cat));
+            const extra = categories.filter(cat => !categoryOrder.includes(cat));
+            return [...known, ...extra];
+        }
+
         // Fetch
         async function loadProducts() {
             const grid = document.getElementById("productGrid");
@@ -1913,10 +2021,10 @@
             allBtn.className = "cat-nav-item active";
             allBtn.id = "cat-nav-all";
             allBtn.innerHTML = `<span>All</span>`;
-            allBtn.onclick = () => { setActiveCat("All"); window.scrollTo({ top: document.getElementById('shop').offsetTop - 140, behavior: 'smooth' }); };
+            allBtn.onclick = () => { showCategories(); };
             nav.appendChild(allBtn);
 
-            Object.keys(allData).forEach(cat => {
+            getOrderedCategories().forEach(cat => {
                 const btn = document.createElement("div");
                 btn.className = "cat-nav-item";
                 btn.id = `cat-nav-${cat.replace(/\s+/g, '-')}`;
@@ -1941,62 +2049,24 @@
         function showCategories(shouldScroll = true) {
             currentView = { type: 'cats', cat: null };
             const grid = document.getElementById("productGrid");
-            grid.className = "grid-single-page";
+            grid.className = "grid cat-grid";
             grid.innerHTML = "";
             document.getElementById("backBtn").classList.remove("visible");
             document.querySelector(".section-title").textContent = "Explore Our Menu";
             document.querySelector(".section-tag").textContent = "Menu";
+            setActiveCat("All");
 
-            Object.keys(allData).forEach(cat => {
-                const section = document.createElement("div");
-                section.className = "category-section";
-                section.id = `cat-sec-${cat.replace(/\s+/g, '-')}`;
-
-                const header = document.createElement("div");
-                header.className = "category-section-header";
-                header.innerHTML = `<h3 class="category-section-title">${cat}</h3>`;
-                section.appendChild(header);
-
-                const prodGrid = document.createElement("div");
-                prodGrid.className = "grid prod-grid";
-
-                const items = (allData[cat] || []).slice();
-                items.forEach(item => {
-                    const cartItem = cart.find(c => c.name === item.name);
-                    const currentQty = cartItem ? cartItem.qty : 0;
-
-                    const d = document.createElement("div");
-                    d.className = "prod-card";
-
-                    let actionHtml = "";
-                    if (currentQty === 0) {
-                        actionHtml = `<button class="add-btn-inline" onclick="event.stopPropagation(); addToCartDirect('${item.name.replace(/'/g, "\\'")}', ${item.price})">ADD +</button>`;
-                    } else {
-                        actionHtml = `
-                            <div class="qty-selector-inline" onclick="event.stopPropagation();">
-                                <button onclick="changeQtyDirect('${item.name.replace(/'/g, "\\'")}', -1)">−</button>
-                                <span>${currentQty}</span>
-                                <button onclick="changeQtyDirect('${item.name.replace(/'/g, "\\'")}', 1)">+</button>
-                            </div>
-                        `;
-                    }
-
-                    d.innerHTML = `
-                        <div class="prod-img-wrap">
-                            ${item.img ? `<img src="${item.img}" alt="${item.name}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"/>` : `<div style="font-size:3rem; font-weight:900; color:var(--brand); opacity:0.1;">K</div>`}
-                            <div style="display:none; font-size:3rem; font-weight:900; color:var(--brand); opacity:0.1;">K</div>
-                        </div>
-                        <div class="prod-name">${item.name}</div>
-                        <div class="prod-price">₹${item.price}</div>
-                        <div style="margin-top:auto; width:100%;">
-                            ${actionHtml}
-                        </div>
-                    `;
-                    prodGrid.appendChild(d);
-                });
-
-                section.appendChild(prodGrid);
-                grid.appendChild(section);
+            getOrderedCategories().forEach(cat => {
+                const card = document.createElement("div");
+                card.className = "cat-card";
+                card.onclick = () => showItems(cat);
+                card.innerHTML = `
+                    <div>
+                        <div class="cat-icon">${getIcon(cat)}</div>
+                        <div class="cat-name">${cat}</div>
+                    </div>
+                `;
+                grid.appendChild(card);
             });
 
             if (shouldScroll) {
@@ -2005,11 +2075,50 @@
         }
 
         function showItems(cat) {
+            currentView = { type: 'products', cat };
             setActiveCat(cat);
-            const section = document.getElementById(`cat-sec-${cat.replace(/\s+/g, '-')}`);
-            if (section) {
-                section.scrollIntoView({ behavior: 'smooth' });
-            }
+            const grid = document.getElementById("productGrid");
+            grid.className = "grid prod-grid";
+            grid.innerHTML = "";
+            document.getElementById("backBtn").classList.add("visible");
+            document.querySelector(".section-title").textContent = cat;
+            document.querySelector(".section-tag").textContent = "Products";
+
+            (allData[cat] || []).forEach(item => {
+                const cartItem = cart.find(c => c.name === item.name);
+                const currentQty = cartItem ? cartItem.qty : 0;
+                const safeName = item.name.replace(/'/g, "\\'");
+                const card = document.createElement("div");
+                card.className = "prod-card";
+
+                let actionHtml = "";
+                if (currentQty === 0) {
+                    actionHtml = `<button class="add-btn-inline" onclick="event.stopPropagation(); addToCartDirect('${safeName}', ${item.price})">ADD +</button>`;
+                } else {
+                    actionHtml = `
+                        <div class="qty-selector-inline" onclick="event.stopPropagation();">
+                            <button onclick="changeQtyDirect('${safeName}', -1)">−</button>
+                            <span>${currentQty}</span>
+                            <button onclick="changeQtyDirect('${safeName}', 1)">+</button>
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = `
+                    <div class="prod-img-wrap">
+                        ${item.img ? `<img src="${item.img}" alt="${item.name}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"/>` : `<div style="font-size:3rem; font-weight:900; color:var(--brand); opacity:0.1;">K</div>`}
+                        <div style="display:none; font-size:3rem; font-weight:900; color:var(--brand); opacity:0.1;">K</div>
+                    </div>
+                    <div class="prod-name">${item.name}</div>
+                    <div class="prod-price">₹${item.price}</div>
+                    <div style="margin-top:auto; width:100%;">
+                        ${actionHtml}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            window.scrollTo({ top: document.getElementById('shop').offsetTop - 140, behavior: 'smooth' });
         }
 
         function updateFloatingCartBar() {
@@ -2053,21 +2162,9 @@
 
         // Scroll spy to highlight active category in top nav
         window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('.category-section');
-            let activeCat = "All";
-            
-            sections.forEach(section => {
-                const rect = section.getBoundingClientRect();
-                if (rect.top <= 160 && rect.bottom >= 160) {
-                    activeCat = section.id.replace('cat-sec-', '').replace(/-/g, ' ');
-                }
-            });
-            
-            if (window.scrollY < 200) {
-                activeCat = "All";
+            if (currentView.type === "cats") {
+                setActiveCat("All");
             }
-            
-            setActiveCat(activeCat);
         });
 
         // Keep local mappings of modals to prevent errors but disable them since they are not used
@@ -2087,7 +2184,11 @@
             document.getElementById("cartCount").textContent = cart.reduce((s, i) => s + i.qty, 0);
             updateFloatingCartBar();
             if (Object.keys(allData).length > 0) {
-                showCategories(false);
+                if (currentView.type === "products" && currentView.cat) {
+                    showItems(currentView.cat);
+                } else {
+                    showCategories(false);
+                }
             }
         }
 
