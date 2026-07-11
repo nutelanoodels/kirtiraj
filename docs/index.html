@@ -1597,13 +1597,10 @@
             <a href="#location">Location</a>
         </nav>
         <div class="header-actions">
-            <button class="cart-btn" onclick="openCart()">
-                <svg class="icon icon-sm">
-                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
-                    <line x1="3" y1="6" x2="21" y2="6" />
-                    <path d="M16 10a4 4 0 0 1-8 0" />
-                </svg>
-                <span class="cart-badge" id="cartCount">0</span>
+            <button class="cart-btn" onclick="openCart()" style="display: flex; align-items: center; gap: 8px; padding: 10px 18px;">
+                <span style="font-size: 1.25rem; line-height: 1;">🛒</span>
+                <span style="font-size: 0.95rem; font-weight: 800;" class="desktop-only">My Order</span>
+                <span class="cart-badge" id="cartCount" style="margin-left: 2px;">0</span>
             </button>
             <div class="burger" onclick="openMobileNav()">
                 <span></span><span></span><span></span>
@@ -1813,9 +1810,9 @@
             <div class="floating-cart-title" id="floatCartTitle">🛒 0 Items | Total: ₹0</div>
             <div class="floating-cart-sub">Fresh snacks ready to order</div>
         </div>
-        <button class="floating-cart-btn" onclick="openCart()">
-            <span>View Cart</span>
-            <svg class="icon icon-sm" style="stroke: currentColor;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <button class="floating-cart-btn" onclick="openCart()" style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 1.15rem; line-height: 1;">🛒</span>
+            <span style="font-weight: 800;">View Order</span>
         </button>
     </div>
 
