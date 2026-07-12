@@ -317,17 +317,19 @@
         }
 
         .cat-card {
-            background: linear-gradient(145deg, #fffdf4 0%, #fef9e7 60%, #fdf3c8 100%);
+            background: linear-gradient(135deg, #C8960C 0%, #F5D060 45%, #E8C547 75%, #ffffff 100%);
+            background-size: 200% auto;
             border-radius: var(--radius-lg);
             height: 120px;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
-            border: 1.5px solid #D4AF37;
+            border: 2px solid #D4AF37;
+            border-left: 5px solid #1B3FA6;
             transition: var(--transition);
             cursor: pointer;
-            box-shadow: 0 3px 12px rgba(200,150,12,0.15), inset 0 1px 0 rgba(255,255,255,0.8);
+            box-shadow: 0 4px 18px rgba(200, 150, 12, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.5);
             position: relative;
             overflow: hidden;
         }
@@ -341,13 +343,25 @@
             height: 5px;
             background: linear-gradient(90deg, #C8960C, #F5D060, #C8960C);
             background-size: 200% auto;
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
+            transform: scaleX(1);
+            animation: shimmer-gold 2.5s linear infinite;
             transform-origin: left;
         }
 
+        .cat-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 12%;
+            right: 12%;
+            height: 3px;
+            border-radius: 3px 3px 0 0;
+            background: linear-gradient(90deg, #1A1A6E, #1B3FA6, #153090);
+            opacity: 0.85;
+        }
+
         .cat-card:hover::before {
-            transform: scaleX(1);
+            height: 5px;
             animation: shimmer-gold 1.2s linear infinite;
         }
 
@@ -355,7 +369,12 @@
             transform: translateY(-8px) scale(1.02);
             background: linear-gradient(135deg, #1A1A6E 0%, #1B3FA6 60%, #153090 100%);
             border-color: #F5D060;
-            box-shadow: 0 12px 32px rgba(27,63,166,0.35), 0 0 0 2px rgba(245,208,96,0.3);
+            box-shadow: 0 12px 32px rgba(27, 63, 166, 0.35), 0 0 0 2px rgba(245, 208, 96, 0.3);
+        }
+
+        .cat-card:hover::after {
+            background: linear-gradient(90deg, #F5D060, #FFD700, #F5D060);
+            opacity: 1;
         }
 
         .cat-card:hover .cat-name {
@@ -363,13 +382,13 @@
         }
 
         .cat-card:hover .cat-icon {
-            filter: drop-shadow(0 0 6px rgba(255,215,0,0.6));
+            filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.6));
         }
 
         .cat-name {
             font-weight: 800;
             font-size: 1.2rem;
-            color: #1A1A2E;
+            color: #003580;
             text-align: center;
             transition: color 0.3s ease;
         }
