@@ -12,24 +12,21 @@
     <style>
         /* PREMIUM LIGHT E-COMMERCE THEME */
         :root {
-            --bg: #FAFAF9;
-            /* Soft Off-White */
-            --surface: #FFFFFF;
-            --text: #1C1917;
-            /* Dark Gray Stone */
-            --text-muted: #78716C;
-            --brand: #EA580C;
-            /* Appetizing Deep Orange */
-            --brand-hover: #C2410C;
-            --brand-light: #FFEDD5;
-            --border: #E7E5E4;
-            --radius-lg: 24px;
-            --radius: 16px;
-            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
-            --transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
-        }
+    --bg: #FAFAF9;
+    --surface: #FFFFFF;
+    --text: #1C1917;
+    --text-muted: #6c6363;
+    --brand: #ff4a00;
+    --brand-hover: #ff4a00;
+    --brand-light: #ffe6c5;
+    --border: #E7E5E4;
+    --radius-lg: 24px;
+    --radius: 16px;
+    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+    --transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    }
 
         * {
             box-sizing: border-box;
@@ -316,21 +313,21 @@
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
         }
 
-        .cat-card {
-            background: linear-gradient(145deg, #fff7ed 0%, #ffedd5 55%, #fed7aa 100%);
-            border-radius: var(--radius-lg);
-            height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            border: 2px solid var(--brand);
-            transition: var(--transition);
-            cursor: pointer;
-            box-shadow: 0 4px 14px rgba(234, 88, 12, 0.12), inset 0 2px 0 rgba(255, 255, 255, 0.8);
-            position: relative;
-            overflow: hidden;
-        }
+       .cat-card {
+    background: #ff4a00;
+    border-radius: var(--radius-lg);
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border: 2px solid var(--brand);
+    transition: var(--transition);
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(234, 88, 12, 0.12), inset 0 2px 0 rgba(255, 255, 255, 0.8);
+    position: relative;
+    overflow: hidden;
+}
 
         .cat-card::before {
             content: '';
@@ -384,11 +381,11 @@
         }
 
         .cat-name {
-            font-weight: 800;
-            font-size: 1.2rem;
-            color: var(--brand-hover);
-            text-align: center;
-            transition: color 0.3s ease;
+        font-weight: 800;
+        font-size: 1.2rem;
+        color: white;
+        text-align: center;
+        transition: color 0.3s ease;
         }
 
         .prod-grid {
@@ -606,7 +603,6 @@
 
         /* Active state — darker orange */
         .cat-nav-item.active {
-            background: linear-gradient(135deg, #9a3412 0%, var(--brand-hover) 100%);
             color: #ffffff;
             border-color: #ffffff;
             box-shadow: 0 4px 16px rgba(234, 88, 12, 0.4), 0 0 0 2px rgba(255, 237, 213, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
