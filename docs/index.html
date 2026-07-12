@@ -317,19 +317,17 @@
         }
 
         .cat-card {
-            background: linear-gradient(135deg, #C8960C 0%, #F5D060 45%, #E8C547 75%, #ffffff 100%);
-            background-size: 200% auto;
+            background: linear-gradient(145deg, #fff7ed 0%, #ffedd5 55%, #fed7aa 100%);
             border-radius: var(--radius-lg);
             height: 120px;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
-            border: 2px solid #D4AF37;
-            border-left: 5px solid #1B3FA6;
+            border: 2px solid var(--brand);
             transition: var(--transition);
             cursor: pointer;
-            box-shadow: 0 4px 18px rgba(200, 150, 12, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 14px rgba(234, 88, 12, 0.12), inset 0 2px 0 rgba(255, 255, 255, 0.8);
             position: relative;
             overflow: hidden;
         }
@@ -340,8 +338,8 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, #C8960C, #F5D060, #C8960C);
+            height: 4px;
+            background: linear-gradient(90deg, var(--brand-hover), var(--brand), var(--brand-hover));
             background-size: 200% auto;
             transform: scaleX(1);
             animation: shimmer-gold 2.5s linear infinite;
@@ -356,39 +354,39 @@
             right: 12%;
             height: 3px;
             border-radius: 3px 3px 0 0;
-            background: linear-gradient(90deg, #1A1A6E, #1B3FA6, #153090);
-            opacity: 0.85;
+            background: linear-gradient(90deg, #fdba74, var(--brand), #fdba74);
+            opacity: 0.7;
         }
 
         .cat-card:hover::before {
-            height: 5px;
+            height: 4px;
             animation: shimmer-gold 1.2s linear infinite;
         }
 
         .cat-card:hover {
             transform: translateY(-8px) scale(1.02);
-            background: linear-gradient(135deg, #1A1A6E 0%, #1B3FA6 60%, #153090 100%);
-            border-color: #F5D060;
-            box-shadow: 0 12px 32px rgba(27, 63, 166, 0.35), 0 0 0 2px rgba(245, 208, 96, 0.3);
+            background: linear-gradient(135deg, var(--brand-hover) 0%, var(--brand) 100%);
+            border-color: #fb923c;
+            box-shadow: 0 12px 28px rgba(234, 88, 12, 0.3), 0 0 0 2px rgba(255, 237, 213, 0.5);
         }
 
         .cat-card:hover::after {
-            background: linear-gradient(90deg, #F5D060, #FFD700, #F5D060);
+            background: linear-gradient(90deg, #fff7ed, #ffffff, #fff7ed);
             opacity: 1;
         }
 
         .cat-card:hover .cat-name {
-            color: #FFD700;
+            color: #ffffff;
         }
 
         .cat-card:hover .cat-icon {
-            filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.6));
+            filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.5));
         }
 
         .cat-name {
             font-weight: 800;
             font-size: 1.2rem;
-            color: #003580;
+            color: var(--brand-hover);
             text-align: center;
             transition: color 0.3s ease;
         }
@@ -544,7 +542,7 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
-            border-bottom: 1px solid #D4AF37;
+            border-bottom: 1px solid #fdba74;
             padding: 12px 0;
             transition: var(--transition);
             display: flex;
@@ -570,7 +568,7 @@
             display: none;
         }
 
-        /* Default state — rich gold gradient */
+        /* Default state — orange with white text */
         .cat-nav-item {
             flex: 0 0 auto;
             display: flex;
@@ -579,16 +577,15 @@
             justify-content: center;
             gap: 4px;
             padding: 10px 18px;
-            background: linear-gradient(135deg, #C8960C 0%, #F5D060 50%, #C8960C 100%);
-            background-size: 200% auto;
-            color: #1A1A2E;
+            background: linear-gradient(135deg, var(--brand-hover) 0%, var(--brand) 100%);
+            color: #ffffff;
             border-radius: 20px;
             cursor: pointer;
             transition: var(--transition);
             min-width: 88px;
             text-align: center;
-            border: 1.5px solid #D4AF37;
-            box-shadow: 0 2px 8px rgba(200,150,12,0.25), inset 0 1px 0 rgba(255,255,255,0.4);
+            border: 1.5px solid #fb923c;
+            box-shadow: 0 2px 8px rgba(234, 88, 12, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
             font-weight: 700;
             position: relative;
             overflow: hidden;
@@ -597,35 +594,36 @@
         .cat-nav-item i {
             font-size: 1.6rem;
             line-height: 1;
+            color: #ffffff;
         }
 
         .cat-nav-item span {
             font-size: 0.75rem;
             font-weight: 800;
             letter-spacing: 0.02em;
+            color: #ffffff;
         }
 
-        /* Active state — deep royal blue with gold border */
+        /* Active state — darker orange */
         .cat-nav-item.active {
-            background: linear-gradient(135deg, #1A1A6E 0%, #1B3FA6 60%, #153090 100%);
-            background-size: 200% auto;
-            color: #FFD700;
-            border-color: #F5D060;
-            box-shadow: 0 4px 16px rgba(27,63,166,0.45), 0 0 0 2px rgba(245,208,96,0.3), inset 0 1px 0 rgba(255,255,255,0.15);
+            background: linear-gradient(135deg, #9a3412 0%, var(--brand-hover) 100%);
+            color: #ffffff;
+            border-color: #ffffff;
+            box-shadow: 0 4px 16px rgba(234, 88, 12, 0.4), 0 0 0 2px rgba(255, 237, 213, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
         }
 
         .cat-nav-item.active i,
         .cat-nav-item.active span {
-            color: #FFD700;
+            color: #ffffff;
         }
 
-        /* Hover state — shimmering gold + slight lift */
+        /* Hover state */
         .cat-nav-item:hover:not(.active) {
-            animation: shimmer-gold 1s linear infinite;
-            color: #1A1A2E;
-            border-color: #C8960C;
-            box-shadow: 0 6px 20px rgba(200,150,12,0.4), inset 0 1px 0 rgba(255,255,255,0.5);
+            background: linear-gradient(135deg, var(--brand) 0%, #fb923c 100%);
+            color: #ffffff;
+            border-color: #ffffff;
+            box-shadow: 0 6px 20px rgba(234, 88, 12, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
             transform: translateY(-3px) scale(1.04);
         }
 
