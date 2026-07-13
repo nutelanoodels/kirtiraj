@@ -1173,6 +1173,45 @@
             resize: none;
         }
 
+        .delivery-options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .delivery-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            background: var(--bg);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .delivery-option:has(input:checked) {
+            border-color: var(--brand);
+            background: var(--brand-light);
+        }
+
+        .delivery-option input {
+            width: auto;
+            margin: 4px 0 0;
+            accent-color: var(--brand);
+        }
+
+        .delivery-option strong,
+        .delivery-option small {
+            display: block;
+        }
+
+        .delivery-option small {
+            margin-top: 3px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
         .checkout-summary {
             background: #F8FAFC;
             padding: 20px;
@@ -1824,6 +1863,23 @@
                 <label>Delivery Address</label>
                 <textarea id="oAddress"></textarea>
             </div>
+            <div class="form-group">
+                <label>Delivery option <span aria-hidden="true">*</span></label>
+                <div class="delivery-options" role="radiogroup" aria-label="Delivery option">
+                    <label class="delivery-option">
+                        <input type="radio" name="deliveryOption" value="home_delivery" />
+                        <span><strong>Home delivery</strong><small>Within 10 km of Gota · Free delivery · Minimum order ₹500</small></span>
+                    </label>
+                    <label class="delivery-option">
+                        <input type="radio" name="deliveryOption" value="porter" />
+                        <span><strong>Porter</strong><small>Within Ahmedabad · Charges apply</small></span>
+                    </label>
+                    <label class="delivery-option">
+                        <input type="radio" name="deliveryOption" value="courier" />
+                        <span><strong>Courier</strong><small>Within India · Charges apply</small></span>
+                    </label>
+                </div>
+            </div>
             <button class="form-submit" id="orderBtn" onclick="confirmOrder()">Confirm Order</button>
         </div>
     </div>
@@ -2299,7 +2355,13 @@
             const name = document.getElementById("oName").value.trim();
             const phone = document.getElementById("oPhone").value.trim();
             const address = document.getElementById("oAddress").value.trim();
-            if (!name || !phone || !address) { showToast("⚠️ Fill all fields"); return; }
+            const selectedDelivery = document.querySelector('input[name="deliveryOption"]:checked');
+            const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+            if (!name || !phone || !address || !selectedDelivery) { showToast("⚠️ Fill all fields and select a delivery option"); return; }
+            if (selectedDelivery.value === "home_delivery" && total < 500) {
+                showToast("⚠️ Home delivery requires a minimum order of ₹500");
+                return;
+            }
 
             const btn = document.getElementById("orderBtn");
             btn.disabled = true; btn.textContent = "Processing...";
@@ -2307,7 +2369,7 @@
                 // 1. Submit to Backend API in the background
                 await fetch(`${API}/api/orders/create/`, {
                     method: "POST", headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ name, phone, email: "", address, items: cart.map(i => ({ name: i.name, quantity: i.qty })) })
+                    body: JSON.stringify({ name, phone, email: "", address, delivery_option: selectedDelivery.value, items: cart.map(i => ({ name: i.name, quantity: i.qty })) })
                 });
             } catch (err) {
                 console.error("Error submitting order to backend:", err);
@@ -2319,15 +2381,16 @@
             messageText += `👤 Name: ${name}\n`;
             messageText += `📞 Phone: ${phone}\n`;
             messageText += `📍 Address: ${address}\n\n`;
+            messageText += `🚚 Delivery: ${selectedDelivery.parentElement.querySelector("strong").textContent}\n\n`;
             messageText += `*Ordered Items:*\n`;
             
-            let total = 0;
+            let orderTotal = 0;
             cart.forEach(item => {
                 const itemTotal = item.price * item.qty;
-                total += itemTotal;
+                orderTotal += itemTotal;
                 messageText += `• ${item.name} x ${item.qty} = ₹${itemTotal}\n`;
             });
-            messageText += `\n*Total Amount: ₹${total}*\n`;
+            messageText += `\n*Total Amount: ₹${orderTotal}*\n`;
             messageText += `\nThank you! Please confirm my order.`;
 
             const encodedMessage = encodeURIComponent(messageText);
@@ -2338,6 +2401,7 @@
             cart = []; 
             updateCartBadge();
             ["oName", "oPhone", "oAddress"].forEach(id => document.getElementById(id).value = "");
+            document.querySelectorAll('input[name="deliveryOption"]').forEach(input => input.checked = false);
             hide("orderOverlay");
             show("successOverlay");
 

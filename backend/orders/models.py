@@ -3,6 +3,11 @@ import re
 
 
 class Order(models.Model):
+    DELIVERY_OPTION_CHOICES = [
+        ("home_delivery", "Home delivery (within 10 km of Gota; free; minimum order ₹500)"),
+        ("porter", "Porter (within Ahmedabad; chargeable)"),
+        ("courier", "Courier (within India; chargeable)"),
+    ]
     STATUS_CHOICES = [
         ("pending", "Pending"),
         ("dispatched", "Dispatched"),
@@ -13,6 +18,7 @@ class Order(models.Model):
     phone = models.CharField(max_length=20)
     email = models.EmailField(null=True, blank=True)
     address = models.TextField()
+    delivery_option = models.CharField(max_length=20, choices=DELIVERY_OPTION_CHOICES, default="porter")
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.CharField(
         max_length=20, choices=STATUS_CHOICES, default="pending"

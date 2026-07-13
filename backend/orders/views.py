@@ -45,11 +45,17 @@ def create_order(request):
         data = request.data
         print(f"[Debug] Received order request: {data}")
 
+        delivery_option = data.get("delivery_option")
+        valid_delivery_options = {choice[0] for choice in Order.DELIVERY_OPTION_CHOICES}
+        if delivery_option not in valid_delivery_options:
+            return Response({"success": False, "error": "A valid delivery option is required."}, status=400)
+
         order = Order.objects.create(
             name=data["name"],
             phone=data["phone"],
             email=data.get("email"),
             address=data["address"],
+            delivery_option=delivery_option,
             total_amount=0,
         )
 
@@ -76,6 +82,9 @@ def create_order(request):
                 continue
 
         order.total_amount = total
+        if delivery_option == "home_delivery" and total < 500:
+            order.delete()
+            return Response({"success": False, "error": "Home delivery requires a minimum order of ₹500."}, status=400)
         order.save()
 
         items_text = "\n".join(items_summary)
@@ -91,6 +100,7 @@ def create_order(request):
             f"Total items: {len(data['items'])}\n"
             f"Total quantity: {sum(int(item['quantity']) for item in data['items'])}\n\n"
             f"*Total:* ₹{order.total_amount}\n\n"
+            f"*Delivery option:* {order.get_delivery_option_display()}\n\n"
             f"*Items:*\n{items_text}\n\n"
             f"*Delivery Address:*\n{order.address}\n\n"
             f"We'll message you again once it's dispatched! 🙏"
@@ -102,6 +112,7 @@ def create_order(request):
             f"👤 *Customer:* {order.name}\n"
             f"📞 *Phone:* {order.phone}\n"
             f"🆔 *Order ID:* #{order.id}\n\n"
+            f"🚚 *Delivery option:* {order.get_delivery_option_display()}\n\n"
             f"🛒 *Items:*\n{items_text}\n\n"
             f"📦 *Delivery Address:*\n{order.address}\n\n"
             f"📊 *Stats:*\n"

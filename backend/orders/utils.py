@@ -7,6 +7,7 @@ def build_customer_whatsapp_message(order):
     lines.append(f"Order ID: {order.id}")
     lines.append(f"Name: {order.name}")
     lines.append(f"Phone: {order.phone}")
+    lines.append(f"Delivery: {order.get_delivery_option_display()}")
     lines.append("")
     lines.append("*Items:*")
 

@@ -98,6 +98,7 @@
     <strong>Time:</strong> {{ order.created_at|time:"h:i A" }}<br>
     <strong>Name:</strong> {{ order.name }}<br>
     <strong>Phone:</strong> {{ order.phone }}<br>
+    <strong>Delivery:</strong> {{ order.get_delivery_option_display }}<br>
     <strong>Address:</strong> {{ order.address }}
   </div>
 
@@ -141,6 +142,7 @@ function shareOrder() {
 Order ID: {{ order.id }}
 Name: {{ order.name }}
 Phone: {{ order.phone }}
+Delivery: {{ order.get_delivery_option_display }}
 
 Address:
 {{ order.address }}

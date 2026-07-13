@@ -24,13 +24,14 @@ class OrderAdmin(admin.ModelAdmin):
         "id",
         "name",
         "phone",
+        "delivery_option",
         "total_amount",
         "status",
         "created_at",
         "whatsapp_link",
         "print_link",
     )
-    list_filter = ("status", "created_at")
+    list_filter = ("status", "delivery_option", "created_at")
     search_fields = ("name", "phone", "address")
     list_editable = ("status",)
     ordering = ("-created_at",)
