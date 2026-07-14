@@ -82,9 +82,9 @@ def create_order(request):
                 continue
 
         order.total_amount = total
-        if delivery_option == "home_delivery" and total < 7500:
+        if delivery_option == "home_delivery" and total < 500:
             order.delete()
-            return Response({"success": False, "error": "Home delivery requires a minimum order of ₹7,500."}, status=400)
+            return Response({"success": False, "error": "Home delivery requires a minimum order of ₹500."}, status=400)
         order.save()
 
         items_text = "\n".join(items_summary)
