@@ -4,7 +4,7 @@ import re
 
 class Order(models.Model):
     DELIVERY_OPTION_CHOICES = [
-        ("home_delivery", "Home delivery (within 10 km of Gota; free; minimum order ₹7,500)"),
+        ("home_delivery", "Home delivery (within 10 km of Gota; free; minimum order ₹500)"),
         ("porter", "Porter (within Ahmedabad; chargeable)"),
         ("courier", "Courier (within India; chargeable)"),
     ]
