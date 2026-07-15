@@ -2280,7 +2280,7 @@
             }
         }
 
-        function showItems(cat) {
+        function showItems(cat, shouldScroll = true) {
             currentView = { type: 'products', cat };
             setActiveCat(cat);
             const grid = document.getElementById("productGrid");
@@ -2324,7 +2324,9 @@
                 grid.appendChild(card);
             });
 
-            window.scrollTo({ top: document.getElementById('shop').offsetTop - 140, behavior: 'smooth' });
+            if (shouldScroll) {
+                window.scrollTo({ top: document.getElementById('shop').offsetTop - 140, behavior: 'smooth' });
+            }
         }
 
         function updateFloatingCartBar() {
@@ -2391,7 +2393,7 @@
             updateFloatingCartBar();
             if (Object.keys(allData).length > 0) {
                 if (currentView.type === "products" && currentView.cat) {
-                    showItems(currentView.cat);
+                    showItems(currentView.cat, false);
                 } else {
                     showCategories(false);
                 }
@@ -2451,8 +2453,8 @@
             const selectedDelivery = document.querySelector('input[name="deliveryOption"]:checked');
             const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
             if (!name || !phone || !address || !selectedDelivery) { showToast("⚠️ Fill all fields and select a delivery option"); return; }
-            if (selectedDelivery.value === "home_delivery" && total < 7500) {
-                showToast("⚠️ Home delivery requires a minimum order of ₹7,500");
+            if (selectedDelivery.value === "home_delivery" && total < 500) {
+                showToast("⚠️ Home delivery requires a minimum order of ₹500");
                 return;
             }
 
