@@ -7,252 +7,277 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0f1117;
-      --surface: #1a1d27;
-      --surface2: #222536;
-      --border: #2e3245;
-      --text: #f0f0f5;
-      --text-muted: #8b8fa8;
+      --bg: #0b0c10;
+      --surface: #1f2833;
+      --surface2: #2c3540;
+      --border: #45525c;
+      --text: #f5f7fa;
+      --text-muted: #95a5a6;
       --brand: #f5a623;
-      --brand-dark: #c4831a;
-      --green: #22c55e;
-      --blue: #3b82f6;
-      --red: #ef4444;
-      --yellow: #eab308;
-      --radius: 14px;
-      --radius-sm: 8px;
-      --shadow: 0 4px 24px rgba(0,0,0,0.35);
+      --brand-hover: #ffb83d;
+      --green: #2ecc71;
+      --green-dark: #27ae60;
+      --blue: #3498db;
+      --blue-dark: #2980b9;
+      --yellow: #f1c40f;
+      --red: #e74c3c;
+      --radius: 18px;
+      --radius-sm: 12px;
+      --shadow: 0 8px 30px rgba(0,0,0,0.4);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); }
-    body { min-height: 100vh; }
+    body { min-height: 100vh; padding-bottom: 40px; }
 
     /* ── HEADER ── */
     .header {
       position: sticky; top: 0; z-index: 100;
       background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 64px;
+      border-bottom: 2px solid var(--border);
+      padding: 0 24px; height: 70px;
       display: flex; align-items: center; justify-content: space-between;
       box-shadow: var(--shadow);
     }
-    .header-brand { display: flex; align-items: center; gap: 12px; }
-    .header-brand h1 { font-size: 1.35rem; font-weight: 900; color: var(--brand); letter-spacing: -0.02em; }
-    .header-brand span { color: var(--text-muted); font-size: 0.85rem; font-weight: 500; }
-    .header-right { display: flex; align-items: center; gap: 12px; }
-    .time-display { color: var(--text-muted); font-size: 0.9rem; font-weight: 500; }
+    .header-brand h1 { font-size: 1.6rem; font-weight: 900; color: var(--brand); letter-spacing: -0.02em; }
+    .header-brand span { color: var(--text-muted); font-size: 0.9rem; font-weight: 600; margin-left: 6px; }
+    .header-right { display: flex; align-items: center; gap: 14px; }
+    .time-display { color: var(--brand); font-size: 1rem; font-weight: 800; }
 
     /* ── BUTTONS ── */
     .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      padding: 12px 20px;
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 14px 24px;
       border: none; border-radius: var(--radius-sm); cursor: pointer;
-      font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 700;
-      transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
-      white-space: nowrap; line-height: 1;
+      font-family: inherit; font-size: 1.05rem; font-weight: 800;
+      transition: all 0.2s ease;
+      line-height: 1; text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.15);
     }
-    .btn:hover { transform: translateY(-2px); opacity: 0.92; }
-    .btn:active { transform: translateY(0); }
+    .btn:hover { transform: translateY(-3px); opacity: 0.95; box-shadow: 0 6px 12px rgba(0,0,0,0.2); }
+    .btn:active { transform: translateY(-1px); }
+    
     .btn-brand { background: var(--brand); color: #000; }
-    .btn-green { background: var(--green); color: #fff; }
+    .btn-green { background: var(--green); color: #000; }
     .btn-blue  { background: var(--blue);  color: #fff; }
     .btn-red   { background: var(--red);   color: #fff; }
-    .btn-yellow { background: var(--yellow); color: #000; }
-    .btn-ghost {
-      background: var(--surface2); color: var(--text);
-      border: 1px solid var(--border);
-    }
-    .btn-ghost.active {
-      background: var(--brand); color: #000; border-color: var(--brand);
-    }
-    .btn-sm { padding: 8px 14px; font-size: 0.82rem; border-radius: 6px; }
-    .btn-logout { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+    .btn-ghost { background: var(--surface2); color: var(--text); border: 2px solid var(--border); }
+    .btn-ghost.active { background: var(--brand); color: #000; border-color: var(--brand); }
+    .btn-sm { padding: 10px 16px; font-size: 0.88rem; border-radius: 8px; }
+    .btn-logout { background: transparent; color: var(--text-muted); border: 2px solid var(--border); }
     .btn-logout:hover { color: var(--red); border-color: var(--red); }
 
     /* ── MAIN LAYOUT ── */
-    .main { padding: 28px 24px; max-width: 1400px; margin: 0 auto; }
+    .main { padding: 24px 16px; max-width: 1400px; margin: 0 auto; }
 
     /* ── STAT CARDS ── */
     .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 16px; margin-bottom: 28px;
     }
     .stat-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 22px 24px;
-      cursor: pointer; transition: border-color 0.2s, transform 0.15s;
+      background: var(--surface); border: 2px solid var(--border);
+      border-radius: var(--radius); padding: 20px;
+      cursor: pointer; transition: all 0.2s ease;
+      display: flex; flex-direction: column; justify-content: space-between;
     }
     .stat-card:hover { border-color: var(--brand); transform: translateY(-3px); }
-    .stat-card.active { border-color: var(--brand); box-shadow: 0 0 0 2px rgba(245,166,35,0.25); }
-    .stat-label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
-    .stat-value { font-size: 2rem; font-weight: 900; color: var(--text); line-height: 1; }
-    .stat-sub { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); margin-top: 6px; }
+    .stat-card.active { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(245,166,35,0.3); }
+    .stat-label { font-size: 0.85rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .stat-value { font-size: 2.2rem; font-weight: 900; line-height: 1.2; margin: 10px 0; }
+    .stat-sub { font-size: 0.95rem; font-weight: 700; color: var(--text); }
+    
     .stat-card.brand .stat-value { color: var(--brand); }
     .stat-card.green .stat-value { color: var(--green); }
-    .stat-card.blue  .stat-value  { color: var(--blue);  }
+    .stat-card.blue .stat-value { color: var(--blue); }
 
-    /* ── FILTER PANEL ── */
-    .filter-panel {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 20px 24px; margin-bottom: 24px;
-    }
-    .filter-panel h2 { font-size: 0.8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px; }
-    .filter-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 12px; }
-    .filter-row:last-child { margin-bottom: 0; }
-    .filter-label { font-size: 0.8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; min-width: 60px; }
-    .filter-divider { width: 100%; height: 1px; background: var(--border); margin: 4px 0; }
-    .date-input {
-      background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm);
-      color: var(--text); font-family: 'Outfit', sans-serif; font-size: 0.9rem; font-weight: 600;
-      padding: 10px 14px; cursor: pointer;
-    }
-    .date-input:focus { outline: 2px solid var(--brand); }
-    .search-input {
-      background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm);
-      color: var(--text); font-family: 'Outfit', sans-serif; font-size: 0.9rem; font-weight: 500;
-      padding: 10px 14px; min-width: 260px;
-    }
-    .search-input:focus { outline: 2px solid var(--brand); border-color: var(--brand); }
-    .search-input::placeholder { color: var(--text-muted); }
-
-    /* ── INSIGHTS ROW ── */
+    /* ── INSIGHT BUTTONS ── */
     .insights-row {
       display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px;
     }
     .insight-btn {
-      padding: 14px 22px;
-      background: var(--surface); border: 1px solid var(--border);
+      padding: 16px 24px; background: var(--surface); border: 2px solid var(--border);
       border-radius: var(--radius); cursor: pointer;
-      font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text);
-      transition: border-color 0.2s, transform 0.15s, background 0.2s;
-      display: flex; align-items: center; gap: 10px;
+      font-family: inherit; font-size: 1.05rem; font-weight: 800; color: var(--text);
+      transition: all 0.2s ease; display: flex; align-items: center; gap: 10px;
     }
     .insight-btn:hover { border-color: var(--brand); transform: translateY(-2px); background: var(--surface2); }
-    .insight-icon { font-size: 1.4rem; }
+    .insight-icon { font-size: 1.3rem; }
+
+    /* ── FILTER PANEL ── */
+    .filter-panel {
+      background: var(--surface); border: 2px solid var(--border);
+      border-radius: var(--radius); padding: 20px; margin-bottom: 24px;
+    }
+    .filter-panel h2 { font-size: 0.9rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 14px; }
+    .filter-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 12px; }
+    .filter-row:last-child { margin-bottom: 0; }
+    .filter-label { font-size: 0.85rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; min-width: 75px; }
+    .filter-divider { width: 100%; height: 2px; background: var(--border); margin: 6px 0; }
+    
+    .date-input {
+      background: var(--surface2); border: 2px solid var(--border); border-radius: var(--radius-sm);
+      color: var(--text); font-family: inherit; font-size: 0.95rem; font-weight: 700;
+      padding: 10px 14px; cursor: pointer; outline: none;
+    }
+    .date-input:focus { border-color: var(--brand); }
+    .search-input {
+      background: var(--surface2); border: 2px solid var(--border); border-radius: var(--radius-sm);
+      color: var(--text); font-family: inherit; font-size: 1rem; font-weight: 700;
+      padding: 10px 16px; min-width: 260px; outline: none; flex: 1; max-width: 400px;
+    }
+    .search-input:focus { border-color: var(--brand); }
+    .search-input::placeholder { color: var(--text-muted); }
 
     /* ── RESULTS BAR ── */
     .results-bar {
       display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 14px;
+      margin-bottom: 16px; padding: 0 4px;
     }
-    .results-count { font-size: 0.9rem; font-weight: 700; color: var(--text-muted); }
-    .results-count span { color: var(--brand); font-size: 1.2rem; }
+    .results-count { font-size: 1rem; font-weight: 800; color: var(--text-muted); }
+    .results-count span { color: var(--brand); font-size: 1.3rem; }
 
-    /* ── ORDERS TABLE ── */
-    .orders-wrapper {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); overflow: hidden;
+    /* ── ORDER CARDS GRID (MOBILE FRIENDLY) ── */
+    .orders-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
     }
-    .orders-table { width: 100%; border-collapse: collapse; }
-    .orders-table th {
-      background: var(--surface2); padding: 14px 16px;
-      text-align: left; font-size: 0.78rem; font-weight: 700;
-      color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;
-      border-bottom: 1px solid var(--border);
+    
+    .order-card {
+      background: var(--surface); border: 2px solid var(--border);
+      border-radius: var(--radius); padding: 22px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      box-shadow: var(--shadow); transition: all 0.2s ease;
+      position: relative;
     }
-    .orders-table td {
-      padding: 16px; border-bottom: 1px solid var(--border);
-      vertical-align: top; font-size: 0.9rem;
+    .order-card:hover { border-color: var(--brand); transform: translateY(-4px); }
+    
+    .order-card-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      border-bottom: 2px solid var(--border); padding-bottom: 12px; margin-bottom: 14px;
     }
-    .orders-table tr:last-child td { border-bottom: none; }
-    .orders-table tr:hover td { background: rgba(255,255,255,0.02); }
-
-    .order-id { font-weight: 900; color: var(--brand); font-size: 1rem; }
-    .customer-name { font-weight: 700; font-size: 0.95rem; }
-    .customer-phone { font-size: 0.82rem; color: var(--text-muted); margin-top: 3px; }
+    .order-card-id { font-size: 1.5rem; font-weight: 900; color: var(--brand); }
+    .order-card-date { font-size: 0.82rem; color: var(--text-muted); text-align: right; font-weight: 600; }
+    
+    .order-card-section { margin-bottom: 12px; }
+    .order-card-label {
+      font-size: 0.8rem; font-weight: 800; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px;
+    }
+    .order-card-value { font-size: 1.05rem; font-weight: 700; line-height: 1.4; }
+    .order-card-phone { color: var(--brand); font-size: 1.1rem; text-decoration: underline; font-weight: 800; }
+    
     .delivery-chip {
-      display: inline-block; padding: 3px 10px; border-radius: 20px;
-      font-size: 0.75rem; font-weight: 700;
+      display: inline-block; padding: 4px 12px; border-radius: 20px;
+      font-size: 0.82rem; font-weight: 800; text-transform: uppercase;
     }
-    .delivery-home { background: rgba(34,197,94,0.15); color: var(--green); }
-    .delivery-porter { background: rgba(59,130,246,0.15); color: var(--blue); }
-    .delivery-courier { background: rgba(245,166,35,0.15); color: var(--brand); }
+    .delivery-home { background: rgba(46,204,113,0.2); color: #2ecc71; border: 1px solid rgba(46,204,113,0.4); }
+    .delivery-porter { background: rgba(52,152,219,0.2); color: #3498db; border: 1px solid rgba(52,152,219,0.4); }
+    .delivery-courier { background: rgba(243,156,18,0.2); color: #f39c12; border: 1px solid rgba(243,156,18,0.4); }
 
-    .amount { font-size: 1.05rem; font-weight: 800; color: var(--text); }
-    .items-list { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
-
-    .status-badge {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700;
+    .items-box {
+      background: var(--surface2); border-radius: var(--radius-sm);
+      padding: 12px 14px; font-size: 0.95rem; font-weight: 600;
+      line-height: 1.5; border: 1px solid var(--border);
     }
-    .status-pending    { background: rgba(234,179,8,0.15);  color: var(--yellow); }
-    .status-dispatched { background: rgba(59,130,246,0.15); color: var(--blue); }
-    .status-delivered  { background: rgba(34,197,94,0.15);  color: var(--green); }
+    
+    .order-card-total {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 14px; border-top: 2px dashed var(--border);
+      padding-top: 14px; margin-bottom: 16px;
+    }
+    .order-card-total-lbl { font-size: 1rem; font-weight: 800; color: var(--text-muted); }
+    .order-card-total-val { font-size: 1.5rem; font-weight: 900; color: var(--brand); }
 
-    .action-buttons { display: flex; flex-wrap: wrap; gap: 6px; }
+    /* Action Buttons Area */
+    .order-card-actions {
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    
+    /* State-dependent Button Styles */
+    .status-action-btn {
+      width: 100%; padding: 16px; border-radius: var(--radius-sm);
+      font-size: 1.15rem; font-weight: 900; text-transform: uppercase;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    
+    .status-badge-completed {
+      width: 100%; padding: 14px; border-radius: var(--radius-sm);
+      background: rgba(46,204,113,0.15); color: var(--green);
+      border: 2px solid var(--green); text-align: center;
+      font-size: 1.1rem; font-weight: 900; letter-spacing: 0.05em;
+    }
 
-    .order-date { font-size: 0.8rem; color: var(--text-muted); }
-
+    .secondary-actions {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px;
+    }
+    .btn-secondary {
+      padding: 12px; font-size: 0.95rem; font-weight: 800;
+      border-radius: var(--radius-sm);
+    }
+    
     /* ── LOADING / EMPTY ── */
     .loading-state, .empty-state {
-      text-align: center; padding: 60px 20px;
-      color: var(--text-muted); font-size: 1.1rem; font-weight: 600;
+      text-align: center; padding: 80px 20px;
+      color: var(--text-muted); font-size: 1.2rem; font-weight: 700;
+      grid-column: 1 / -1;
     }
     .loading-state .spinner {
-      width: 40px; height: 40px; border: 4px solid var(--border);
+      width: 50px; height: 50px; border: 5px solid var(--border);
       border-top-color: var(--brand); border-radius: 50%;
-      animation: spin 0.8s linear infinite; margin: 0 auto 16px;
+      animation: spin 0.8s linear infinite; margin: 0 auto 20px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ── MODAL ── */
+    /* ── MODALS ── */
     .modal-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(4px); z-index: 500;
+      position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(6px); z-index: 500;
       display: none; align-items: center; justify-content: center;
-      padding: 20px;
+      padding: 16px;
     }
     .modal-overlay.show { display: flex; }
     .modal-box {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 28px;
-      max-width: 640px; width: 100%; max-height: 80vh; overflow-y: auto;
+      background: var(--surface); border: 2px solid var(--border);
+      border-radius: var(--radius); padding: 24px;
+      max-width: 600px; width: 100%; max-height: 85vh; overflow-y: auto;
       box-shadow: var(--shadow);
-      animation: modalIn 0.25s ease;
+      animation: modalIn 0.2s ease;
     }
-    @keyframes modalIn { from { transform: scale(0.95) translateY(16px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+    @keyframes modalIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-    .modal-header h2 { font-size: 1.2rem; font-weight: 800; }
+    .modal-header h2 { font-size: 1.4rem; font-weight: 900; }
     .modal-close-btn {
-      background: var(--surface2); border: 1px solid var(--border);
-      color: var(--text); border-radius: 50%; width: 36px; height: 36px;
-      cursor: pointer; font-size: 1rem; font-weight: 700;
+      background: var(--surface2); border: 2px solid var(--border);
+      color: var(--text); border-radius: 50%; width: 40px; height: 40px;
+      cursor: pointer; font-size: 1.1rem; font-weight: 900;
       display: flex; align-items: center; justify-content: center;
-      transition: background 0.15s;
+      transition: all 0.15s;
     }
     .modal-close-btn:hover { background: var(--red); border-color: var(--red); color: #fff; }
-    .modal-table { width: 100%; border-collapse: collapse; }
+    
+    .modal-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
     .modal-table th {
-      text-align: left; padding: 10px 12px;
-      font-size: 0.78rem; font-weight: 700; color: var(--text-muted);
-      text-transform: uppercase; border-bottom: 1px solid var(--border);
+      text-align: left; padding: 12px; font-size: 0.85rem; font-weight: 800;
+      color: var(--text-muted); text-transform: uppercase; border-bottom: 2px solid var(--border);
     }
-    .modal-table td { padding: 12px; font-size: 0.9rem; border-bottom: 1px solid var(--border); }
+    .modal-table td { padding: 14px 12px; font-size: 1rem; border-bottom: 1px solid var(--border); font-weight: 600; }
     .modal-table tr:last-child td { border-bottom: none; }
     .modal-table tr:hover td { background: rgba(255,255,255,0.03); }
+    
     .rank-badge {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 26px; height: 26px; border-radius: 50%; font-size: 0.78rem; font-weight: 800;
+      width: 28px; height: 28px; border-radius: 50%; font-size: 0.85rem; font-weight: 900;
     }
     .rank-1 { background: var(--brand); color: #000; }
     .rank-2 { background: #9ca3af; color: #000; }
     .rank-3 { background: #cd7c3a; color: #fff; }
     .rank-n { background: var(--surface2); color: var(--text-muted); }
 
-    /* ── ORDER DETAIL MODAL ── */
-    .order-detail-grid { display: grid; gap: 12px; }
-    .detail-row { display: flex; gap: 10px; }
-    .detail-key { font-size: 0.82rem; font-weight: 700; color: var(--text-muted); min-width: 110px; }
-    .detail-val { font-size: 0.9rem; font-weight: 600; color: var(--text); }
-
     /* ── TOAST ── */
     .toast {
-      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px);
-      background: var(--surface2); border: 1px solid var(--border);
-      color: var(--text); padding: 12px 24px; border-radius: 40px;
-      font-size: 0.9rem; font-weight: 700; z-index: 1000;
+      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: var(--brand); color: #000; padding: 14px 28px; border-radius: 40px;
+      font-size: 1rem; font-weight: 900; z-index: 1000;
       transition: transform 0.3s ease, opacity 0.3s ease; opacity: 0;
       box-shadow: var(--shadow);
     }
@@ -260,16 +285,14 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      .main { padding: 16px; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .orders-table { font-size: 0.82rem; }
-      .orders-table th, .orders-table td { padding: 10px; }
-      .action-buttons { gap: 4px; }
-      .btn-sm { padding: 6px 10px; font-size: 0.76rem; }
-      .header { padding: 0 16px; }
-    }
-    @media (max-width: 480px) {
-      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .main { padding: 16px 10px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .stat-card { padding: 16px; }
+      .stat-value { font-size: 1.8rem; }
+      .orders-grid { grid-template-columns: 1fr; gap: 16px; }
+      .header-brand h1 { font-size: 1.35rem; }
+      .header-brand span { display: none; }
+      .btn { padding: 12px 18px; font-size: 0.95rem; }
     }
   </style>
 </head>
@@ -283,7 +306,6 @@
   </div>
   <div class="header-right">
     <span class="time-display" id="liveTime"></span>
-    <a href="/admin/" class="btn btn-ghost btn-sm">⚙️ Settings</a>
     <a href="/admin/logout/" class="btn btn-logout btn-sm">🚪 Logout</a>
   </div>
 </header>
@@ -292,22 +314,22 @@
 
   <!-- STATS ROW -->
   <div class="stats-grid" id="statsGrid">
-    <div class="stat-card brand" id="statToday" onclick="applyFilter('today')" title="Click to filter today's orders">
+    <div class="stat-card brand" id="statToday" onclick="applyFilter('today')" title="Filter: Today">
       <div class="stat-label">📅 Today's Orders</div>
       <div class="stat-value" id="todayCount">—</div>
       <div class="stat-sub" id="todayRev">Revenue: ₹—</div>
     </div>
-    <div class="stat-card green" id="statWeek" onclick="applyFilter('week')" title="Click to filter this week">
+    <div class="stat-card green" id="statWeek" onclick="applyFilter('week')" title="Filter: This Week">
       <div class="stat-label">📆 This Week</div>
       <div class="stat-value" id="weekCount">—</div>
       <div class="stat-sub" id="weekRev">Revenue: ₹—</div>
     </div>
-    <div class="stat-card blue" id="statMonth" onclick="applyFilter('month')" title="Click to filter this month">
+    <div class="stat-card blue" id="statMonth" onclick="applyFilter('month')" title="Filter: This Month">
       <div class="stat-label">🗓️ This Month</div>
       <div class="stat-value" id="monthCount">—</div>
       <div class="stat-sub" id="monthRev">Revenue: ₹—</div>
     </div>
-    <div class="stat-card" id="statAll" onclick="applyFilter('all')" title="Click to show all orders">
+    <div class="stat-card" id="statAll" onclick="applyFilter('all')" title="Filter: All Time">
       <div class="stat-label">🗂️ All Time</div>
       <div class="stat-value" id="allCount">—</div>
       <div class="stat-sub" id="allRev">Revenue: ₹—</div>
@@ -317,18 +339,18 @@
   <!-- INSIGHT BUTTONS -->
   <div class="insights-row">
     <button class="insight-btn" onclick="openTopProducts()">
-      <span class="insight-icon">🏆</span> Most Selling Products
+      <span class="insight-icon">🏆</span> Top Selling Products
     </button>
     <button class="insight-btn" onclick="openTopCustomers()">
-      <span class="insight-icon">👥</span> Most Frequent Customers
+      <span class="insight-icon">👥</span> Top Customers
     </button>
-    <button class="insight-btn" onclick="applyStatus('pending')">
+    <button class="insight-btn" onclick="applyStatus('pending')" id="insightPending">
       <span class="insight-icon">⏳</span> Pending Orders
     </button>
-    <button class="insight-btn" onclick="applyStatus('dispatched')">
+    <button class="insight-btn" onclick="applyStatus('dispatched')" id="insightDispatched">
       <span class="insight-icon">🚚</span> Dispatched Orders
     </button>
-    <button class="insight-btn" onclick="applyStatus('delivered')">
+    <button class="insight-btn" onclick="applyStatus('delivered')" id="insightDelivered">
       <span class="insight-icon">✅</span> Delivered Orders
     </button>
   </div>
@@ -344,7 +366,7 @@
       <button class="btn btn-ghost btn-sm" id="filterToday" onclick="applyFilter('today')">📅 Today</button>
       <button class="btn btn-ghost btn-sm" id="filterWeek" onclick="applyFilter('week')">📆 This Week</button>
       <button class="btn btn-ghost btn-sm" id="filterMonth" onclick="applyFilter('month')">🗓 This Month</button>
-      <input type="date" class="date-input" id="filterDate" onchange="applyDateFilter(this.value)" title="Pick a specific date" />
+      <input type="date" class="date-input" id="filterDate" onchange="applyDateFilter(this.value)" title="Pick specific date" />
     </div>
 
     <div class="filter-divider"></div>
@@ -353,9 +375,9 @@
     <div class="filter-row">
       <span class="filter-label">📊 Status</span>
       <button class="btn btn-ghost btn-sm" id="statusAll" onclick="applyStatus('')">All Status</button>
-      <button class="btn btn-yellow btn-sm" id="statusPending" onclick="applyStatus('pending')" style="opacity:0.7">⏳ Pending</button>
-      <button class="btn btn-blue btn-sm" id="statusDispatched" onclick="applyStatus('dispatched')" style="opacity:0.7">🚚 Dispatched</button>
-      <button class="btn btn-green btn-sm" id="statusDelivered" onclick="applyStatus('delivered')" style="opacity:0.7">✅ Delivered</button>
+      <button class="btn btn-ghost btn-sm" id="statusPending" onclick="applyStatus('pending')">⏳ Pending</button>
+      <button class="btn btn-ghost btn-sm" id="statusDispatched" onclick="applyStatus('dispatched')">🚚 Dispatched</button>
+      <button class="btn btn-ghost btn-sm" id="statusDelivered" onclick="applyStatus('delivered')">✅ Delivered</button>
     </div>
 
     <div class="filter-divider"></div>
@@ -363,7 +385,7 @@
     <!-- Search -->
     <div class="filter-row">
       <span class="filter-label">🔎 Search</span>
-      <input class="search-input" id="searchInput" type="text" placeholder="Name, phone, or address…" oninput="debounceSearch()" />
+      <input class="search-input" id="searchInput" type="text" placeholder="Name, phone, address..." oninput="debounceSearch()" />
       <button class="btn btn-ghost btn-sm" onclick="clearSearch()">✕ Clear</button>
       <button class="btn btn-brand btn-sm" onclick="loadOrders()">🔄 Refresh</button>
     </div>
@@ -372,16 +394,14 @@
   <!-- RESULTS BAR -->
   <div class="results-bar">
     <div class="results-count">Showing <span id="orderCount">—</span> orders</div>
-    <div id="activeFilterTag" style="font-size:0.82rem; font-weight:700; color:var(--brand);"></div>
+    <div id="activeFilterTag" style="font-size:0.9rem; font-weight:800; color:var(--brand);"></div>
   </div>
 
-  <!-- ORDERS TABLE -->
-  <div class="orders-wrapper">
-    <div id="ordersContainer">
-      <div class="loading-state">
-        <div class="spinner"></div>
-        Loading orders…
-      </div>
+  <!-- ORDERS CARDS CONTAINER -->
+  <div class="orders-grid" id="ordersContainer">
+    <div class="loading-state">
+      <div class="spinner"></div>
+      Loading orders…
     </div>
   </div>
 
@@ -428,17 +448,6 @@
       </thead>
       <tbody id="topCustomersBody"></tbody>
     </table>
-  </div>
-</div>
-
-<!-- ── MODAL: ORDER DETAIL ── -->
-<div class="modal-overlay" id="orderDetailModal">
-  <div class="modal-box">
-    <div class="modal-header">
-      <h2 id="orderDetailTitle">Order Detail</h2>
-      <button class="modal-close-btn" onclick="closeModal('orderDetailModal')">✕</button>
-    </div>
-    <div id="orderDetailBody"></div>
   </div>
 </div>
 
@@ -503,6 +512,7 @@
     }
   }
 
+  // Format currency
   function fmt(num) {
     return Number(num).toLocaleString("en-IN", { maximumFractionDigits: 0 });
   }
@@ -561,14 +571,14 @@
   }
 
   function updateStatusButtons() {
+    // Top Row filter buttons style toggle
     ["All","Pending","Dispatched","Delivered"].forEach(n => {
-      const el = document.getElementById(`status${n}`);
-      if (el) el.style.opacity = "0.7";
+      document.getElementById(`status${n}`).classList.remove("active");
     });
-    if (currentStatus === "")            document.getElementById("statusAll").style.opacity = "1";
-    if (currentStatus === "pending")     document.getElementById("statusPending").style.opacity = "1";
-    if (currentStatus === "dispatched")  document.getElementById("statusDispatched").style.opacity = "1";
-    if (currentStatus === "delivered")   document.getElementById("statusDelivered").style.opacity = "1";
+    if (currentStatus === "")            document.getElementById("statusAll").classList.add("active");
+    if (currentStatus === "pending")     document.getElementById("statusPending").classList.add("active");
+    if (currentStatus === "dispatched")  document.getElementById("statusDispatched").classList.add("active");
+    if (currentStatus === "delivered")   document.getElementById("statusDelivered").classList.add("active");
   }
 
   // ── Load Orders ──
@@ -595,7 +605,7 @@
     }
   }
 
-  // ── Render Orders ──
+  // ── Render Orders using Mobile Cards ──
   function renderOrders(orders) {
     const container = document.getElementById("ordersContainer");
     if (orders.length === 0) {
@@ -609,55 +619,91 @@
       courier: "delivery-courier",
     };
 
-    const rows = orders.map(o => {
-      const statusClass = `status-${o.status}`;
-      const statusIcon = { pending: "⏳", dispatched: "🚚", delivered: "✅" }[o.status] || "•";
+    const cards = orders.map(o => {
       const dlClass = deliveryClasses[o.delivery_option_key] || "delivery-porter";
-      const itemsSummary = o.items.map(i => `${i.name} × ${i.qty}`).join("<br>");
+      const itemsSummary = o.items.map(i => `• ${i.name} × ${i.qty}`).join("<br>");
+
+      // ── Status Action Logic (ONE DIRECTION ONLY, BIG BUTTON) ──
+      let statusActionHtml = "";
+      if (o.status === "pending") {
+        // Pending can only go forward to Dispatched
+        statusActionHtml = `
+          <button class="btn btn-blue status-action-btn" onclick="updateStatus(${o.id}, 'dispatched')">
+            🚚 Dispatch Order
+          </button>
+        `;
+      } else if (o.status === "dispatched") {
+        // Dispatched can only go forward to Delivered
+        statusActionHtml = `
+          <button class="btn btn-green status-action-btn" onclick="updateStatus(${o.id}, 'delivered')">
+            ✅ Deliver Order
+          </button>
+        `;
+      } else if (o.status === "delivered") {
+        // Completed/Delivered — no forward status action buttons
+        statusActionHtml = `
+          <div class="status-badge-solid delivered">
+            🎉 Completed & Delivered
+          </div>
+        `;
+      }
 
       return `
-        <tr id="order-row-${o.id}">
-          <td><div class="order-id">#${o.id}</div><div class="order-date">${o.created_at}</div></td>
-          <td>
-            <div class="customer-name">${escHtml(o.name)}</div>
-            <div class="customer-phone">${escHtml(o.phone)}</div>
-          </td>
-          <td><div class="items-list">${itemsSummary || '—'}</div></td>
-          <td><div class="amount">₹${fmt(o.total_amount)}</div></td>
-          <td><span class="delivery-chip ${dlClass}">${escHtml(o.delivery_option)}</span></td>
-          <td>
-            <span class="status-badge ${statusClass}" id="badge-${o.id}">${statusIcon} ${capitalize(o.status)}</span>
-          </td>
-          <td>
-            <div class="action-buttons">
-              <button class="btn btn-yellow btn-sm" onclick="updateStatus(${o.id}, 'pending')" title="Mark as Pending">⏳ Pending</button>
-              <button class="btn btn-blue btn-sm" onclick="updateStatus(${o.id}, 'dispatched')" title="Mark as Dispatched">🚚 Dispatched</button>
-              <button class="btn btn-green btn-sm" onclick="updateStatus(${o.id}, 'delivered')" title="Mark as Delivered">✅ Delivered</button>
-              ${o.wa_url ? `<button class="btn btn-ghost btn-sm" onclick="window.open('${o.wa_url}','_blank')" title="WhatsApp customer">💬 WhatsApp</button>` : ''}
-              <button class="btn btn-ghost btn-sm" onclick="window.open('/api/orders/print/${o.id}/','_blank')" title="Print bill">🖨️ Print</button>
-              <button class="btn btn-ghost btn-sm" onclick="openOrderDetail(${JSON.stringify(o).replace(/"/g, '&quot;')})" title="View details">🔍 Detail</button>
+        <div class="order-card" id="order-card-${o.id}">
+          <div>
+            <div class="order-card-header">
+              <div class="order-card-id">#${o.id}</div>
+              <div class="order-card-date">${o.created_at}</div>
             </div>
-          </td>
-        </tr>
+
+            <!-- Customer -->
+            <div class="order-card-section">
+              <div class="order-card-label">Customer</div>
+              <div class="order-card-value" style="font-size:1.15rem; font-weight:800;">${escHtml(o.name)}</div>
+              <a href="tel:${escHtml(o.phone)}" class="order-card-phone">${escHtml(o.phone)}</a>
+            </div>
+
+            <!-- Delivery Option Badge -->
+            <div class="order-card-section">
+              <span class="delivery-chip ${dlClass}">${escHtml(o.delivery_option)}</span>
+            </div>
+
+            <!-- Delivery Address -->
+            <div class="order-card-section">
+              <div class="order-card-label">Address</div>
+              <div class="order-card-value" style="font-weight:600; color:var(--text-muted);">${escHtml(o.address)}</div>
+            </div>
+
+            <!-- Items list -->
+            <div class="order-card-section">
+              <div class="order-card-label">Items</div>
+              <div class="items-box">${itemsSummary || '—'}</div>
+            </div>
+          </div>
+
+          <div>
+            <!-- Total amount -->
+            <div class="order-card-total">
+              <div class="order-card-total-lbl">Total Bill</div>
+              <div class="order-card-total-val">₹${fmt(o.total_amount)}</div>
+            </div>
+
+            <!-- Lifecycle Status Big Button -->
+            <div class="order-card-actions">
+              ${statusActionHtml}
+
+              <!-- Print & WhatsApp Helper Buttons -->
+              <div class="secondary-actions">
+                ${o.wa_url ? `<button class="btn btn-ghost btn-secondary" onclick="window.open('${o.wa_url}','_blank')">💬 WhatsApp</button>` : ''}
+                <button class="btn btn-ghost btn-secondary" onclick="window.open('/api/orders/print/${o.id}/','_blank')">🖨️ Print Bill</button>
+              </div>
+            </div>
+          </div>
+        </div>
       `;
     }).join("");
 
-    container.innerHTML = `
-      <table class="orders-table">
-        <thead>
-          <tr>
-            <th>Order</th>
-            <th>Customer</th>
-            <th>Items</th>
-            <th>Amount</th>
-            <th>Delivery</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>${rows}</tbody>
-      </table>
-    `;
+    container.innerHTML = cards;
   }
 
   // ── Update Status ──
@@ -669,54 +715,18 @@
         body: JSON.stringify({ status: newStatus }),
       });
       const data = await res.json();
-      if (data.success) {
-        const badge = document.getElementById(`badge-${orderId}`);
-        if (badge) {
-          const icons = { pending: "⏳", dispatched: "🚚", delivered: "✅" };
-          badge.className = `status-badge status-${newStatus}`;
-          badge.textContent = `${icons[newStatus]} ${capitalize(newStatus)}`;
-        }
-        showToast(`✅ Order #${orderId} marked as ${capitalize(newStatus)}`);
-        loadStats(); // refresh stats
+      
+      if (res.ok && data.success) {
+        showToast(`Order #${orderId} marked as ${capitalize(newStatus)}!`);
+        loadStats();   // refresh stats
+        loadOrders();  // re-render the lists
       } else {
-        showToast("⚠️ Failed to update status");
+        showToast(`⚠️ Error: ${data.error || 'Failed to update status'}`);
       }
     } catch (err) {
       showToast("⚠️ Network error");
       console.error(err);
     }
-  }
-
-  // ── Order Detail Modal ──
-  function openOrderDetail(order) {
-    document.getElementById("orderDetailTitle").textContent = `Order #${order.id} — ${order.name}`;
-    const itemRows = order.items.map(i =>
-      `<tr><td>${escHtml(i.name)}</td><td>${i.qty}</td><td>₹${fmt(i.price)}</td><td>₹${fmt(i.price * i.qty)}</td></tr>`
-    ).join("");
-
-    document.getElementById("orderDetailBody").innerHTML = `
-      <div class="order-detail-grid" style="margin-bottom:20px;">
-        <div class="detail-row"><span class="detail-key">📅 Date:</span><span class="detail-val">${order.created_at}</span></div>
-        <div class="detail-row"><span class="detail-key">👤 Customer:</span><span class="detail-val">${escHtml(order.name)}</span></div>
-        <div class="detail-row"><span class="detail-key">📞 Phone:</span><span class="detail-val">${escHtml(order.phone)}</span></div>
-        <div class="detail-row"><span class="detail-key">📍 Address:</span><span class="detail-val">${escHtml(order.address)}</span></div>
-        <div class="detail-row"><span class="detail-key">🚚 Delivery:</span><span class="detail-val">${escHtml(order.delivery_option)}</span></div>
-        <div class="detail-row"><span class="detail-key">📊 Status:</span><span class="detail-val">${capitalize(order.status)}</span></div>
-        <div class="detail-row"><span class="detail-key">💰 Total:</span><span class="detail-val" style="color:var(--brand);font-size:1.1rem;font-weight:900;">₹${fmt(order.total_amount)}</span></div>
-      </div>
-      <table class="modal-table">
-        <thead><tr><th>Product</th><th>Qty</th><th>Price</th><th>Subtotal</th></tr></thead>
-        <tbody>${itemRows}</tbody>
-      </table>
-      <div style="margin-top:16px; display:flex; gap:8px; flex-wrap:wrap;">
-        <button class="btn btn-yellow btn-sm" onclick="updateStatus(${order.id},'pending'); closeModal('orderDetailModal')">⏳ Mark Pending</button>
-        <button class="btn btn-blue btn-sm" onclick="updateStatus(${order.id},'dispatched'); closeModal('orderDetailModal')">🚚 Mark Dispatched</button>
-        <button class="btn btn-green btn-sm" onclick="updateStatus(${order.id},'delivered'); closeModal('orderDetailModal')">✅ Mark Delivered</button>
-        ${order.wa_url ? `<button class="btn btn-ghost btn-sm" onclick="window.open('${order.wa_url}','_blank')">💬 WhatsApp</button>` : ''}
-        <button class="btn btn-ghost btn-sm" onclick="window.open('/api/orders/print/${order.id}/','_blank')">🖨️ Print Bill</button>
-      </div>
-    `;
-    openModal("orderDetailModal");
   }
 
   // ── Top Products Modal ──

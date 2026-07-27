@@ -378,6 +378,16 @@ def admin_update_status(request, order_id):
     if new_status not in valid:
         return JsonResponse({"error": "Invalid status"}, status=400)
 
+    # ── Enforce status lifecycle: once changed, it cannot go back ──
+    # Valid flow: pending -> dispatched -> delivered
+    if order.status == "delivered":
+        return JsonResponse({"error": "This order is already delivered and completed. Status cannot be changed."}, status=400)
+
+    if order.status == "dispatched":
+        if new_status == "pending":
+            return JsonResponse({"error": "This order has already been dispatched. Cannot set back to pending."}, status=400)
+
     order.status = new_status
     order.save(update_fields=["status"])
     return JsonResponse({"success": True, "status": order.status})
+
