@@ -120,6 +120,8 @@ CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "https://nutelanoodels.
 CORS_ALLOW_METHODS = [
     "GET",
     "POST",
+    "PATCH",
+    "PUT",
     "OPTIONS",
 ]
 

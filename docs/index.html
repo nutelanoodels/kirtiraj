@@ -316,80 +316,35 @@
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
         }
 
-      .cat-card {
-    background: #d3a84c;
-    border-radius: var(--radius-lg);
-    height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    border: 2px solid #eae877;
-    transition: var(--transition);
-    cursor: pointer;
-    box-shadow: 0 4px 14px rgba(234, 88, 12, 0.12), inset 0 2px 0 rgba(255, 255, 255, 0.8);
-    position: relative;
-    overflow: hidden;
-}
-
-        .cat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--brand-hover), var(--brand), var(--brand-hover));
-            background-size: 200% auto;
-            transform: scaleX(1);
-            animation: shimmer-gold 2.5s linear infinite;
-            transform-origin: left;
-        }
-
-        .cat-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 12%;
-            right: 12%;
-            height: 3px;
-            border-radius: 3px 3px 0 0;
-            background: linear-gradient(90deg, #fdba74, var(--brand), #fdba74);
-            opacity: 0.7;
-        }
-
-        .cat-card:hover::before {
-            height: 4px;
-            animation: shimmer-gold 1.2s linear infinite;
+        .cat-card {
+            background: var(--brand);
+            border-radius: 999px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 28px;
+            border: none;
+            transition: var(--transition);
+            cursor: pointer;
+            box-shadow: 0 15px 30px -10px rgba(234, 88, 12, 0.4);
+            position: relative;
+            overflow: hidden;
         }
 
         .cat-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            background: linear-gradient(135deg, var(--brand-hover) 0%, var(--brand) 100%);
-            border-color: #fb923c;
-            box-shadow: 0 12px 28px rgba(234, 88, 12, 0.3), 0 0 0 2px rgba(255, 237, 213, 0.5);
-        }
-
-        .cat-card:hover::after {
-            background: linear-gradient(90deg, #fff7ed, #ffffff, #fff7ed);
-            opacity: 1;
-        }
-
-        .cat-card:hover .cat-name {
-            color: #ffffff;
-        }
-
-        .cat-card:hover .cat-icon {
-            filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.5));
+            background: var(--brand-hover);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 20px 40px -10px rgba(234, 88, 12, 0.5);
         }
 
         .cat-name {
-    font-weight: 800;
-    font-size: 1.2rem;
-    color: #0f0f10;
-    text-align: center;
-    transition: color 0.3s ease;
-}
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #ffffff;
+            text-align: center;
+            transition: color 0.3s ease;
+        }
 
         .prod-grid {
             grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -542,7 +497,7 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
-            border-bottom: 1px solid #fdba74;
+            border-bottom: 1px solid var(--border);
             padding: 12px 0;
             transition: var(--transition);
             display: flex;
@@ -568,7 +523,7 @@
             display: none;
         }
 
-        /* Default state — orange with white text */
+        /* Match Start Shopping button style */
         .cat-nav-item {
             flex: 0 0 auto;
             display: flex;
@@ -577,16 +532,16 @@
             justify-content: center;
             gap: 4px;
             padding: 10px 18px;
-            background: linear-gradient(135deg, var(--brand-hover) 0%, var(--brand) 100%);
+            background: var(--brand);
             color: #ffffff;
-            border-radius: 20px;
+            border-radius: 999px;
             cursor: pointer;
             transition: var(--transition);
             min-width: 88px;
             text-align: center;
-            border: 1.5px solid #fb923c;
-            box-shadow: 0 2px 8px rgba(234, 88, 12, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            font-weight: 700;
+            border: none;
+            box-shadow: 0 15px 30px -10px rgba(234, 88, 12, 0.4);
+            font-weight: 800;
             position: relative;
             overflow: hidden;
         }
@@ -604,27 +559,23 @@
     color: #0a0909;
 }
 
-        /* Active state — darker orange */
-       
-.cat-nav-item span {
-    font-size: 0.75rem;
-    font-weight: 800;
-    letter-spacing: 0.02em;
-    color: #060606;
-}
+        .cat-nav-item.active {
+            background: var(--brand-hover);
+            color: #ffffff;
+            box-shadow: 0 20px 40px -10px rgba(234, 88, 12, 0.5);
+            transform: translateY(-4px) scale(1.02);
+        }
 
         .cat-nav-item.active i,
         .cat-nav-item.active span {
             color: #060606;
         }
 
-        /* Hover state */
         .cat-nav-item:hover:not(.active) {
-            background: linear-gradient(135deg, var(--brand) 0%, #fb923c 100%);
+            background: var(--brand-hover);
             color: #ffffff;
-            border-color: #ffffff;
-            box-shadow: 0 6px 20px rgba(234, 88, 12, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-            transform: translateY(-3px) scale(1.04);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 20px 40px -10px rgba(234, 88, 12, 0.5);
         }
 
         /* CONTACT SECTION */
@@ -1270,6 +1221,54 @@
             box-shadow: 0 15px 35px -5px rgba(234, 88, 12, 0.5);
         }
 
+        /* PHONE-FIRST CHECKOUT STEPS */
+        .checkout-step { display: none; }
+        .checkout-step.active { display: block; animation: stepFadeIn 0.3s ease; }
+        @keyframes stepFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+        .step-indicator {
+            display: flex; align-items: center; gap: 8px;
+            margin-bottom: 28px; justify-content: center;
+        }
+        .step-dot {
+            width: 10px; height: 10px; border-radius: 50%;
+            background: var(--border); transition: all 0.3s ease;
+        }
+        .step-dot.active { background: var(--brand); transform: scale(1.35); }
+        .step-dot.done { background: var(--brand); opacity: 0.45; }
+        .step-line { flex: 1; height: 2px; background: var(--border); max-width: 60px; }
+
+        .phone-step-icon {
+            font-size: 3rem; text-align: center; margin-bottom: 16px;
+        }
+        .phone-step-title {
+            font-size: 1.6rem; font-weight: 900; text-align: center; margin-bottom: 6px;
+        }
+        .phone-step-sub {
+            text-align: center; color: var(--text-muted); font-size: 0.92rem;
+            font-weight: 600; margin-bottom: 28px;
+        }
+
+        .welcome-banner {
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            border: 2px solid var(--brand-light);
+            border-radius: 16px; padding: 14px 18px;
+            margin-bottom: 20px; display: none;
+            align-items: center; gap: 12px;
+        }
+        .welcome-banner.show { display: flex; animation: stepFadeIn 0.3s ease; }
+        .welcome-banner-icon { font-size: 1.6rem; }
+        .welcome-banner-text strong { display: block; font-size: 0.95rem; font-weight: 800; color: #92400e; }
+        .welcome-banner-text span { font-size: 0.82rem; font-weight: 600; color: #b45309; }
+
+        .back-to-phone {
+            background: none; border: none; cursor: pointer;
+            color: var(--text-muted); font-family: inherit; font-size: 0.85rem;
+            font-weight: 700; padding: 0; margin-bottom: 20px;
+            display: flex; align-items: center; gap: 4px;
+        }
+        .back-to-phone:hover { color: var(--brand); }
+
         /* TOAST */
         .toast {
             position: fixed;
@@ -1911,41 +1910,77 @@
         </div>
     </div>
 
-    <!-- ORDER FORM -->
+    <!-- ORDER FORM — 2-Step Checkout -->
     <div class="overlay" id="orderOverlay" onclick="closeOrderForm(event)">
-        <div class="modal" onclick="event.stopPropagation()">
+        <div class="modal" onclick="event.stopPropagation()" style="overflow-y:auto;">
             <button class="modal-close" onclick="closeOrderForm()">✕</button>
-            <div class="form-title">Delivery Info</div>
-            <div class="form-group">
-                <label>Full Name</label>
-                <input id="oName" type="text" />
+
+            <!-- Step Indicator -->
+            <div class="step-indicator">
+                <div class="step-dot active" id="dot1"></div>
+                <div class="step-line"></div>
+                <div class="step-dot" id="dot2"></div>
             </div>
-            <div class="form-group">
-                <label>WhatsApp Number</label>
-                <input id="oPhone" type="tel" />
-            </div>
-            <div class="form-group">
-                <label>Delivery Address</label>
-                <textarea id="oAddress"></textarea>
-            </div>
-            <div class="form-group">
-                <label>Delivery option <span aria-hidden="true">*</span></label>
-                <div class="delivery-options" role="radiogroup" aria-label="Delivery option">
-                    <label class="delivery-option">
-                        <input type="radio" name="deliveryOption" value="home_delivery" />
-                        <span><strong>Home delivery</strong><small>Within 10 km of Gota · Free delivery · Minimum order ₹500</small></span>
-                    </label>
-                    <label class="delivery-option">
-                        <input type="radio" name="deliveryOption" value="porter" />
-                        <span><strong>Porter</strong><small>Within Ahmedabad · Charges apply</small></span>
-                    </label>
-                    <label class="delivery-option">
-                        <input type="radio" name="deliveryOption" value="courier" />
-                        <span><strong>Courier</strong><small>Within India · Charges apply</small></span>
-                    </label>
+
+            <!-- ── STEP 1: Phone Number ── -->
+            <div class="checkout-step active" id="checkoutStep1">
+                <div class="phone-step-icon">📱</div>
+                <div class="phone-step-title">Enter Your Phone</div>
+                <div class="phone-step-sub">We'll check if you've ordered before<br>and fill your details automatically!</div>
+                <div class="form-group">
+                    <label for="oPhoneStep1">WhatsApp / Mobile Number</label>
+                    <input id="oPhoneStep1" type="tel" placeholder="e.g. 9876543210"
+                        onkeydown="if(event.key==='Enter') lookupAndContinue()" />
                 </div>
+                <button class="form-submit" id="phoneLookupBtn" onclick="lookupAndContinue()">Continue →</button>
             </div>
-            <button class="form-submit" id="orderBtn" onclick="confirmOrder()">Confirm Order</button>
+
+            <!-- ── STEP 2: Delivery Details ── -->
+            <div class="checkout-step" id="checkoutStep2">
+                <button class="back-to-phone" onclick="goToPhoneStep()">← Change Number</button>
+
+                <!-- Welcome back banner (shown for returning customers) -->
+                <div class="welcome-banner" id="welcomeBanner">
+                    <div class="welcome-banner-icon">👋</div>
+                    <div class="welcome-banner-text">
+                        <strong id="welcomeName">Welcome back!</strong>
+                        <span>We've filled in your details. Feel free to update them.</span>
+                    </div>
+                </div>
+
+                <div class="form-title" style="font-size:1.6rem; margin-bottom:24px;">Delivery Info</div>
+
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input id="oName" type="text" placeholder="Your full name" />
+                </div>
+                <div class="form-group">
+                    <label>WhatsApp Number</label>
+                    <input id="oPhone" type="tel" readonly style="opacity:0.7; cursor:not-allowed;" />
+                </div>
+                <div class="form-group">
+                    <label>Delivery Address</label>
+                    <textarea id="oAddress" placeholder="Full delivery address"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Delivery option <span aria-hidden="true">*</span></label>
+                    <div class="delivery-options" role="radiogroup" aria-label="Delivery option">
+                        <label class="delivery-option">
+                            <input type="radio" name="deliveryOption" value="home_delivery" />
+                            <span><strong>Home delivery</strong><small>Within 10 km of Gota · Free delivery · Minimum order ₹500</small></span>
+                        </label>
+                        <label class="delivery-option">
+                            <input type="radio" name="deliveryOption" value="porter" />
+                            <span><strong>Porter</strong><small>Within Ahmedabad · Charges apply</small></span>
+                        </label>
+                        <label class="delivery-option">
+                            <input type="radio" name="deliveryOption" value="courier" />
+                            <span><strong>Courier</strong><small>Within India · Charges apply</small></span>
+                        </label>
+                    </div>
+                </div>
+                <button class="form-submit" id="orderBtn" onclick="confirmOrder()">Confirm Order 🎉</button>
+            </div>
         </div>
     </div>
 
@@ -2440,11 +2475,83 @@
         function updateQty(i, d) { cart[i].qty += d; if (cart[i].qty <= 0) cart.splice(i, 1); updateCartBadge(); renderCart(); }
         function removeItem(i) { cart.splice(i, 1); updateCartBadge(); renderCart(); }
 
+        // ── Checkout Step Management ──
         function openOrderForm() {
             closeCart();
+            goToPhoneStep();  // Always start at phone step
             show("orderOverlay");
+            setTimeout(() => document.getElementById("oPhoneStep1").focus(), 200);
         }
-        function closeOrderForm(e) { if (!e || e.target === document.getElementById("orderOverlay")) { hide("orderOverlay"); document.body.style.overflow = ""; } }
+
+        function goToPhoneStep() {
+            document.getElementById("checkoutStep1").classList.add("active");
+            document.getElementById("checkoutStep2").classList.remove("active");
+            document.getElementById("dot1").className = "step-dot active";
+            document.getElementById("dot2").className = "step-dot";
+            document.getElementById("welcomeBanner").classList.remove("show");
+        }
+
+        function goToDetailsStep() {
+            document.getElementById("checkoutStep1").classList.remove("active");
+            document.getElementById("checkoutStep2").classList.add("active");
+            document.getElementById("dot1").className = "step-dot done";
+            document.getElementById("dot2").className = "step-dot active";
+        }
+
+        async function lookupAndContinue() {
+            const rawPhone = document.getElementById("oPhoneStep1").value.trim();
+            if (!rawPhone) { showToast("⚠️ Please enter your phone number"); return; }
+
+            const btn = document.getElementById("phoneLookupBtn");
+            btn.disabled = true;
+            btn.textContent = "Checking...";
+
+            // Copy phone to the (readonly) step-2 phone field
+            document.getElementById("oPhone").value = rawPhone;
+
+            try {
+                const res = await fetch(`${API}/api/orders/customer-lookup/?phone=${encodeURIComponent(rawPhone)}`);
+                const data = await res.json();
+
+                if (data.found) {
+                    // Auto-fill name and address
+                    document.getElementById("oName").value = data.name || "";
+                    document.getElementById("oAddress").value = data.address || "";
+
+                    // Pre-select delivery option
+                    if (data.delivery_option) {
+                        const radio = document.querySelector(`input[name="deliveryOption"][value="${data.delivery_option}"]`);
+                        if (radio) radio.checked = true;
+                    }
+
+                    // Show welcome banner
+                    document.getElementById("welcomeName").textContent = `Welcome back, ${data.name}! 👋`;
+                    document.getElementById("welcomeBanner").classList.add("show");
+                } else {
+                    // New customer — clear fields
+                    document.getElementById("oName").value = "";
+                    document.getElementById("oAddress").value = "";
+                    document.querySelectorAll('input[name="deliveryOption"]').forEach(r => r.checked = false);
+                    document.getElementById("welcomeBanner").classList.remove("show");
+                }
+            } catch (err) {
+                console.error("Lookup error:", err);
+                // On network error, just continue with blank form
+                document.getElementById("oName").value = "";
+                document.getElementById("oAddress").value = "";
+            }
+
+            btn.disabled = false;
+            btn.textContent = "Continue →";
+            goToDetailsStep();
+        }
+
+        function closeOrderForm(e) {
+            if (!e || e.target === document.getElementById("orderOverlay")) {
+                hide("orderOverlay");
+                document.body.style.overflow = "";
+            }
+        }
 
         async function confirmOrder() {
             const name = document.getElementById("oName").value.trim();
@@ -2478,7 +2585,7 @@
             messageText += `📍 Address: ${address}\n\n`;
             messageText += `🚚 Delivery: ${selectedDelivery.parentElement.querySelector("strong").textContent}\n\n`;
             messageText += `*Ordered Items:*\n`;
-            
+
             let orderTotal = 0;
             cart.forEach(item => {
                 const itemTotal = item.price * item.qty;
@@ -2493,8 +2600,9 @@
             const whatsappUrl = `https://wa.me/${adminPhone}?text=${encodedMessage}`;
 
             // 3. Clear cart and UI
-            cart = []; 
+            cart = [];
             updateCartBadge();
+            document.getElementById("oPhoneStep1").value = "";
             ["oName", "oPhone", "oAddress"].forEach(id => document.getElementById(id).value = "");
             document.querySelectorAll('input[name="deliveryOption"]').forEach(input => input.checked = false);
             hide("orderOverlay");
@@ -2502,6 +2610,9 @@
 
             // 4. Open WhatsApp
             window.open(whatsappUrl, "_blank");
+
+            btn.disabled = false;
+            btn.textContent = "Confirm Order 🎉";
         }
         function closeSuccess() { hide("successOverlay"); document.body.style.overflow = ""; }
 
