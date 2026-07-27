@@ -283,7 +283,98 @@
     }
     .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
+    /* Header Nav Styles */
+    .header-nav {
+      display: flex;
+      gap: 8px;
+    }
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 0.95rem;
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border: 2px solid transparent;
+    }
+    .nav-link:hover {
+      color: var(--text);
+      border-color: var(--border);
+      background: var(--surface2);
+    }
+    .nav-link.active {
+      color: #000;
+      background: var(--brand);
+      border-color: var(--brand);
+    }
+
+    /* ── MANAGEMENT SECTION ── */
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin: 32px 0 16px 4px;
+    }
+    .management-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .manage-card {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: all 0.2s ease;
+    }
+    .manage-card:hover {
+      border-color: var(--brand);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+    .manage-icon {
+      font-size: 1.8rem;
+      background: var(--surface2);
+      width: 50px;
+      height: 50px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .manage-details h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--brand);
+      margin-bottom: 4px;
+    }
+    .manage-details p {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+
     /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .header-nav {
+        display: none;
+      }
+    }
     @media (max-width: 768px) {
       .main { padding: 16px 10px; }
       .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -304,6 +395,13 @@
     <h1>🏪 Kirtiraj</h1>
     <span>Admin Dashboard</span>
   </div>
+  <nav class="header-nav">
+    <a href="/dashboard/" class="nav-link active">📋 Orders</a>
+    <a href="/admin/products/product/" class="nav-link">🥨 Products</a>
+    <a href="/admin/products/category/" class="nav-link">🏷️ Categories</a>
+    <a href="/admin/auth/user/" class="nav-link">👥 Users</a>
+    <a href="/admin/auth/group/" class="nav-link">🛡️ Groups</a>
+  </nav>
   <div class="header-right">
     <span class="time-display" id="liveTime"></span>
     <a href="/admin/logout/" class="btn btn-logout btn-sm">🚪 Logout</a>
@@ -353,6 +451,39 @@
     <button class="insight-btn" onclick="applyStatus('delivered')" id="insightDelivered">
       <span class="insight-icon">✅</span> Delivered Orders
     </button>
+  </div>
+
+  <!-- MANAGEMENT SECTION -->
+  <div class="section-title">🛠️ System Management</div>
+  <div class="management-grid">
+    <a href="/admin/products/product/" class="manage-card">
+      <div class="manage-icon">🥨</div>
+      <div class="manage-details">
+        <h3>Products</h3>
+        <p>Add, edit, or delete products, update pricing and availability.</p>
+      </div>
+    </a>
+    <a href="/admin/products/category/" class="manage-card">
+      <div class="manage-icon">🏷️</div>
+      <div class="manage-details">
+        <h3>Categories</h3>
+        <p>Manage product categories for filtering and organization.</p>
+      </div>
+    </a>
+    <a href="/admin/auth/user/" class="manage-card">
+      <div class="manage-icon">👥</div>
+      <div class="manage-details">
+        <h3>Users</h3>
+        <p>Manage admin user accounts, staff access, and credentials.</p>
+      </div>
+    </a>
+    <a href="/admin/auth/group/" class="manage-card">
+      <div class="manage-icon">🛡️</div>
+      <div class="manage-details">
+        <h3>Groups</h3>
+        <p>Manage user permission groups and administrative roles.</p>
+      </div>
+    </a>
   </div>
 
   <!-- FILTER PANEL -->
