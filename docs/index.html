@@ -771,6 +771,12 @@
             cursor: pointer;
             box-shadow: var(--shadow-sm);
             transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            line-height: 1;
+            flex-shrink: 0;
         }
 
         .qty-ctrl button:hover {
@@ -1392,6 +1398,10 @@
                 display: flex;
             }
 
+            .shop {
+                padding: 40px 5%;
+            }
+
             .hero {
                 padding: 120px 6% 60px;
                 min-height: 80vh;
@@ -1833,7 +1843,7 @@
     <section class="shop" id="shop">
         <div class="sticky-shop-header" id="shopHeader">
             <button class="back-btn" id="backBtn" onclick="showCategories()">
-                <svg class="icon icon-sm" style="margin-right:4px;">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" style="margin-right:4px;">
                     <path d="m15 18-6-6 6-6" />
                 </svg> Back
             </button>
@@ -1931,11 +1941,11 @@
             <h3 id="mName"></h3>
             <div class="modal-price" id="mPrice"></div>
             <div class="qty-ctrl">
-                <button onclick="changeQty(-1)"><svg class="icon icon-sm">
+                <button onclick="changeQty(-1)"><svg class="icon icon-sm" viewBox="0 0 24 24">
                         <path d="M5 12h14" />
                     </svg></button>
                 <span class="qty-val" id="mQty">1</span>
-                <button onclick="changeQty(1)"><svg class="icon icon-sm">
+                <button onclick="changeQty(1)"><svg class="icon icon-sm" viewBox="0 0 24 24">
                         <path d="M12 5v14M5 12h14" />
                     </svg></button>
             </div>
@@ -2338,10 +2348,14 @@
             grid.className = "grid cat-grid";
             grid.innerHTML = "";
             document.getElementById("backBtn").classList.remove("visible");
+            const headerSec = document.querySelector("#shopHeader .section-header");
+            if (headerSec) headerSec.style.display = "";
             const titleEl = document.querySelector(".section-title");
             const tagEl = document.querySelector(".section-tag");
             if (titleEl) { titleEl.style.display = ""; titleEl.textContent = "Explore Our Menu"; }
             if (tagEl) { tagEl.style.display = ""; tagEl.textContent = "Menu"; }
+            const shopHeader = document.getElementById("shopHeader");
+            if (shopHeader) shopHeader.style.margin = "-20px -5% 20px";
             setActiveCat("All");
 
             getOrderedCategories().forEach(cat => {
@@ -2369,10 +2383,14 @@
             grid.className = "grid prod-grid";
             grid.innerHTML = "";
             document.getElementById("backBtn").classList.add("visible");
+            const headerSec = document.querySelector("#shopHeader .section-header");
+            if (headerSec) headerSec.style.display = "none";
             const titleEl = document.querySelector(".section-title");
             const tagEl = document.querySelector(".section-tag");
             if (titleEl) titleEl.style.display = "none";
             if (tagEl) tagEl.style.display = "none";
+            const shopHeader = document.getElementById("shopHeader");
+            if (shopHeader) shopHeader.style.margin = "0 -5% 10px";
 
             (allData[cat] || []).forEach(item => {
                 const cartItem = cart.find(c => c.name === item.name);
@@ -2387,9 +2405,9 @@
                 } else {
                     actionHtml = `
                         <div class="qty-selector-inline" onclick="event.stopPropagation();">
-                            <button onclick="changeQtyDirect('${safeName}', -1)" aria-label="Decrease"><svg class="icon icon-sm"><path d="M5 12h14"/></svg></button>
+                            <button onclick="changeQtyDirect('${safeName}', -1)" aria-label="Decrease"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>
                             <span>${currentQty}</span>
-                            <button onclick="changeQtyDirect('${safeName}', 1)" aria-label="Increase"><svg class="icon icon-sm"><path d="M12 5v14M5 12h14"/></svg></button>
+                            <button onclick="changeQtyDirect('${safeName}', 1)" aria-label="Increase"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
                         </div>
                     `;
                 }
@@ -2503,11 +2521,11 @@
                         <div class="cart-item-price">₹${item.price} x ${item.qty}</div>
                     </div>
                     <div class="cart-item-actions">
-                        <button class="ci-btn" onclick="updateQty(${i},-1)"><svg class="icon icon-sm"><path d="M5 12h14"/></svg></button>
+                        <button class="ci-btn" onclick="updateQty(${i},-1)"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>
                         <span class="ci-qty">${item.qty}</span>
-                        <button class="ci-btn" onclick="updateQty(${i},1)"><svg class="icon icon-sm"><path d="M12 5v14M5 12h14"/></svg></button>
+                        <button class="ci-btn" onclick="updateQty(${i},1)"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
                     </div>
-                    <button class="ci-remove" onclick="removeItem(${i})"><svg class="icon icon-sm"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+                    <button class="ci-remove" onclick="removeItem(${i})"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
                 `;
                 body.appendChild(row);
             });
