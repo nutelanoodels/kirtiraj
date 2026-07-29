@@ -255,6 +255,11 @@ def admin_orders_api(request):
     if status in ("pending", "dispatched", "delivered"):
         qs = qs.filter(status=status)
 
+    # ── Delivery option filter ──
+    delivery_option = request.GET.get("delivery_option", "")
+    if delivery_option in ("home_delivery", "porter", "courier"):
+        qs = qs.filter(delivery_option=delivery_option)
+
     # ── Search ──
     search = request.GET.get("search", "").strip()
     if search:
