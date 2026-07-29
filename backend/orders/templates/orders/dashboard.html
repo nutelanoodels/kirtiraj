@@ -534,19 +534,33 @@
       }
     }
     @media (max-width: 768px) {
-      .main { padding: 16px 10px; }
+      .main { padding: 12px 8px; }
       .stats-grid-small { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-      .stat-value-small { font-size: 1.2rem; }
-      .metrics-grid-2col { grid-template-columns: 1fr; gap: 10px; }
-      .metric-card { padding: 12px 14px; gap: 10px; }
-      .metric-icon { font-size: 1.4rem; }
-      .metric-title { font-size: 0.95rem; }
-      .metric-sub { font-size: 0.75rem; }
+      .stat-value-small { font-size: 1.25rem; }
+      .metrics-grid-2col { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .metric-card { padding: 8px 10px; gap: 8px; min-height: 56px; }
+      .metric-icon { font-size: 1.25rem; }
+      .metric-title { font-size: 0.85rem; line-height: 1.2; word-break: break-word; }
+      .metric-sub { display: none; }
       .orders-grid { grid-template-columns: 1fr; gap: 16px; }
-      .header-brand h1 { font-size: 1.35rem; }
+      .header-brand h1 { font-size: 1.25rem; }
       .header-brand span { display: none; }
-      .btn { padding: 12px 18px; font-size: 0.95rem; }
+      .btn { padding: 10px 14px; font-size: 0.88rem; }
     }
+    @media (max-width: 400px) {
+      .header { padding: 0 8px; height: 56px; }
+      .header-brand h1 { font-size: 1.1rem; }
+      .time-display { font-size: 0.78rem; }
+      .stats-grid-small { gap: 6px; }
+      .stat-card-small { padding: 6px 8px; }
+      .stat-value-small { font-size: 1.1rem; }
+      .stat-sub-small { font-size: 0.72rem; }
+      .metrics-grid-2col { gap: 6px; }
+      .metric-card { padding: 6px 8px; gap: 6px; }
+      .metric-title { font-size: 0.78rem; }
+      .metric-icon { font-size: 1.1rem; }
+    }
+
 
   </style>
 </head>
@@ -559,11 +573,10 @@
     <span>Admin Dashboard</span>
   </div>
   <div class="header-right">
-    <!-- Hamburger System Management Menu -->
+    <!-- Hamburger Menu -->
     <div class="hamburger-menu-wrap">
-      <button class="btn btn-ghost btn-sm hamburger-btn" onclick="toggleHamburgerMenu(event)" aria-label="Toggle System Management Menu">
-        <span>☰ System Management</span>
-        <span class="dropdown-arrow">▼</span>
+      <button class="btn btn-ghost btn-sm hamburger-btn" onclick="toggleHamburgerMenu(event)" aria-label="Toggle Menu" style="font-size:1.3rem; width:44px; height:38px; padding:0; display:flex; align-items:center; justify-content:center;">
+        ☰
       </button>
       <div class="hamburger-dropdown" id="hamburgerDropdown">
         <div class="dropdown-header">🛠️ System Management</div>
@@ -573,11 +586,12 @@
         <a href="/admin/auth/group/" class="dropdown-item">🛡️ Groups</a>
         <div class="dropdown-divider"></div>
         <a href="/dashboard/" class="dropdown-item">📋 Orders Dashboard</a>
+        <div class="dropdown-divider"></div>
+        <a href="/admin/logout/" class="dropdown-item" style="color: var(--red);">🚪 Logout</a>
       </div>
     </div>
 
     <span class="time-display" id="liveTime"></span>
-    <a href="/admin/logout/" class="btn btn-logout btn-sm">🚪 Logout</a>
   </div>
 </header>
 
