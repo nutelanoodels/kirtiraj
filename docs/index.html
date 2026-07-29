@@ -705,6 +705,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 0;
+            line-height: 1;
+            flex-shrink: 0;
         }
 
         .modal-close:hover {
@@ -867,11 +870,20 @@
             position: absolute;
             top: 30px;
             right: 30px;
+            width: 44px;
+            height: 44px;
             color: white;
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             cursor: pointer;
-            opacity: 0.7;
+            opacity: 0.8;
             transition: 0.3s;
+            border: none;
+            background: none;
+            padding: 0;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .lightbox-close:hover {
@@ -937,6 +949,12 @@
             cursor: pointer;
             box-shadow: var(--shadow-sm);
             transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            line-height: 1;
+            flex-shrink: 0;
         }
 
         .cart-head button:hover {
@@ -1013,6 +1031,12 @@
             cursor: pointer;
             box-shadow: var(--shadow-sm);
             transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            line-height: 1;
+            flex-shrink: 0;
         }
 
         .ci-btn:hover {
@@ -1038,6 +1062,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 0;
+            line-height: 1;
+            flex-shrink: 0;
             cursor: pointer;
             margin-left: auto;
             transition: var(--transition);
@@ -1325,13 +1352,20 @@
 
         .close-nav {
             position: absolute;
-            top: 30px;
-            right: 30px;
-            font-size: 2.5rem;
+            top: 24px;
+            right: 24px;
+            width: 44px;
+            height: 44px;
+            font-size: 2.2rem;
             cursor: pointer;
             color: var(--text);
             border: none;
             background: none;
+            padding: 0;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .mobile-nav a {
@@ -1588,8 +1622,11 @@
             border: none;
             width: 36px;
             height: 36px;
+            flex-shrink: 0;
+            padding: 0;
+            line-height: 1;
             border-radius: 50%;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 800;
             cursor: pointer;
             display: flex;
@@ -1618,10 +1655,16 @@
             border: none;
             color: white;
             font-weight: 800;
-            font-size: 1.1rem;
+            font-size: 1rem;
             cursor: pointer;
             transition: var(--transition);
             box-shadow: 0 4px 10px rgba(234, 88, 12, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 0;
+            line-height: 1;
         }
 
         .add-btn-inline:hover {
@@ -2344,9 +2387,9 @@
                 } else {
                     actionHtml = `
                         <div class="qty-selector-inline" onclick="event.stopPropagation();">
-                            <button onclick="changeQtyDirect('${safeName}', -1)">−</button>
+                            <button onclick="changeQtyDirect('${safeName}', -1)" aria-label="Decrease"><svg class="icon icon-sm"><path d="M5 12h14"/></svg></button>
                             <span>${currentQty}</span>
-                            <button onclick="changeQtyDirect('${safeName}', 1)">+</button>
+                            <button onclick="changeQtyDirect('${safeName}', 1)" aria-label="Increase"><svg class="icon icon-sm"><path d="M12 5v14M5 12h14"/></svg></button>
                         </div>
                     `;
                 }
