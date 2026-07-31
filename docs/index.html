@@ -280,7 +280,7 @@
 
         /* SHOP & GRID */
         .shop {
-            padding: 100px 5%;
+            padding: 24px 5% 60px;
             max-width: 1400px;
             margin: 0 auto;
             min-height: 60vh;
@@ -457,29 +457,31 @@
 
         .sticky-shop-header {
             position: sticky;
-            top: 152px;
+            top: 130px;
             z-index: 900;
-            background: transparent;
-            margin: -20px -5% 20px;
-            padding: 20px 5%;
+            background: var(--surface);
+            margin: 0 0 12px 0;
+            padding: 8px 16px;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             transition: var(--transition);
-            border-bottom: 1px solid transparent;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
         }
 
         .header.scrolled+.cat-nav-wrapper+.sticky-shop-header {
-            top: 142px;
+            top: 120px;
         }
 
         .sticky-shop-header.stuck {
-            background: transparent;
+            background: var(--surface);
             backdrop-filter: none;
             -webkit-backdrop-filter: none;
-            border-bottom: 1px solid transparent;
-            box-shadow: none;
-            padding: 15px 5%;
+            border-color: var(--border);
+            box-shadow: var(--shadow-sm);
+            padding: 8px 16px;
         }
 
         /* CATEGORY NAV BAR */
@@ -1399,7 +1401,7 @@
             }
 
             .shop {
-                padding: 40px 5%;
+                padding: 12px 4% 40px;
             }
 
             .hero {
@@ -1848,11 +1850,10 @@
                 </svg> Back
             </button>
             <div class="section-header" style="margin-bottom: 0; text-align: left;">
-                <div class="section-tag" style="margin-bottom: 0;">Menu</div>
-                <h2 class="section-title" style="font-size: clamp(1.4rem, 5vw, 2.2rem);">Explore Our Menu</h2>
+                <h2 class="section-title" style="font-size: clamp(1.1rem, 3.2vw, 1.35rem); margin: 0; font-weight: 800;">Explore Our Menu</h2>
             </div>
         </div>
-        <div class="grid cat-grid" id="productGrid" style="margin-top: 30px;">
+        <div class="grid cat-grid" id="productGrid" style="margin-top: 12px;">
             <!-- Dynamically populated -->
         </div>
     </section>
@@ -2351,11 +2352,9 @@
             const headerSec = document.querySelector("#shopHeader .section-header");
             if (headerSec) headerSec.style.display = "";
             const titleEl = document.querySelector(".section-title");
-            const tagEl = document.querySelector(".section-tag");
             if (titleEl) { titleEl.style.display = ""; titleEl.textContent = "Explore Our Menu"; }
-            if (tagEl) { tagEl.style.display = ""; tagEl.textContent = "Menu"; }
             const shopHeader = document.getElementById("shopHeader");
-            if (shopHeader) shopHeader.style.margin = "-20px -5% 20px";
+            if (shopHeader) shopHeader.style.margin = "0 0 12px 0";
             setActiveCat("All");
 
             getOrderedCategories().forEach(cat => {
@@ -2384,13 +2383,11 @@
             grid.innerHTML = "";
             document.getElementById("backBtn").classList.add("visible");
             const headerSec = document.querySelector("#shopHeader .section-header");
-            if (headerSec) headerSec.style.display = "none";
+            if (headerSec) headerSec.style.display = "";
             const titleEl = document.querySelector(".section-title");
-            const tagEl = document.querySelector(".section-tag");
-            if (titleEl) titleEl.style.display = "none";
-            if (tagEl) tagEl.style.display = "none";
+            if (titleEl) { titleEl.style.display = ""; titleEl.textContent = cat; }
             const shopHeader = document.getElementById("shopHeader");
-            if (shopHeader) shopHeader.style.margin = "0 -5% 10px";
+            if (shopHeader) shopHeader.style.margin = "0 0 12px 0";
 
             (allData[cat] || []).forEach(item => {
                 const cartItem = cart.find(c => c.name === item.name);
