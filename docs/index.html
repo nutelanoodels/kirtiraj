@@ -284,6 +284,7 @@
             max-width: 1400px;
             margin: 0 auto;
             min-height: 60vh;
+            scroll-margin-top: 130px;
         }
 
         .section-header {
@@ -1783,7 +1784,7 @@
     <div class="mobile-nav" id="mobileNav" aria-hidden="true">
         <button class="close-nav" type="button" aria-label="Close menu" onclick="closeMobileNav()">✕</button>
         <a href="#" onclick="closeMobileNav()">Home</a>
-        <a href="#shop" onclick="closeMobileNav()">Shop</a>
+        <a href="#shop" onclick="showCategories(true); closeMobileNav();">Shop</a>
         <a href="#gallery" onclick="closeMobileNav()">Gallery</a>
         <a href="#contact" onclick="closeMobileNav()">Contact</a>
         <a href="#location" onclick="closeMobileNav()">Location</a>
@@ -1800,7 +1801,7 @@
             <span class="logo-text desktop-only">Kirtiraj</span>
         </div>
         <nav class="nav">
-            <a href="#shop">Shop</a>
+            <a href="#shop" onclick="showCategories(true)">Shop</a>
             <a href="#gallery">Gallery</a>
             <a href="#contact">Contact</a>
             <a href="#location">Location</a>
@@ -1836,7 +1837,7 @@
                 <img src="hero_tree.png" alt="Product Tree" class="hero-brand-img" style="width:100%; height:auto;">
             </div>
             <div class="hero-actions">
-                <button class="btn-primary" style="margin-top: 30px" onclick="document.getElementById('shop').scrollIntoView()">Start Shopping →</button>
+                <button class="btn-primary" style="margin-top: 30px" onclick="showCategories(true)">Start Shopping →</button>
             </div>
         </div>
     </section>
@@ -2371,7 +2372,15 @@
             });
 
             if (shouldScroll) {
-                window.scrollTo({ top: document.getElementById('shop').offsetTop - 140, behavior: 'smooth' });
+                const shopEl = document.getElementById('shop');
+                if (shopEl) {
+                    const headerEl = document.getElementById('header');
+                    const catNavEl = document.getElementById('catNavWrapper');
+                    const headerHeight = headerEl ? headerEl.offsetHeight : 64;
+                    const catNavHeight = catNavEl ? catNavEl.offsetHeight : 56;
+                    const totalOffset = headerHeight + catNavHeight + 10;
+                    window.scrollTo({ top: Math.max(0, shopEl.offsetTop - totalOffset), behavior: 'smooth' });
+                }
             }
         }
 
@@ -2424,7 +2433,15 @@
             });
 
             if (shouldScroll) {
-                window.scrollTo({ top: document.getElementById('shop').offsetTop - 140, behavior: 'smooth' });
+                const shopEl = document.getElementById('shop');
+                if (shopEl) {
+                    const headerEl = document.getElementById('header');
+                    const catNavEl = document.getElementById('catNavWrapper');
+                    const headerHeight = headerEl ? headerEl.offsetHeight : 64;
+                    const catNavHeight = catNavEl ? catNavEl.offsetHeight : 56;
+                    const totalOffset = headerHeight + catNavHeight + 10;
+                    window.scrollTo({ top: Math.max(0, shopEl.offsetTop - totalOffset), behavior: 'smooth' });
+                }
             }
         }
 
