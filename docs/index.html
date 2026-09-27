@@ -2109,11 +2109,14 @@
             "Chocolate Chips Cookies 200g": "cc.png",
             "Dry Fruit Biscuit 200g": "dryfruitcookies.png",
             "Surti Nankhatai 200g": "surtinankhatai.png",
+            "Wheat Toast 300g": "Wheat Toast 300g.png",
             "Wheat Toast Mini 200gm": "wheattoastmini.png",
             "Jeera Toast Mini 200gm": "jeeratoastmini.png",
-            "Jeera Khari 200gm": "jeerakhari.jpeg",
+            "Jeera Khari 200gm": "Jeera Khari 300gm.jpeg",
+            "Jeera Khari 200g": "Jeera Khari 300gm.jpeg",
             "Plain Khari 200gm": "plainkhari.jpeg",
-            "Wheat Khari 200gm": "wheatkhari.jpeg",
+            "Wheat Khari 200gm": "Wheat Khari 300gm.jpeg",
+            "Wheat Khari 200g": "Wheat Khari 300gm.jpeg",
             "Wheat Methi Masala Khari 200gm": "methikhari.jpeg",
             "Jeera Khakhra 500g": "jeerakhakhra.png",
             "Masala Khakhra 500g": "masalakhakhra.png",
@@ -2122,14 +2125,22 @@
             "Plain Khakhra 500g": "plainkhakhra.png",
             "Bajari Dhebra Khakhra 200g": "bajreedhebrakhakhra.png",
             "Bajra Khichiya 250gm": "bajrakhichiya.png",
-            "Green Chilli Rice Papadi 400gm - Mini": "greenchillikhichiya.png",
+            "Bajra Khichiya BIG 500gm": "Bajra Khichiya BIG 500gm.png",
+            "Green Chilli Rice Papadi 400gm - Mini": "Green Chilli Rice Papadi 500gm - Mini.jpeg",
+            "Green Chilli Rice Papadi 500gm - Mini": "Green Chilli Rice Papadi 500gm - Mini.jpeg",
             "Green Chilli Rice Papadi 250gm": "greenchillikhichiya.png",
+            "Green Chilli Rice Papadi BIG 500 gm": "Green Chilli Rice Papadi BIG 500 gm.png",
             "Jeera Rice Papadi 250g": "jeerakhichiya.png",
-            "Jeera Rice Papadi 400g - Mini": "jeerakhichiya.png",
+            "Jeera Rice Papadi 400g - Mini": "Jeera Rice Papadi 500g - Mini.jpeg",
+            "Jeera Rice Papadi 500g - Mini": "Jeera Rice Papadi 500g - Mini.jpeg",
+            "Jeera Rice Papadi BIG 500 GM": "Jeera Rice Papadi BIG 500 GM.png",
             "Jowar Khichiya 250gm": "jowarkhichiya.png",
+            "Jowar Khichiya BIG 500gm": "Jowar Khichiya BIG 500gm.png",
             "Moraiya Papadi 200g - Mini": "moripapdi.png",
-            "Rajwadi Rice Papadi 400g - Mini": "rajwadikhichiya.png",
+            "Rajwadi Rice Papadi 400g - Mini": "Rajwadi Rice Papadi 500g - Mini.jpeg",
+            "Rajwadi Rice Papadi 500g - Mini": "Rajwadi Rice Papadi 500g - Mini.jpeg",
             "Rajwadi Rice Papadi 250gm": "rajwadikhichiya.png",
+            "Rajwadi Rice Papadi BIG 500 GM": "Rajwadi Rice Papadi BIG 500 GM.png",
             "Thick Mathia 200g": "thickmathiya.png",
             "Vadhvani Marcha 200g": "vadhvanimarcha.png",
             "Hing 50g": "hing.png",
@@ -2149,6 +2160,8 @@
             "Usal Sev 200g": "usalsev.png",
             "Fulwadi 200g": "fulwadi.png",
             "Tam Tam 200g": "tamtam.jpeg",
+            "Plain Papadi Namkin 200gm": "Plain Papadi Namkin 200gm.jpeg",
+            "Plain Papadi Namkeen 200g": "Plain Papadi Namkin 200gm.jpeg",
             "Bhadrani Moong 200g": "bhadranimoong.png",
             "Chanajor Garam 200g": "chanajor.png",
             "Chapta Mug 200g": "chaptamoong.png",
@@ -2238,8 +2251,10 @@
                     // Ensure cached items have fallback images too if needed
                     Object.keys(data).forEach(cat => {
                         data[cat].forEach(item => {
-                            if (!item.img || item.img.trim() === "") {
-                                item.img = productImageMap[item.name] || "";
+                            if (productImageMap[item.name]) {
+                                item.img = productImageMap[item.name];
+                            } else if (!item.img || item.img.trim() === "") {
+                                item.img = "";
                             }
                         });
                         data[cat].sort((a, b) => {
@@ -2271,7 +2286,7 @@
                     const cat = p.category || "Others";
                     if (!newData[cat]) newData[cat] = [];
                     const localImg = productImageMap[p.name] || "";
-                    const imgUrl = (p.image && p.image.trim() !== "") ? p.image : localImg;
+                    const imgUrl = localImg || ((p.image && p.image.trim() !== "") ? p.image : "");
                     newData[cat].push({ name: p.name, price: parseFloat(p.price) || 0, img: imgUrl });
                 });
 
