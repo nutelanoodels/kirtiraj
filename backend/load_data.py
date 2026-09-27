@@ -28,7 +28,7 @@ data = {
       { "name": "Moong Udad Papad 500g", "size": 0.5, "rate": 170, "img": "moongudadpapad.png" }
     ],
     "Coockies / Khari / Toast": [
-      { "name": "Atta Biscuit (wheat Cookies)", "size": 0.2, "rate": 80 },
+      { "name": "Atta Biscuit (wheat Cookies)", "size": 0.2, "rate": 80, "img": "Atta Biscuit (wheat Cookies).jpeg" },
       { "name": "Austrlian Cookies 200gm", "size": 0.2, "rate": 110 },
       { "name": "Chocolate Chips Cookies 200g", "size": 0.2, "rate": 90, "img" : "cc.png" },
       { "name": "Dry Fruit Biscuit 200g", "size": 0.2, "rate": 110, "img" : "dryfruitcookies.png" },
@@ -44,7 +44,8 @@ data = {
       { "name": "Jeera Khari 200gm", "size": 0.2, "rate": 90 ,"img" : "Jeera Khari 300gm.jpeg"},
       { "name": "Plain Khari 200gm", "size": 0.2, "rate": 90 ,"img" : "plainkhari.jpeg"},
       { "name": "Wheat Khari 200gm", "size": 0.2, "rate": 90, "img" : "Wheat Khari 300gm.jpeg" },
-      { "name": "Wheat Methi Masala Khari 200gm", "size": 0.2, "rate": 90, "img" : "methikhari.jpeg" }
+      { "name": "Wheat Methi Masala Khari 200gm", "size": 0.2, "rate": 90, "img" : "methikhari.jpeg" },
+      { "name": "Digestive 170 GM", "size": 0.17, "img": "Digestive 170 GM.jpeg" }
     ],
     "Khakhra": [
       { "name": "Bajari Dhebra Khakhra 200g", "size": 0.2, "rate": 60, "img": "bajreedhebrakhakhra.png" },
@@ -118,7 +119,7 @@ data = {
   { "name": "Indori Mix 200g", "size": 0.2, "rate": 65, "img" : "indori mix.png" },
   { "name": "Mix Chavanu 200g", "size": 0.2, "rate": 90, "img" : "mixchavanu.png" },
   { "name": "Kenyan Chevdo 200gm", "size": 0.2, "rate": 85 },
-  { "name": "Navrang Chevdo 200gms", "size": 0.2, "rate": 85 },
+  { "name": "Navrang Chevdo 200gms", "size": 0.2, "rate": 85, "img": "Navrang Chevdo 200gm.jpeg" },
   { "name": "New Gujarati Chevdo 400g", "size": 0.4, "rate": 160, "img": "gujaratichevdo.png" },
   { "name": "Papad Chavanu 200g", "size": 0.2, "rate": 85, "img" : "papadchavanu.jpeg" },
   { "name": "Nylon Pauva 200gm", "size": 0.2, "rate": 75 },
@@ -137,16 +138,17 @@ data = {
     ],
     "Mukhwas": [
       { "name": "Alsi Mukhwas 150g", "size": 0.15 },
-      { "name": "Banarasi Paan 220gm", "size": 0.22 },
-      { "name": "Chulbuli Imli 200gm", "size": 0.2 },
+      { "name": "Banarasi Paan 220gm", "size": 0.22, "img": "Banarasi Paan 220gm.jpeg" },
+      { "name": "Chulbuli Imli 200gm", "size": 0.2, "img": "Chulbuli Imli 200gm.jpeg" },
       { "name": "Dhana Dal 180g", "size": 0.18 },
-      { "name": "Jal Jeera Shots 200g", "size": 0.2 },
+      { "name": "Jal Jeera Shots 200g", "size": 0.2, "img": "Jal Jeera Shots 200g.jpeg" },
       { "name": "Kalkatti Paan 220gm", "size": 0.22 },
-      { "name": "Keri Ni Gotli 100gm", "size": 0.1 },
-      { "name": "Mix Fruit Shots 200gm", "size": 0.2 },
+      { "name": "Keri Ni Gotli 100gm", "size": 0.1, "img": "Keri Ni Gotli 100gm.jpeg" },
+      { "name": "Mix Fruit Shots 200gm", "size": 0.2, "img": "Mix Fruit Shots 200gm.jpeg" },
       { "name": "Natural Mukhwas 130gm", "size": 0.13 },
-      { "name": "Paan Shot 170gm", "size": 0.17, "rate": 110 },
-      { "name": "Til Alsi Dhana Dal 150g", "size": 0.15 }
+      { "name": "Paan Shot 170gm", "size": 0.17, "rate": 110, "img": "Paan Shot 170gm.jpeg" },
+      { "name": "Spicy Mango", "size": 0.2, "img": "Spicy Mango.jpeg" },
+      { "name": "Til Alsi Dhana Dal 150g", "size": 0.15, "img": "Til Alsi Dhana Dal 150g.jpeg" }
     ]
   }
 
